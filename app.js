@@ -21,7 +21,8 @@ const app = express();
 const users = require('./routes/users');
 const movies = require('./routes/movies');
 
-const port = 3008;
+const port = process.env.PORT || 8080;
+//const port = 3008;
 //Cors midlleware
 app.use(cors());
 
