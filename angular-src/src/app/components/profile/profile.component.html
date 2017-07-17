@@ -1,0 +1,65 @@
+<!--div *ngIf="user">
+  <h2 class="page-header">{{user.name}}</h2>
+  <ul class="list-group">
+    <li class="list-group-item">Username: {{user.username}}</li>
+    <li class="list-group-item">Email: {{user.email}}</li>
+  </ul>
+</div-->
+
+
+<div class="col-lg-10 col-lg-offset-1 col-sm-10 pannel-user">
+    <div class="card hovercard">
+        <div class="card-background">
+            <img class="card-bkimg" alt="" [src]=backgroundImagePath>
+
+        </div>
+        <div class="useravatar">
+            <img alt="" src="https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAmCAAAAJDQ5NWRmY2I0LWJhYjEtNDRjOC1iY2UyLTg1OWM3ODEzZDg5MA.jpg">
+        </div>
+        <div class="card-info"> <span *ngIf="user" class="card-title">{{userName}}</span>
+
+        </div>
+    </div>
+    <div class="btn-pref btn-group btn-group-justified btn-group-lg" role="group" aria-label="...">
+        <div class="btn-group" role="group">
+            <button type="button" id="stars" class="btn btn-primary" href="#tab1" data-toggle="tab"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                <div class="hidden-xs">Bio</div>
+            </button>
+        </div>
+        <div class="btn-group" role="group">
+            <button type="button" id="favorites" class="btn btn-default" href="#tab2" data-toggle="tab"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
+                <div class="hidden-xs">Like</div>
+            </button>
+        </div>
+        <div class="btn-group" role="group">
+            <button type="button" id="rating" class="btn btn-default" href="#tab4" data-toggle="tab"><span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                <div class="hidden-xs">Rating</div>
+            </button>
+        </div>
+        <div class="btn-group" role="group">
+            <button type="button" id="following" class="btn btn-default" href="#tab3" data-toggle="tab"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
+                <div class="hidden-xs">Places</div>
+            </button>
+        </div>
+    </div>
+
+    <div class="well">
+      <div class="tab-content">
+        <div class="tab-pane fade in active" id="tab1">
+          <app-bio  [childUser]='user' (userUpdated)="handleUserUpdated($event)"></app-bio>
+        </div>
+        <div class="tab-pane fade in" id="tab2">
+          <app-like [likeUser]='user'></app-like>
+        </div>
+        <div class="tab-pane fade in" id="tab4">
+          <app-rating [ratingUser]='user'></app-rating>
+        </div>
+        <div class="tab-pane fade in" id="tab3">
+          <app-places [placesUser]='user'></app-places>
+        </div>
+      </div>
+    </div>
+    
+    </div>
+
+    

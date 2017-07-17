@@ -1,0 +1,28 @@
+ #outer-circle {
+   background: #385a94;
+   border-radius: 50%;
+   height: 300px;
+   width: 300px;
+   position: relative;
+   /* 
+    Child elements with absolute positioning will be 
+    positioned relative to this div 
+   */
+ }
+ #inner-circle {
+   position: absolute;
+   background: white;
+   border-radius: 50%;
+   height: 200px;
+   width: 200px;
+   /*
+    Put top edge and left edge in the center
+   */
+   top: 50%;
+   left: 50%;
+   margin: -100px 0px 0px -100px;
+   /* 
+    Offset the position correctly with
+    minus half of the width and minus half of the height 
+   */
+ }

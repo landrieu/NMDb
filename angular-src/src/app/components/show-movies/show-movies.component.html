@@ -1,0 +1,43 @@
+
+<div *ngIf=user class="col-md-10 col-md-offset-1">
+  <h2 class="page-header text-center" id="main-title">List of Movies</h2>
+<div *ngFor="let movie of movies; let i = index" class="list-group">
+  <a class="list-group-item active request-movie-container">
+  <div class="info-movie">
+  <div class="request-movie-info">
+    <h4 class="list-group-item-heading title-movie"><a class="title-link" [routerLink]="['/info-movie', movie._id]" >{{movie.title}}</a>
+      <div class="left-title">
+      <div class="left-title-image">
+          <img id="heart-{{i}}" [src]="getHeart(movie._id)" alt="Image" style="width:20px;" (click)="addLikedMovie(movie._id,movie.title)"/>
+         
+      </div>
+      <div class="metascore"> 
+          <div [class]="getStyleMetascore(movie.metascore)">
+            {{movie.metascore}} 
+          </div>
+      </div>
+      </div>
+    </h4>
+    <p class="list-group-item-text">
+      Director: {{movie.director}} <br>
+      Actors: {{movie.actors}}<br>
+      Location: {{movie.location}}<br>
+      ReleaseDate: {{movie.releaseDate}}<br>
+      <!--Budget: {{movie.budget}}<br>-->
+      <!--Metascore: {{movie.metascore}}--><br>
+      <p class="plot-movie">
+      Plot: {{movie.plot}}
+      
+    </p>
+  </div>
+  <div *ngIf=isEmpty(movie.poster) class="request-movie-image">
+      <img [src]="movie.poster" alt="Image" style="width:110px;">
+  </div>
+  </div>
+  </a>
+  <div *ngIf="authService.isAdmin()" class="btn-edit-delete">
+    <button (click)="editMovie(movie._id)" class="btn btn-warning">Edit</button>
+    <button (click)="deleteMovie(movie._id)" class="btn btn-danger">Delete</button>
+  </div>
+</div>
+</div>

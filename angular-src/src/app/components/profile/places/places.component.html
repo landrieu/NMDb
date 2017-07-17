@@ -1,0 +1,37 @@
+
+<div class="location">
+<h3><b>Places I went:</b></h3>
+<div class="divider">  
+</div> 
+Show Map
+<div class="divider">  
+</div> 
+
+<h3><b>Places I want to go:</b></h3>
+<div class="divider">  
+</div> 
+Show Map
+<div class="divider">  
+</div> 
+
+   <h3><b>Add a place:</b></h3>
+  <div class="divider">  
+</div> 
+<div class="form-group">
+  <form>
+    <label>Location</label>
+    <input type="text" [(ngModel)]="location" name="location" class="form-control">
+     <label>To see or seen</label>
+     <select id="select" class="form-control" [(ngModel)]="type" name="type">
+      <option value="toSee">To See</option> 
+      <option value="Seen">See</option>
+    </select>
+    <button class="btn-check-location btn btn-success center-block" (click)="checkLocation()">Check location </button>
+    <div class="map">
+    <agm-map *ngIf=displayMap [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
+      <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
+    </agm-map>
+    </div>
+  </form>
+  </div>
+</div>

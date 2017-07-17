@@ -1,0 +1,86 @@
+.image-movie{
+    width: 33%;
+    display: inline-block;
+    margin-top: 0;
+}
+
+.image-movie img{
+    margin-left: auto;
+	margin-right: auto;
+	display: block;
+    margin-top: 15px;
+}
+
+.detail-movie{
+    width: 66%;
+    display: inline-block;
+    padding-top:50px;
+    vertical-align: top
+}
+.detail-movie-imdb{
+    width: 66%;
+    display: inline-block;
+    padding-top:20px;
+    vertical-align: top
+}
+.info{
+  width: 100%;
+  margin: 0 auto;
+}
+
+.no-metascore{
+  background-color: black;
+}
+.metascore-red{
+    background-color:#cc2323;
+}
+.metascore-orange{
+    background-color:#bb4e17;
+}
+.metascore-yellow{
+    background-color:#e3db21;
+}
+.metascore-green{
+    background-color:#5bff07;
+}
+.metascore-greener{
+    background-color: #338b06;
+}
+
+.metascore{
+    width: 50px;
+    font-size: 25px;
+    color: white;
+    margin-right: 5%;
+    margin-top: 5px;
+    float: right;
+}
+#metascore-box{
+    padding: 5px;
+}
+
+.divider {
+  height: 1px;
+  width:100%;
+  display:block; /* for use on default inline elements like span */
+  margin: 9px 0;
+  overflow: hidden;
+  background-color: #e5e5e5;
+}
+
+.comments-users{
+    margin-top: 5px;
+    height: 120px;
+    background-color: red;
+    margin-bottom: 5px;
+}
+
+.plot-movie{
+     text-align: justify;
+    text-justify: inter-word;
+}
+
+.section-plot-comments{
+    margin-left: 40px;
+    margin-right: 40px;
+}

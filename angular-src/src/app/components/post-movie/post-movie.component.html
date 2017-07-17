@@ -1,0 +1,119 @@
+
+<ul class="nav nav-tabs col-md-8 col-md-offset-2 nav-post-movie">
+  <li role="presentation" [class.active]="!postFromIMDb"><a (click)="changeForm(false)">Post Form</a></li>
+  <li role="presentation" [class.active]="postFromIMDb"><a (click)="changeForm(true)">Post from IMDb</a></li>
+</ul>
+<div class="col-md-8 col-md-offset-2 post-movie-form">
+<div *ngIf="!postFromIMDb;else post_movie_imdb" class="col-md-10 col-md-offset-1 post-form">
+<h2 class="page-header">Post a Movie</h2>
+<form (submit)="onMovieSubmit()">
+  <div class="form-group">
+    <label>Title</label>
+    <input type="text" [(ngModel)]="movie.title" name="title" class="form-control">
+  </div>
+  <div class="form-group">
+    <label>Director</label>
+    <input type="text" [(ngModel)]="movie.director" name="director" class="form-control">
+  </div>
+  <div class="form-group">
+    <label>Actors</label>
+    <input type="text" [(ngModel)]="movie.actors" name="actors" class="form-control" >
+  </div>
+  <div class="form-group">
+    <label>Location</label>
+    <input type="text" [(ngModel)]="movie.location" name="location" class="form-control">
+    <button class="btn-check-location btn btn-success center-block" (click)="checkLocation($event)">Check location </button>
+    <agm-map *ngIf=displayMap [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
+      <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
+    </agm-map>
+  </div>
+  <div class="form-group">
+    <label>Release Date</label>
+    <input type="text" [(ngModel)]="movie.releaseDate" name="releaseDate" class="form-control">
+  </div>
+  <div class="form-group">
+    <label>Budget (Millions of $)</label>
+    <input type="text" [(ngModel)]="movie.budget" name="budget" class="form-control">
+  </div>
+
+  <input type="submit" class="btn-register btn btn-primary center-block" value="Post">
+</form>
+</div>
+
+<ng-template #post_movie_imdb>
+
+<div class="col-md-10 col-md-offset-1" id="request-movie">
+<h2 class="page-header">Post a Movie from the IMDb Database <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/IMDB_Logo_2016.svg/1200px-IMDB_Logo_2016.svg.png"></h2>
+<form (submit)="onMovieSearch()">
+  <div class="form-group">
+    <label>Movie title</label>
+    <input type="text" [(ngModel)]="requestMovie.title" name="title" class="form-control">
+  </div>
+  <div class="form-group">
+    <label>Movie type</label>
+    <select id="select" class="form-control" [(ngModel)]="requestMovie.type" name="type">
+      <option value="movie">Movie</option> 
+      <option value="series">Serie</option>
+      <option value="episode">Episode</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label>Movie year</label>
+    <input type="text" [(ngModel)]="requestMovie.year" name="year" class="form-control">
+  </div>
+  <input type="submit" class="btn-register btn btn-primary center-block" value="Search">
+</form>
+
+<div id="scroll"> </div>
+<div *ngIf=requestMovies>
+<div *ngFor="let movie of requestMovies">
+  <div  class="list-group">
+  <a  class="list-group-item request-movie-container">
+    <div class="request-movie-info">
+    <h4 class="list-group-item-heading" id="request-movie-title">{{movie.Title}}</h4>
+    <p class="list-group-item-text">
+      Type: {{movie.Type | firstuppercase}} <br>
+      Year: {{movie.Year}}<br>
+      </p>
+      <input (click)='postMovieFromIMDb(movie.imdbID)' class="btn-post-movie btn btn-primary center-block" value="Save this movie">
+      </div>
+      <div *ngIf=isEmpty(movie.Poster) class="request-movie-image">
+      <img [src]="movie.Poster" alt="Image" style="width:140px;">
+      </div>
+    
+  </a>
+</div>
+</div>
+</div>
+</div>
+
+
+
+<!--<div *ngIf=requestMovies class="col-md-12 " id="section-request-movie">
+  <h2 class="page-header text-center">Requested Movie</h2>
+<div  class="list-group">
+  <a  class="list-group-item request-movie-container">
+    <div class="request-movie-info">
+    <h4 class="list-group-item-heading" id="request-movie-title">{{requestMovie.Title}}</h4>
+    <p class="list-group-item-text">
+      Director: {{requestMovie.Director}} <br>
+      Actors: {{requestMovie.Actors}}<br>
+      Country: {{requestMovie.Country}}<br>
+      ReleaseDate: {{requestMovie.Released}}<br>
+      Runtime: {{requestMovie.Runtime}}<br>
+      </p>
+      </div>
+      <div class="request-movie-image">
+      <img [src]="requestMovie.Poster" alt="Image" style="width:140px;">
+      </div>
+    
+  </a>
+</div>
+</div>-->
+</ng-template>
+
+</div>
+
+
+
+

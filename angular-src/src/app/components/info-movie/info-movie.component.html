@@ -1,0 +1,95 @@
+<div *ngIf=movie class="well">
+<div *ngIf="imdbMovie;else other_section">
+<div class="title-movie block-center"><h1 class="text-center">{{movie.Title}}
+  <div class="metascore"> 
+          <div [class]="getStyleMetascore(movie.Metascore)" id="metascore-box">
+            {{movie.Metascore}} 
+          </div>
+  </div>  
+  </h1></div>
+  <div class="info">
+    <div class="image-movie">
+      <img [src]="movie.Poster" alt="Image" style="width:200px;">
+    </div>
+    <div class="detail-movie-imdb">
+      <div class="technical-details">
+      <p><b>Directors: </b>{{movie.Director}}</p>
+      <p><b>Actors: </b>{{movie.Actors}}</p>
+      <p><b>Production: </b>{{movie.Production}}</p>
+      <p><b>Country: </b>{{movie.Country}}</p>
+      <p><b>Release Date: </b>{{movie.Released}}</p>
+      <p><b>Genre: </b>{{movie.Genre}}</p>
+      <p><b>Language: </b>{{movie.Language}}</p>
+      <p><b>Runtime: </b>{{movie.Runtime}}</p>
+      <p><b>Type: </b>{{movie.Type}}</p>
+      </div>
+    </div>
+  </div>
+<div class="divider">  
+</div>
+
+<div class="section-plot-comments">
+<div class="plot">
+  <h3><b>Plot:</b></h3>
+  <div class="divider">  
+</div>
+<div class="plot-movie">
+  {{movie.Plot}}
+</div>
+</div>
+<div class="comments">
+  <h3><b>Comments:</b></h3>
+  <div class="divider">  
+</div>
+<div class="comments-users">
+</div>
+</div>
+<div class="post-comment">
+  <h3><b>Post your comment:</b></h3>
+  <div class="divider">  
+</div>
+<div class="your-comment">
+    <textarea  name="description" class="form-control" rows="5" id="inputComment"></textarea>
+</div>
+</div>
+</div>
+
+</div>
+
+
+<ng-template #other_section>
+  <div class="title-movie block-center"><h1 class="text-center">{{movie.title}}
+  <div class="metascore"> 
+          <div [class]="getStyleMetascore(movie.metascore)" id="metascore-box">
+            {{movie.metascore}} 
+          </div>
+  </div>  
+  </h1></div>
+  <div class="info">
+    <div class="image-movie">
+      <img [src]="movie.poster" alt="Image" style="width:200px;">
+    </div>
+    <div class="detail-movie">
+      <div class="technical-details">
+      <p><b>Directors: </b>{{movie.director}}</p>
+      <p><b>Actors: </b>{{movie.actors}}</p>
+      <p><b>Country: </b>{{movie.location}}</p>
+      <p><b>Release Date: </b>{{movie.releaseDate}}</p>
+      <p><b>Plot: </b>{{movie.plot}}</p>
+      </div>
+    </div>
+  </div>
+<div class="divider">  
+</div>
+
+<div class="comments">
+  <h3><b>Comments:</b></h3>
+  <div class="divider">  
+</div>
+<div class="comments-users">
+</div>
+</div>
+
+
+</ng-template>
+</div>

@@ -1,0 +1,9 @@
+<div *ngIf="likeUser">
+  <h2 class="page-header">Movies that you like</h2>
+  <ul class="list-group">
+    <div *ngFor="let movie of likeUser.likedMovies">
+    <li class="list-group-item">{{movie.title}}</li>
+    </div>
+  </ul>
+</div>
+

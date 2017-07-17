@@ -1,0 +1,22 @@
+.notification{
+    width: 90%;
+    margin-left: 5%;
+    height: 50px;
+    background-color: #00C851;
+    position: fixed;
+    top:40px;
+    opacity: 0.9;
+    z-index: 9;
+    border-radius: 5px;
+}
+
+.notification-text{
+    text-align: center;
+    color: white;
+    font-size:20px;
+    margin-top:10px;
+}
+
+/*#ffbb33 orange
+    #33b5e5 blue
+        #ff4444 red*/

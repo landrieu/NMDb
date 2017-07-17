@@ -1,0 +1,88 @@
+.request-movie-container{
+  overflow:auto;
+}
+
+.request-movie-info{
+  position: relative;
+  margin-top: 1%;
+  float: left;
+  width: calc(100% - 210px);
+}
+.request-movie-image{
+  margin-top: 10px;
+  margin-right: 5%;
+  float: right;
+  
+}
+
+.info-movie{
+  width: 100%;
+}
+.btn-edit-delete{
+  text-align: center;
+  padding: 10px;
+  background-color: #f8f5f0;
+  opacity: 0.9;
+  border: solid 1px #ddd;
+  border-top-style: none;
+}
+.btn-edit-delete button{
+  margin: 0 20px;
+  width: 100px;
+}
+
+.plot-movie{
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+.title-movie{
+  font-size: 25px;
+  margin-bottom: 5px;
+  text-align: center;
+}
+.metascore{
+  color: white;
+  width: 60px;
+  font-size: 20px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+.no-metascore{
+  background-color: black;
+}
+.metascore-red{
+    background-color:#cc2323;
+}
+.metascore-orange{
+    background-color:#bb4e17;
+}
+.metascore-yellow{
+    background-color:#e3db21;
+}
+.metascore-green{
+    background-color:#5bff07;
+}
+.metascore-greener{
+    background-color: #338b06;
+}
+
+.left-title{
+    position: relative;
+    display: flex;
+    float: right;
+}
+.left-title img{
+      margin-right: 20px;
+      cursor: pointer;
+}
+
+.left-title img:hover{
+      background-image : url("../../../assets/locale/images/icons/full-heart.png");
+      background-size: 20px;
+}
+.title-link{
+  text-decoration: none;
+  color: black;
+  cursor: pointer;
+}
