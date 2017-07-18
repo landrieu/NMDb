@@ -20,6 +20,7 @@ export class ShowMoviesComponent implements OnInit, AfterViewInit {
   imagePath = "/assets/locale/images/icons/empty-heart.png";
   fullHeart = "/assets/locale/images/icons/full-heart.png";
   emptyHeart =  "/assets/locale/images/icons/empty-heart.png";
+  heartArray: Array<boolean>;
 
   constructor(private movieService: MovieService,private notificationService: NotificationService, private authService: AuthService,  private router: Router) { }
 
@@ -27,6 +28,11 @@ export class ShowMoviesComponent implements OnInit, AfterViewInit {
     
     this.movieService.getMovies().subscribe( res => {
       this.movies = res.movies;
+      /*for(let i=0; i<this.movies.length; i++){
+        if(this.user.likedMovies[i].id === this.movies[i]._id){
+
+        }
+      }*/
     });
     this.authService.getProfile().subscribe(profile => {
       this.user = profile.user;
@@ -106,15 +112,13 @@ export class ShowMoviesComponent implements OnInit, AfterViewInit {
       type: "likedMovie"
     };
     this.authService.addLikedMovie(movie).subscribe(data => {
+      
     });
     
   }
 
 
   getHeart(movieId){
-    
-    
-
     for(let i=0; i < this.likedMovies.length; i++){
       if(this.likedMovies[i].id === movieId){
         return this.fullHeart;

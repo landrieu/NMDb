@@ -10,7 +10,23 @@ Show Map
 <h3><b>Places I want to go:</b></h3>
 <div class="divider">  
 </div> 
-Show Map
+<div *ngIf="placesUser">
+  <ul class="list-group">
+    <div *ngFor="let place of placesUser.placesToSee">
+    <li class="list-group-item">{{place.title}} - {{place.address}}</li>
+    </div>
+  </ul>
+</div>
+
+<button *ngIf=!displayMapToSee class="btn-check-location btn btn-info center-block" (click)="showMapToSee()">Show the map </button>
+<div *ngIf=displayMapToSee class="map">
+  <button class="btn-check-location btn btn-info center-block" (click)="showMapToSee()">Hide the map </button>
+    <agm-map [latitude]="mapToSeeLatitude" [longitude]="mapToSeeLongitude" [zoom]="15">
+      <div *ngFor="let place of toSeeArray">
+      <agm-marker [latitude]='place.latitude' [longitude]="place.longitude" [title]="place.title"></agm-marker>
+      </div>
+    </agm-map>
+</div>
 <div class="divider">  
 </div> 
 
@@ -32,6 +48,11 @@ Show Map
       <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
     </agm-map>
     </div>
+
   </form>
+    <label>Tilte fo this place</label>
+    <input type="text" [(ngModel)]="title" name="title" class="form-control">
+    <button class="btn-check-location btn btn-info center-block" (click)="addPlace()">Add the place </button>
+    
   </div>
 </div>

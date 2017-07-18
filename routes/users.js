@@ -64,6 +64,8 @@ router.post('/authenticate',(req,res,next)=>{
 });
 
 router.get('/profile',passport.authenticate('jwt',{session:false}),(req,res,next)=>{
+        console.log("AA");
+    console.log(req.connection.remoteAddress);
     res.json({user: req.user});
 });
 
@@ -174,6 +176,30 @@ router.patch('/edit/updateProfile/:id',(req,res,next)=>{
         }
     });
 });
+
+router.patch('/edit/addPlace/:id',(req,res,next)=>{
+    
+    let id = req.params.id;
+
+    let param = {
+        timeStamp: new Date(),
+        latitude: req.body.latitude,
+        longitude: req.body.longitude,
+        title: req.body.title,
+        seen: req.body.seen,
+        address: req.body.address
+    }
+
+    User.addPlace(param, id, (err,count,status)=>{
+        if(err){
+            res.json({success:false,msg:"Failed to add place"});
+        }else{
+            res.json({success:true,msg:"Place added"});
+        }
+    });
+});
+
+
 
  
 module.exports = router;

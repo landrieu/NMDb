@@ -8,8 +8,15 @@
     <h4 class="list-group-item-heading title-movie"><a class="title-link" [routerLink]="['/info-movie', movie._id]" >{{movie.title}}</a>
       <div class="left-title">
       <div class="left-title-image">
+
           <img id="heart-{{i}}" [src]="getHeart(movie._id)" alt="Image" style="width:20px;" (click)="addLikedMovie(movie._id,movie.title)"/>
-         
+          
+          <!--div *ngIf="heartArray[i]; else #empty">
+          </div>
+          <ng-template #empty>
+          </ng-template-->
+
+
       </div>
       <div class="metascore"> 
           <div [class]="getStyleMetascore(movie.metascore)">
