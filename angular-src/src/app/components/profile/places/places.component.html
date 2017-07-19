@@ -1,9 +1,27 @@
 
 <div class="location">
-<h3><b>Places I went:</b></h3>
+<h3 id="A"><b>Places I went:</b></h3>
 <div class="divider">  
 </div> 
 Show Map
+<div *ngIf="placesUser">
+  <ul class="list-group">
+    <div *ngFor="let place of placesUser.placesSeen">
+    <li class="list-group-item">{{place.title}} - {{place.address}}</li>
+    </div>
+  </ul>
+</div>
+
+<button *ngIf=!displayMapSeen class="btn-check-location btn btn-info center-block" (click)="showMapSeen()">Show the map </button>
+<div *ngIf=displayMapSeen class="map">
+  <button class="btn-check-location btn btn-info center-block" (click)="showMapSeen()">Hide the map </button>
+    <agm-map id="mapSeen" [latitude]="mapSeenLatitude" [longitude]="mapSeenLongitude" [zoom]="15">
+      <div *ngFor="let place of SeenArray">
+      <agm-marker [latitude]='place.latitude' [longitude]="place.longitude" [title]="place.title"></agm-marker>
+      </div>
+    </agm-map>
+</div>
+
 <div class="divider">  
 </div> 
 
@@ -21,7 +39,7 @@ Show Map
 <button *ngIf=!displayMapToSee class="btn-check-location btn btn-info center-block" (click)="showMapToSee()">Show the map </button>
 <div *ngIf=displayMapToSee class="map">
   <button class="btn-check-location btn btn-info center-block" (click)="showMapToSee()">Hide the map </button>
-    <agm-map [latitude]="mapToSeeLatitude" [longitude]="mapToSeeLongitude" [zoom]="15">
+    <agm-map id="mapToSee" [latitude]="mapToSeeLatitude" [longitude]="mapToSeeLongitude" [zoom]="15">
       <div *ngFor="let place of toSeeArray">
       <agm-marker [latitude]='place.latitude' [longitude]="place.longitude" [title]="place.title"></agm-marker>
       </div>
@@ -56,3 +74,5 @@ Show Map
     
   </div>
 </div>
+
+

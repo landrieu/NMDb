@@ -34,7 +34,7 @@ router.get('/movie/:title',(req,res,next)=>{
     Movie.getMovieByTitle(title, (err,movie)=>{
         if(err) throw err;
         if(!movie){
-            return res.json({succes:false, msg: "Movie not found"});
+            return res.json({success:false, msg: "Movie not found"});
         }else{
             return res.json({success:true, movie: movie});
         }
@@ -45,7 +45,7 @@ router.delete('/deleteMovie/:id',(req,res,next)=>{
    let id = req.params.id;
     Movie.deleteMovie(id , (err)=>{
         if(err){
-            return res.json({succes:false, msg: "Movie hasn't been removed"});
+            return res.json({success:false, msg: "Movie hasn't been removed"});
         }else{
             return res.json({success:true, msg: "Movie has been removed"});
         }
@@ -57,7 +57,7 @@ router.get('/movies',(req,res,next)=>{
     Movie.getAllMovies( (err,movies)=>{
         if(err) throw err;
         if(!movies){
-            return res.json({succes:false, msg: "Movies not found"});
+            return res.json({success:false, msg: "Movies not found"});
         }else{
             return res.json({success:true, movies: movies});
         }
@@ -68,7 +68,7 @@ router.get('/movieById/:id',(req,res,next)=>{
     Movie.getMovie(req.params.id, (err,movie)=>{
         if(err) throw err;
         if(!movie){
-            return res.json({succes:false, msg: "Movie not found"});
+            return res.json({success:false, msg: "Movie not found"});
         }else{
             return res.json({success:true, movie: movie});
         }

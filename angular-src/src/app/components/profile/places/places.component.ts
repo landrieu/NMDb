@@ -1,14 +1,17 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { LocationService } from '../../../services/location.service';
 import { NotificationService } from '../../../services/notification.service';
 import { AuthService } from '../../../services/auth.service';
+declare var jquery:any;
+declare var $ :any;
+
 
 @Component({
   selector: 'app-places',
   templateUrl: './places.component.html',
   styleUrls: ['./places.component.css']
 })
-export class PlacesComponent implements OnInit {
+export class PlacesComponent implements OnInit, OnDestroy {
   @Input () placesUser;
   latitude: number = 0;
   longitude: number = 0;
@@ -17,10 +20,16 @@ export class PlacesComponent implements OnInit {
   location: String;
   type: String;
   title: String;
+
   toSeeArray: Array<Object>;
   mapToSeeLongitude: number = 0;
   mapToSeeLatitude: number = 0;
   displayMapToSee: boolean = false;
+
+  SeenArray: Array<Object>;
+  displayMapSeen: boolean = false;
+  mapSeenLongitude: number = 0;
+  mapSeenLatitude: number = 0;
 
   constructor(private locationService: LocationService, private notificationService: NotificationService, private authService: AuthService) { }
 
@@ -34,11 +43,26 @@ export class PlacesComponent implements OnInit {
       this.toSeeArray = array;
       this.mapToSeeLatitude = array[0].latitude;
       this.mapToSeeLongitude = array[0].longitude;
+      
+      let arr = new Array();
+
+      data.user.placesSeen.forEach(element => {
+        arr.push(element);
+      });
+      this.SeenArray = arr;
+      this.mapSeenLatitude = arr[0].latitude;
+      this.mapSeenLongitude = arr[0].longitude;
     });
   }
 
   showMapToSee(){
     this.displayMapToSee = !this.displayMapToSee;
+    $('#mapSeen').remove();
+  }
+
+  showMapSeen(){
+    this.displayMapSeen = !this.displayMapSeen;
+    $('#mapToSee').remove();
   }
 
   checkLocation(){
@@ -101,6 +125,10 @@ export class PlacesComponent implements OnInit {
         this.notificationService.showNotifSuccess(data.msg);
       }
     });
+  }
+
+  ngOnDestroy(){
+    console.log("aa")
   }
 
 }

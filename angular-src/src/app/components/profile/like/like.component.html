@@ -1,3 +1,4 @@
+
 <div *ngIf="likeUser">
   <h2 class="page-header">Movies that you like</h2>
   <ul class="list-group">
@@ -7,3 +8,9 @@
   </ul>
 </div>
 
+<button class="btn-check-location btn btn-info center-block" (click)="hideMap()">Hide  </button>
+
+<button class="btn-check-location btn btn-info center-block" (click)="displayMap()">Hide the map </button>
+
+<div  id="map">
+</div>

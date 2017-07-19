@@ -90,11 +90,19 @@ module.exports.updateProfile = function(param, callback){
 }
 
 module.exports.addPlace = function(param, id,callback){
-    console.log("1");
     if(param.seen === false){
-        console.log("2");
         User.update({"_id": id},{ $push: {
         placesToSee: {
+            "timeStamp": param.timeStamp,
+            "longitude": param.longitude,
+            "latitude": param.latitude,
+            "title": param.title,
+            "address": param.address
+        },
+        }},callback);
+    }else{
+         User.update({"_id": id},{ $push: {
+        placesSeen: {
             "timeStamp": param.timeStamp,
             "longitude": param.longitude,
             "latitude": param.latitude,
