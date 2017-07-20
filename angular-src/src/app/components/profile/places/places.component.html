@@ -1,26 +1,24 @@
 
 <div class="location">
-<h3 id="A"><b>Places I went:</b></h3>
+<h3><b>Places I went:</b></h3>
 <div class="divider">  
 </div> 
-Show Map
 <div *ngIf="placesUser">
   <ul class="list-group">
     <div *ngFor="let place of placesUser.placesSeen">
-    <li class="list-group-item">{{place.title}} - {{place.address}}</li>
+    <li class="block-place list-group-item"><div class="info-place">{{place.title}} - {{place.address}}<br>
+        Latitude: {{place.latitude}} - Longitude: {{place.longitude}}
+        </div>
+        <div>
+          <button class="btn-delete-place btn btn-danger center-block" (click)="deletePlace(place.timeStamp,'Seen')">Delete</button>
+        </div>
+    </li>
     </div>
   </ul>
 </div>
 
-<button *ngIf=!displayMapSeen class="btn-check-location btn btn-info center-block" (click)="showMapSeen()">Show the map </button>
-<div *ngIf=displayMapSeen class="map">
-  <button class="btn-check-location btn btn-info center-block" (click)="showMapSeen()">Hide the map </button>
-    <agm-map id="mapSeen" [latitude]="mapSeenLatitude" [longitude]="mapSeenLongitude" [zoom]="15">
-      <div *ngFor="let place of SeenArray">
-      <agm-marker [latitude]='place.latitude' [longitude]="place.longitude" [title]="place.title"></agm-marker>
-      </div>
-    </agm-map>
-</div>
+<button class="btn-check-location btn btn-info center-block" (click)="showMapSeen()">Show the map </button>
+
 
 <div class="divider">  
 </div> 
@@ -31,28 +29,24 @@ Show Map
 <div *ngIf="placesUser">
   <ul class="list-group">
     <div *ngFor="let place of placesUser.placesToSee">
-    <li class="list-group-item">{{place.title}} - {{place.address}}</li>
+    <li class="block-place list-group-item"><div class="info-place">{{place.title}} - {{place.address}} <br>
+        Latitude: {{place.latitude}} - Longitude: {{place.longitude}}
+        </div>
+        <div>
+          <button class="btn-delete-place btn btn-danger center-block" (click)="deletePlace(place.timeStamp,'ToSee')">Delete</button>
+        </div>
+    </li>
     </div>
   </ul>
 </div>
 
-<button *ngIf=!displayMapToSee class="btn-check-location btn btn-info center-block" (click)="showMapToSee()">Show the map </button>
-<div *ngIf=displayMapToSee class="map">
-  <button class="btn-check-location btn btn-info center-block" (click)="showMapToSee()">Hide the map </button>
-    <agm-map id="mapToSee" [latitude]="mapToSeeLatitude" [longitude]="mapToSeeLongitude" [zoom]="15">
-      <div *ngFor="let place of toSeeArray">
-      <agm-marker [latitude]='place.latitude' [longitude]="place.longitude" [title]="place.title"></agm-marker>
-      </div>
-    </agm-map>
-</div>
-<div class="divider">  
-</div> 
+<button class="btn-check-location btn btn-info center-block" (click)="showMapToSee()">Show the map </button>
 
    <h3><b>Add a place:</b></h3>
   <div class="divider">  
 </div> 
-<div class="form-group">
-  <form>
+
+<form>
     <label>Location</label>
     <input type="text" [(ngModel)]="location" name="location" class="form-control">
      <label>To see or seen</label>
@@ -61,18 +55,15 @@ Show Map
       <option value="Seen">See</option>
     </select>
     <button class="btn-check-location btn btn-success center-block" (click)="checkLocation()">Check location </button>
-    <div class="map">
-    <agm-map *ngIf=displayMap [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
-      <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
-    </agm-map>
-    </div>
-
+    <div  id="map">
+</div>
   </form>
-    <label>Tilte fo this place</label>
+
+<button class="btn-check-location btn btn-info center-block" (click)="displayMap()">Center on the marker </button>
+<label>Tilte fo this place</label>
     <input type="text" [(ngModel)]="title" name="title" class="form-control">
     <button class="btn-check-location btn btn-info center-block" (click)="addPlace()">Add the place </button>
-    
-  </div>
-</div>
+
+
 
 

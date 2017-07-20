@@ -2,6 +2,7 @@ import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { LocationService } from '../../../services/location.service';
 import { NotificationService } from '../../../services/notification.service';
 import { AuthService } from '../../../services/auth.service';
+declare var google: any;
 declare var jquery:any;
 declare var $ :any;
 
@@ -15,58 +16,99 @@ export class PlacesComponent implements OnInit, OnDestroy {
   @Input () placesUser;
   latitude: number = 0;
   longitude: number = 0;
-  displayMap: boolean = false;
+  
   zoom: number = 7;
   location: String;
   type: String;
   title: String;
 
-  toSeeArray: Array<Object>;
-  mapToSeeLongitude: number = 0;
-  mapToSeeLatitude: number = 0;
-  displayMapToSee: boolean = false;
+  displayMapToSee;
+  displayMapSeen;
 
-  SeenArray: Array<Object>;
-  displayMapSeen: boolean = false;
-  mapSeenLongitude: number = 0;
-  mapSeenLatitude: number = 0;
+  markersToSee = [];
+  markersSeen = [];
+
+  showMap: boolean = false;
+  map;
+  markers = [];
 
   constructor(private locationService: LocationService, private notificationService: NotificationService, private authService: AuthService) { }
 
   ngOnInit() {
-    console.log("fa");
-    this.authService.getProfile().subscribe( data => {
-      let array = new Array();
+    /*this.authService.getProfile().subscribe( data => {
       data.user.placesToSee.forEach(element => {
-        array.push(element);
-      });
-      this.toSeeArray = array;
-      this.mapToSeeLatitude = array[0].latitude;
-      this.mapToSeeLongitude = array[0].longitude;
-      
-      let arr = new Array();
 
-      data.user.placesSeen.forEach(element => {
-        arr.push(element);
       });
-      this.SeenArray = arr;
-      this.mapSeenLatitude = arr[0].latitude;
-      this.mapSeenLongitude = arr[0].longitude;
-    });
+    })*/
+
+    var options = {
+      zoom: 4,
+      center: {
+        lat:42,
+        lng: -10
+      },
+      fullscreenControlOptions: {
+        position: 'LEFT_TOP'
+      },
+      mapTypeId: 'satellite'
+    }
+    this.map = new google.maps.Map(document.getElementById('map'),options);
+    console.log("A");
+
   }
 
   showMapToSee(){
-    this.displayMapToSee = !this.displayMapToSee;
-    $('#mapSeen').remove();
+    this.setMarkers(this.placesUser.placesToSee);
   }
 
   showMapSeen(){
-    this.displayMapSeen = !this.displayMapSeen;
-    $('#mapToSee').remove();
+    this.setMarkers(this.placesUser.placesSeen);
+  }
+
+  setMarkers(places){
+    this.deleteMarkers();
+    this.displayMap();
+    
+    places.forEach(element => {
+      this.addMarker(
+          {
+            coords:{lat: element.latitude, lng: element.longitude},
+            content: element.title
+        });
+        this.latitude = element.latitude;
+        this.longitude = element.longitude;
+    });
+      this.setCenterMap();
+      this.setBounds();
+  }
+
+  setBounds(){
+    if(this.markers.length > 1){
+    var bounds = new google.maps.LatLngBounds();
+      for (var i = 0; i < this.markers.length; i++) {
+        bounds.extend(this.markers[i].getPosition());
+      }
+
+      this.map.fitBounds(bounds);
+    }
+  }
+
+  setCenterMap(){
+    this.map.panTo(new google.maps.LatLng(this.latitude,this.longitude));
+  }
+   hideMap(){
+    google.maps.event.clearInstanceListeners(window);
+    google.maps.event.clearInstanceListeners(document);
+  }
+  displayMap(){
+  
+    $('#map').css('height','400px');
+    google.maps.event.trigger(document.getElementById('map'), 'resize');
+    this.map.panTo(new google.maps.LatLng(this.latitude,this.longitude));
+    this.map.setZoom(this.zoom);
   }
 
   checkLocation(){
-
     if(this.location === undefined){
       return false;
     }
@@ -76,7 +118,12 @@ export class PlacesComponent implements OnInit, OnDestroy {
         this.location = location.results[0].formatted_address;
         this.latitude = location.results[0].geometry.location.lat;
         this.longitude = location.results[0].geometry.location.lng;
-        this.displayMap = true;
+        this.deleteMarkers();
+        this.addMarker({coords:{
+          lat: this.latitude,
+          lng: this.longitude
+        }})
+        this.displayMap();
         this.zoom = 4;
         if(location.results[0].address_components.length >= 3){
           this.zoom = 7;
@@ -88,11 +135,18 @@ export class PlacesComponent implements OnInit, OnDestroy {
           this.zoom = 16;
         }
       }else{
-        this.notificationService.showNotifWarning("Place not found");
-        //this.flashMessages.show("Address not found",{cssClass: 'alert-danger',timeout:3000});
-      }
-      
+        this.notificationService.showNotifWarning("Place not found");;
+      }    
     });
+  }
+
+  deleteMarkers(){
+    if(this.markers){
+          for(let i=0; i<this.markers.length; i++){
+            this.markers[i].setMap(null);
+          }
+    }
+    this.markers = [];
   }
 
   addPlace(){
@@ -118,6 +172,7 @@ export class PlacesComponent implements OnInit, OnDestroy {
         this.authService.getProfile().subscribe( user => {
           if(user){
             this.placesUser = user.user;
+            this.title = "";
             console.log(this.placesUser);
           }
         })
@@ -128,7 +183,45 @@ export class PlacesComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(){
-    console.log("aa")
+    
+  }
+
+  addMarker(props){
+    var marker = new google.maps.Marker({
+      position: props.coords,
+      map:this.map
+    })
+
+    if(props.content){
+      var infoWindow = new google.maps.InfoWindow({
+      content: props.content
+    })
+    
+    marker.addListener('click',function(){
+        infoWindow.open(this.map,marker);
+    });
+  }
+    this.markers.push(marker);
+  }
+
+  deletePlace(timeStamp, type){
+    let param = {
+      type: type,
+      timeStamp: timeStamp,
+      id: this.placesUser._id
+    }
+    this.locationService.deletePlace(param).subscribe( data =>{
+      if(data.success === true){
+        this.notificationService.showNotifSuccess(data.msg);
+        this.authService.getProfile().subscribe( user => {
+          if(user){
+            this.placesUser = user.user;
+          }
+        })
+      }else{
+        this.notificationService.showNotifDanger(data.msg);
+      }
+    })
   }
 
 }

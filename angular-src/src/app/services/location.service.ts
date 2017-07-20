@@ -36,4 +36,15 @@ export class LocationService {
     return this.http.patch( AppSettings.API_ENDPOINT + 'users/edit/addPlace/' + param.id, body ,{headers: headers})
     .map( res => res.json());
   }
+  deletePlace(param){
+    let body = {
+      type: param.type,
+      timeStamp: param.timeStamp,
+    };
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    console.log(body);
+    return this.http.patch( AppSettings.API_ENDPOINT + 'users/edit/deletePlace/' + param.id, body ,{headers: headers})
+    .map( res => res.json());
+  }
 }

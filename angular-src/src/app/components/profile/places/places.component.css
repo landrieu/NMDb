@@ -23,3 +23,13 @@ agm-map {
   overflow: hidden;
   background-color: #e5e5e5;
 }
+
+.block-place{
+  display: flex;
+}
+.info-place{
+    width: 500px;
+}
+.btn-delete-place{
+      padding: 7px;
+}
