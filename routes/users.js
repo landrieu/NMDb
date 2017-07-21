@@ -18,7 +18,8 @@ router.post('/register',(req,res,next)=>{
         ratedMovies: [],
         placesToSee: [], 
         placesSaw: [],
-        description: ""
+        description: "",
+        comments: []
     });
 
     User.addUser(newUser, (err,user)=>{
@@ -195,6 +196,24 @@ router.patch('/edit/addPlace/:id',(req,res,next)=>{
             res.json({success:false,msg:"Failed to add place"});
         }else{
             res.json({success:true,msg:"Place added"});
+        }
+    });
+});
+
+router.patch('/edit/deletePlace/:id',(req,res,next)=>{
+    
+    let id = req.params.id;
+
+    let param = {
+        timeStamp: req.body.timeStamp,
+        type: req.body.type
+    }
+
+    User.deletePlace(param, id, (err,count,status)=>{
+        if(err){
+            res.json({success:false,msg:"Failed to delete place"});
+        }else{
+            res.json({success:true,msg:"Place deleted"});
         }
     });
 });

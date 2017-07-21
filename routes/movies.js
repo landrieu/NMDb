@@ -76,4 +76,22 @@ router.get('/movieById/:id',(req,res,next)=>{
 });
 
 
+router.get('/movieFromIMDb/:id',(req,res,next)=>{
+    Movie.getMovieFromIMDb(req.params.id, (data) =>{
+        res.json(data);
+    });
+});
+
+router.get('/searchFromIMDb',(req,res,next)=>{
+    
+    let param = {
+        search: req.query.search,
+        type: req.query.type,
+        year: req.query.year
+    }
+    Movie.searchMovieFromIMDb(param, (data) =>{
+        res.json(data);
+    });
+});
+
 module.exports = router;

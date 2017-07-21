@@ -20,6 +20,7 @@ const app = express();
 
 const users = require('./routes/users');
 const movies = require('./routes/movies');
+const comments = require('./routes/comments');
 
 //const port = process.env.PORT || 8080;
 const port = 3008;
@@ -39,6 +40,7 @@ require('./config/passport')(passport);
 
 app.use('/users',users);
 app.use('/movies',movies);
+app.use('/comments',comments);
 
 //Index route
 app.get('/',(req,res) => {

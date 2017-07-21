@@ -114,4 +114,19 @@ module.exports.addPlace = function(param, id,callback){
     
 }
 
+module.exports.deletePlace = function(param, id,callback){
+    if(param.type === "Seen"){
+        User.update({"_id": id},{ $pull: {
+        "placesSeen": {
+            "timeStamp": new Date(param.timeStamp)
+        }}},callback);
+    }else{
+         User.update({"_id": id},{ $pull: {
+        "placesToSee": {
+            "timeStamp": new Date(param.timeStamp)
+        }}},callback);
+    }
+    
+}
+
 

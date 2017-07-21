@@ -1,4 +1,5 @@
 node_modules/
 config/
 angular-src/src/app/settings/
-angular-src/src/index.html
+angular-src/src/index
+angular-src/src/assets/locale
