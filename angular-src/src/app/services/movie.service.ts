@@ -37,6 +37,7 @@ export class MovieService {
     .map( res => res.json());
   }
 
+  //Deprecated
   getMovieByIMDbId(id){
     let headers = new Headers();
     let endpoint = 'http://www.omdbapi.com/?i=' + id + '&apikey=' + AppSettings.OMDbKey + '&plot=full';
@@ -51,11 +52,26 @@ export class MovieService {
     .map( res => res.json());
   }
 
+  //Deprecated
   searchMovieIMDb(search, type, year){
     let headers = new Headers();
-    let endpoint = 'http://www.omdbapi.com/?s=' + search + '&rogue&apiKey=' + AppSettings.OMDbKey + '&type=' + type + '&y=' + year;
+    let endpoint = 'http://www.omdbapi.com/?s=' + search + '&apiKey=' + AppSettings.OMDbKey + '&type=' + type + '&y=' + year;
     return this.http.get(endpoint, {headers: headers})
     .map(res => res.json());
+  }
+
+    getMovieIMDbByIdBack(id){
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.get( AppSettings.API_ENDPOINT + 'movies/movieFromIMDb/'+ id ,{headers: headers})
+    .map( res => res.json());
+  }
+
+  searchMovieIMDBack(search, type, year){
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.get( AppSettings.API_ENDPOINT + 'movies/searchFromIMDb/?search=' + search + '&year=' + year + '&type=' + type ,{headers: headers})
+    .map( res => res.json());
   }
 
   deleteMovie(id){

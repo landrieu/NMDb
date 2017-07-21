@@ -70,12 +70,10 @@ export class PostMovieComponent implements OnInit {
     this.movieService.postMovie(movie).subscribe( data => {
       if(data.success){
         this.notificationService.showNotifSuccess(data.msg);
-        //this.flashMessages.show(data.msg,{cssClass: 'alert-success',timeout:3000});
         this.emptyMovie(this.movie);
         this.displayMap = false;
       }else{
         this.notificationService.showNotifDanger(data.msg);
-        //this.flashMessages.show(data.msg,{cssClass: 'alert-danger',timeout:3000});
       }
       this.emptyMovie(this.movie);
     });
@@ -121,7 +119,7 @@ export class PostMovieComponent implements OnInit {
       
     });*/
     this.emptyMovie(this.requestMovies);
-    this.movieService.searchMovieIMDb(this.requestMovie.title,this.requestMovie.type,this.requestMovie.year).subscribe( movies => {
+    this.movieService.searchMovieIMDBack(this.requestMovie.title,this.requestMovie.type,this.requestMovie.year).subscribe( movies => {
       if(movies.Error){
         this.flashMessages.show(movies.Error,{cssClass: 'alert-danger',timeout:3000});
         this.requestMovies = null;

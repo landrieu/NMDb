@@ -58,11 +58,19 @@ export class PlacesComponent implements OnInit, OnDestroy {
   }
 
   showMapToSee(){
-    this.setMarkers(this.placesUser.placesToSee);
+    if(this.placesUser.placesToSee.length === 0){
+      this.notificationService.showNotifWarning("There is no places to see")
+    }else{
+      this.setMarkers(this.placesUser.placesToSee);
+    }
   }
 
   showMapSeen(){
-    this.setMarkers(this.placesUser.placesSeen);
+    if(this.placesUser.placesSeen.length === 0){
+      this.notificationService.showNotifWarning("There is no places see")
+    }else{
+      this.setMarkers(this.placesUser.placesSeen);
+    }
   }
 
   setMarkers(places){

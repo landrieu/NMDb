@@ -29,7 +29,7 @@ export class InfoMovieComponent implements OnInit {
            return true;
          }else{
            let id = data.movie.imdbId;
-           this.movieService.getMovieByIMDbId(id).subscribe(movie =>{
+           this.movieService.getMovieIMDbByIdBack(id).subscribe(movie =>{
             console.log(movie);
             this.movie = movie;
             this.imdbMovie = true;
