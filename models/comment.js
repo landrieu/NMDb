@@ -37,5 +37,13 @@ module.exports.addComment = function(newComment, callback){
     newComment.save(callback);
 }
 
+module.exports.getCommentsByMovieId = function(id, callback){
+    Comment.find({idMovie: id},callback)
+}
+
+module.exports.getCommentsByUserId = function(id, callback){
+    Comment.find({idUser: id},callback)
+}
+
 
 

@@ -38,11 +38,14 @@
   {{movie.Plot}}
 </div>
 </div>
-<div class="comments">
+<div *ngIf=comments class="comments">
   <h3><b>Comments:</b></h3>
   <div class="divider">  
 </div>
-<div class="comments-users">
+<div *ngFor="let comment of comments" class="comments-users">
+  <div class="title-comment"><b>{{comment.title}}</b></div>
+  <div class="text-comment">{{comment.text}}</div>
+  <div class="info-comment"><i>Posted by {{comment.username}}, on {{comment.date | date:fullDate}}</i></div>
 </div>
 </div>
 <div class="post-comment">
@@ -50,7 +53,24 @@
   <div class="divider">  
 </div>
 <div class="your-comment">
-    <textarea  name="description" class="form-control" rows="5" id="inputComment"></textarea>
+  <form  class="form-horizontal">
+  <div class="form-group">
+    <label for="titleComment" class="col-sm-1 control-label">Title: </label>
+    <div class="col-sm-10">
+      <input type="text" name="titleComment" [(ngModel)]="titleComment" class="form-control" id="titleComment" placeholder="Title">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="inputComment" id="inputCom" class="col-sm-1 control-label">Comment: </label>
+    <div class="col-sm-10">
+    <textarea  name="textComment"  [(ngModel)]="textComment" class="form-control" rows="5" id="inputComment" placeholder="Comment"></textarea>
+    </div>
+  </div>
+  <div class="btn-post-comment center-block">
+    <button type="button" class="btn btn-success" (click)="postComment()">Post</button>
+    </div>
+  </form>
+    
 </div>
 </div>
 </div>

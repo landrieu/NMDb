@@ -17,9 +17,9 @@ export class ShowMoviesComponent implements OnInit, AfterViewInit {
   movies: Movie[];
   user: User;
   likedMovies = [];
-  imagePath = "/assets/locale/images/icons/empty-heart.png";
-  fullHeart = "/assets/locale/images/icons/full-heart.png";
-  emptyHeart =  "/assets/locale/images/icons/empty-heart.png";
+  imagePath = "/assets/images/icons/empty-heart.png";
+  fullHeart = "/assets/images/icons/full-heart.png";
+  emptyHeart =  "/assets/images/icons/empty-heart.png";
   heartArray: Array<boolean>;
 
   constructor(private movieService: MovieService,private notificationService: NotificationService, private authService: AuthService,  private router: Router) { }

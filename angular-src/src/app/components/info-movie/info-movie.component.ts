@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { MovieService } from '../../services/movie.service';
+import { CommentService } from '../../services/comment.service';
 import { NotificationService } from '../../services/notification.service';
 import { Movie } from '../../models/Movie'
 
@@ -13,10 +14,14 @@ import { Movie } from '../../models/Movie'
 export class InfoMovieComponent implements OnInit {
   id: String;
   private sub: any;
-  movie: Movie;
+  movie;
   imdbMovie: boolean= false;
+  textComment;
+  titleComment;
+  User;
+  comments= [];
 
-  constructor(private route: ActivatedRoute, private authService: AuthService, private movieService: MovieService, private notificationService: NotificationService) { }
+  constructor(private route: ActivatedRoute, private authService: AuthService, private movieService: MovieService, private notificationService: NotificationService, private commentService: CommentService) { }
 
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
@@ -26,17 +31,21 @@ export class InfoMovieComponent implements OnInit {
          if(data.movie.imdbId === null || data.movie.imdbId === "" || data.movie.imdbId === undefined){
            this.movie = data.movie;
             console.log(this.movie);
+            this.getComments();
            return true;
          }else{
            let id = data.movie.imdbId;
            this.movieService.getMovieIMDbByIdBack(id).subscribe(movie =>{
-            console.log(movie);
             this.movie = movie;
             this.imdbMovie = true;
+            console.log(this.movie);
+            this.getComments();
            });
          }
        });
     });
+    this.User = this.authService.getUser();
+    console.log(this.User);
   }
 
   getStyleMetascore(metascore){
@@ -60,6 +69,38 @@ export class InfoMovieComponent implements OnInit {
         return 'metascore-greener';
       }
     }
+  }
+
+  postComment(){
+     let comment = {
+       title: this.titleComment,
+       text: this.textComment,
+       username: this.User.username,
+       idUser: this.User.id,
+       idMovie: this.id,
+       titleMovie: this.movie.Title
+     }
+
+     this.commentService.postComment(comment).subscribe( data =>{
+       if(data.success === true){
+        this.notificationService.showNotifSuccess(data.msg);
+        this.getComments();
+       }else{
+        this.notificationService.showNotifDanger(data.msg);
+       }
+     })
+  }
+
+  getComments(){
+    this.commentService.getComments(this.id).subscribe(data =>{
+      if(data.success === true){
+        this.comments= data.comments;
+        this.titleComment = "";
+        this.textComment = "";
+      }else{
+        console.log(data.msg);
+      }
+    })
   }
   
 

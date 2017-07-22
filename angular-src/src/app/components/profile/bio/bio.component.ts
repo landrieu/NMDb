@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, AfterViewInit } from '@angular/core';
 import { User } from '../../../models/User';
 import { AuthService } from '../../../services/auth.service';
+import { CommentService } from '../../../services/comment.service';
 import { NotificationService } from '../../../services/notification.service';
 import { DatePipe } from '@angular/common';
 
@@ -12,12 +13,17 @@ import { DatePipe } from '@angular/common';
 export class BioComponent implements OnInit {
    @Input() childUser:User;
    @Output() userUpdated = new EventEmitter();
-   
+   comments= [];
    updateUser: boolean= false;
 
-  constructor(private authService: AuthService, private notificationService: NotificationService) { }
+  constructor(private authService: AuthService, private notificationService: NotificationService, private commentService: CommentService) { }
 
   ngOnInit() {
+    this.commentService.getCommentsUser(this.authService.getUser().id).subscribe( data => {
+      
+      this.comments = data.comments;
+      console.log(this.comments);
+    });
   }
 
   submitFormProfile(){

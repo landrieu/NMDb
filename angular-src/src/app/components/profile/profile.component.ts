@@ -15,7 +15,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   user: User;
   childTitle= "test";
   userName: String;
-  backgroundImagePath = "/assets/locale/images/GR1.JPG";
+  backgroundImagePath = "/assets/images/GR1.JPG";
   constructor(private authService: AuthService, private router: Router, private flashMessagesSercice: FlashMessagesService) {
 
   }

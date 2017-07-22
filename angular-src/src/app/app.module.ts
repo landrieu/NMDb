@@ -25,6 +25,8 @@ import { AuthService } from './services/auth.service';
 import { MovieService } from './services/movie.service';
 import { LocationService } from './services/location.service';
 import { NotificationService } from './services/notification.service';
+import { CommentService } from './services/comment.service';
+
 import { ShowMoviesComponent } from './components/show-movies/show-movies.component';
 import { BioComponent } from './components/profile/bio/bio.component';
 import { LikeComponent } from './components/profile/like/like.component';
@@ -74,7 +76,7 @@ const appRoutes: Routes = [
       apiKey: AppSettings.GOOGLE_MAP_KEY
     })
   ],
-  providers: [ValidateService, AuthService, MovieService, LocationService, NotificationService, AuthGuard, AdminGuard],
+  providers: [ValidateService, AuthService, MovieService, LocationService, NotificationService, CommentService, AuthGuard, AdminGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
