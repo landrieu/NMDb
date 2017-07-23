@@ -60,7 +60,8 @@ export class MovieService {
     .map(res => res.json());
   }
 
-    getMovieIMDbByIdBack(id){
+/************OMDb*****************/
+  getMovieIMDbByIdBack(id){
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     return this.http.get( AppSettings.API_ENDPOINT + 'movies/movieFromIMDb/'+ id ,{headers: headers})
@@ -70,9 +71,29 @@ export class MovieService {
   searchMovieIMDBack(search, type, year){
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.get( AppSettings.API_ENDPOINT + 'movies/searchFromIMDb/?search=' + search + '&year=' + year + '&type=' + type ,{headers: headers})
+    return this.http.get( AppSettings.API_ENDPOINT + 'movies/searchFromIMDb?search=' + search + '&year=' + year + '&type=' + type)
     .map( res => res.json());
   }
+
+/************TMDb*****************/
+
+   searchMovieTMDBack(query, year, type){
+     query = query.replace(" ","+");
+     console.log(query);
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.get( AppSettings.API_ENDPOINT + 'movies/searchFromTMDb?query=' + query + '&year=' + year + '&type=' + type)
+    .map( res => res.json());
+  }
+
+  getMovieTMDb(id, type){
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.get( AppSettings.API_ENDPOINT + 'movies/movieFromTMDb/'+ id + '?type=' + type,{headers: headers})
+    .map( res => res.json());
+  }
+
+
 
   deleteMovie(id){
     let headers = new Headers();

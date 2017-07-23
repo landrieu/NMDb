@@ -1,6 +1,6 @@
 
-<div *ngIf="likeUser">
-  <h2 class="page-header">Movies that you like</h2>
+<div *ngIf="likeUser" class="liked">
+  <h3 class="page-header"><b>Movies liked</b></h3>
   <ul class="list-group">
     <div *ngFor="let movie of likeUser.likedMovies">
     <li class="list-group-item">{{movie.title}}</li>

@@ -22,11 +22,10 @@ export class PlacesComponent implements OnInit, OnDestroy {
   type: String;
   title: String;
 
-  displayMapToSee;
-  displayMapSeen;
-
   markersToSee = [];
   markersSeen = [];
+
+  addTitleDisplayed: boolean = false;
 
   showMap: boolean = false;
   map;
@@ -53,8 +52,6 @@ export class PlacesComponent implements OnInit, OnDestroy {
       mapTypeId: 'satellite'
     }
     this.map = new google.maps.Map(document.getElementById('map'),options);
-    console.log("A");
-
   }
 
   showMapToSee(){
@@ -62,6 +59,7 @@ export class PlacesComponent implements OnInit, OnDestroy {
       this.notificationService.showNotifWarning("There is no places to see")
     }else{
       this.setMarkers(this.placesUser.placesToSee);
+      this.addTitleDisplayed = false;
     }
   }
 
@@ -70,6 +68,7 @@ export class PlacesComponent implements OnInit, OnDestroy {
       this.notificationService.showNotifWarning("There is no places see")
     }else{
       this.setMarkers(this.placesUser.placesSeen);
+      this.addTitleDisplayed = false;
     }
   }
 
@@ -142,6 +141,7 @@ export class PlacesComponent implements OnInit, OnDestroy {
         if(location.results[0].address_components.length >= 7){
           this.zoom = 16;
         }
+        this.addTitleDisplayed = true;
       }else{
         this.notificationService.showNotifWarning("Place not found");;
       }    
@@ -230,6 +230,14 @@ export class PlacesComponent implements OnInit, OnDestroy {
         this.notificationService.showNotifDanger(data.msg);
       }
     })
+  }
+  arrayNotEmpty(array){
+    if(array){
+      if(array.length > 0){
+        return true;
+      }
+    }
+    return false;
   }
 
 }

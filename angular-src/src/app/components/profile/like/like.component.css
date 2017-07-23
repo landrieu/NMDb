@@ -2,3 +2,16 @@
    
         width: 100%;
       }
+.liked{
+  width:70%;
+  margin-left: auto;
+  margin-right: auto;
+}
+h3{
+  border-bottom-color: #777;
+  margin-top: 15px;
+}
+
+.btn:focus,.btn:active {
+   outline: none !important;
+}

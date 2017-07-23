@@ -21,15 +21,93 @@ agm-map {
   display:block; /* for use on default inline elements like span */
   margin: 9px 0;
   overflow: hidden;
-  background-color: #e5e5e5;
+  background-color: #777;
 }
 
 .block-place{
   display: flex;
 }
 .info-place{
-    width: 500px;
+    width: 600px;
 }
 .btn-delete-place{
       padding: 7px;
+      background-color: "#ee0000";
+      border-radius: 0px;
+}
+
+.btn-delete-place:hover{
+       transform: scale(1.05, 1.15);
+      background-color: "#cc0000";
+}
+
+.delete-icon{
+  height: 24px;
+  width: 24px;
+}
+.delete-icon img{
+ cursor: pointer;
+ width: 100%;
+ height: auto;
+ opacity: 0.8;
+}
+.delete-icon img:hover{
+ transform: scale(1.05, 1.15);
+ opacity: 1;
+}
+.btn-show-map{
+  background-color: #2F4F4F;
+  border-color: white;
+}
+
+.btn-check-location{
+    background-color: #2ECC40;
+}
+
+.btn{
+  /*border-radius: 0px;*/
+  margin: 10px auto;
+}
+.btn:focus,.btn:active {
+   outline: none !important;
+}
+.btn:hover{
+  transform: scale(1.05, 1.15);
+}
+
+.btn-center-marker{
+  background-color: #0074D9;
+}
+
+.btn-check-location:active{
+    background-color: #2EAC40;
+}
+
+.btn-show-map:active,
+.btn-show-map:target{
+  background-color: #003f6f;
+  border-color: white;
+}
+
+
+
+.btn:focus,.btn:active {
+   outline: none !important;
+}
+.btn:hover{
+  transform: scale(1.05, 1.15);
+}
+
+.btn{
+    opacity: 0.95;
+    box-shadow: 5px 5px 5px #888888;
+}
+.btn:hover{
+     transform: scale(0.95, 0.95);
+     opacity: 1;
+     box-shadow: none;
+}
+.btn:active{
+     opacity: 1;
+     box-shadow: none;
 }

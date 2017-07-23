@@ -52,19 +52,19 @@
   background-color: black;
 }
 .metascore-red{
-    background-color:#cc2323;
+    background-color:#FF4136;
 }
 .metascore-orange{
-    background-color:#bb4e17;
+    background-color:#FF851B;
 }
 .metascore-yellow{
-    background-color:#e3db21;
+    background-color:#FFDC00;
 }
 .metascore-green{
-    background-color:#5bff07;
+    background-color:#01FF70;
 }
 .metascore-greener{
-    background-color: #338b06;
+    background-color: #2ECC40;
 }
 
 .left-title{
@@ -85,4 +85,33 @@
   text-decoration: none;
   color: black;
   cursor: pointer;
+}
+
+.btn:focus,.btn:active {
+   outline: none !important;
+}
+.btn:hover{
+  transform: scale(1.05, 1.15);
+}
+
+.btn{
+    opacity: 0.95;
+    box-shadow: 5px 5px 5px #888888;
+}
+.btn:hover{
+     transform: scale(0.95, 0.95);
+     opacity: 1;
+     box-shadow: none;
+}
+.btn:active{
+     opacity: 1;
+     box-shadow: none;
+}
+
+.btn-warning{
+  background-color: #FF851B;
+}
+
+.btn-danger{
+  background-color: #FF4136;
 }

@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { MovieService } from '../../services/movie.service';
 import { CommentService } from '../../services/comment.service';
 import { NotificationService } from '../../services/notification.service';
-import { Movie } from '../../models/Movie'
+import { Movie } from '../../models/Movie';
+declare var $: any;
+
 
 @Component({
   selector: 'app-info-movie',
@@ -20,13 +22,17 @@ export class InfoMovieComponent implements OnInit {
   titleComment;
   User;
   comments= [];
+  percent = 0;
 
   constructor(private route: ActivatedRoute, private authService: AuthService, private movieService: MovieService, private notificationService: NotificationService, private commentService: CommentService) { }
 
   ngOnInit() {
+    this.notificationService.initProgressBar();
     this.sub = this.route.params.subscribe(params => {
        this.id = params['id']; 
-       
+       this.percent = 10;
+       this.notificationService.changeTextProgress(10);
+
        this.movieService.getMovieById(this.id).subscribe( data =>{
          if(data.movie.imdbId === null || data.movie.imdbId === "" || data.movie.imdbId === undefined){
            this.movie = data.movie;
@@ -36,9 +42,19 @@ export class InfoMovieComponent implements OnInit {
          }else{
            let id = data.movie.imdbId;
            this.movieService.getMovieIMDbByIdBack(id).subscribe(movie =>{
-            this.movie = movie;
-            this.imdbMovie = true;
-            console.log(this.movie);
+            this.percent = 60;
+            this.notificationService.changeTextProgress(60);
+            this.movieService.getMovieTMDb(id, movie.Type).subscribe( data =>{
+              this.percent = 100;
+              this.notificationService.changeTextProgress(100);
+              this.movie = movie;
+              this.imdbMovie = true;
+              this.movie.Budget = data.budget;
+              this.movie.BackgroundImage = data.backdrop_path;
+              this.movie.Tagline = data.tagline;
+              console.log(this.movie);
+            })
+            
             this.getComments();
            });
          }
@@ -103,5 +119,16 @@ export class InfoMovieComponent implements OnInit {
     })
   }
   
+  progress(){
+    console.log("nj");
+    if(this.movie){
+     // $(".progress").fadeOut(1000);
+    }
+    return true;
+  }
+
+  ngOnDestroy(){
+    this.notificationService.removeProgressBar();
+  }
 
 }

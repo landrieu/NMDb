@@ -52,9 +52,9 @@
   <div class="form-group">
     <label>Movie type</label>
     <select id="select" class="form-control" [(ngModel)]="requestMovie.type" name="type">
-      <option value="movie">Movie</option> 
+      <option value="movie" selected>Movie</option> 
       <option value="series">Serie</option>
-      <option value="episode">Episode</option>
+      <!--option value="episode">Episode</option-->
     </select>
   </div>
   <div class="form-group">
@@ -70,15 +70,17 @@
   <div  class="list-group">
   <a  class="list-group-item request-movie-container">
     <div class="request-movie-info">
-    <h4 class="list-group-item-heading" id="request-movie-title">{{movie.Title}}</h4>
+    <h4 class="list-group-item-heading" id="request-movie-title">{{movie.original_title}}</h4>
     <p class="list-group-item-text">
-      Type: {{movie.Type | firstuppercase}} <br>
-      Year: {{movie.Year}}<br>
-      </p>
-      <input (click)='postMovieFromIMDb(movie.imdbID)' class="btn-post-movie btn btn-primary center-block" value="Save this movie">
+      Year: {{movie.release_date}}</p>
+      <div *ngIf=movie.overview>
+      Plot: {{movie.overview}}
       </div>
-      <div *ngIf=isEmpty(movie.Poster) class="request-movie-image">
-      <img [src]="movie.Poster" alt="Image" style="width:140px;">
+      
+      <input (click)='postMovieFromIMDb(movie.id)' class="btn-post-movie btn btn-primary center-block" value="Save this movie">
+      </div>
+      <div *ngIf=isEmpty(movie.poster_path) class="request-movie-image">
+      <img [src]="'https://image.tmdb.org/t/p/w500'+movie.poster_path" alt="Image" style="width:140px;">
       </div>
     
   </a>
@@ -86,30 +88,6 @@
 </div>
 </div>
 </div>
-
-
-
-<!--<div *ngIf=requestMovies class="col-md-12 " id="section-request-movie">
-  <h2 class="page-header text-center">Requested Movie</h2>
-<div  class="list-group">
-  <a  class="list-group-item request-movie-container">
-    <div class="request-movie-info">
-    <h4 class="list-group-item-heading" id="request-movie-title">{{requestMovie.Title}}</h4>
-    <p class="list-group-item-text">
-      Director: {{requestMovie.Director}} <br>
-      Actors: {{requestMovie.Actors}}<br>
-      Country: {{requestMovie.Country}}<br>
-      ReleaseDate: {{requestMovie.Released}}<br>
-      Runtime: {{requestMovie.Runtime}}<br>
-      </p>
-      </div>
-      <div class="request-movie-image">
-      <img [src]="requestMovie.Poster" alt="Image" style="width:140px;">
-      </div>
-    
-  </a>
-</div>
-</div>-->
 </ng-template>
 
 </div>

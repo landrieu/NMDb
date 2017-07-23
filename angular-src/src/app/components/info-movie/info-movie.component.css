@@ -18,42 +18,50 @@
     vertical-align: top
 }
 .detail-movie-imdb{
-    width: 66%;
+    width: 50%;
     display: inline-block;
     padding-top:20px;
-    vertical-align: top
+    vertical-align: top;
 }
 .info{
   width: 100%;
   margin: 0 auto;
 }
 
+.rating{
+    width: 12%;
+    display: inline-block;
+    padding-top:20px;
+    vertical-align: top;
+}
+
+
 .no-metascore{
   background-color: black;
 }
 .metascore-red{
-    background-color:#cc2323;
+    background-color:#FF4136;
 }
 .metascore-orange{
-    background-color:#bb4e17;
+    background-color:#FF851B;
 }
 .metascore-yellow{
-    background-color:#e3db21;
+    background-color:#FFDC00;
 }
 .metascore-green{
-    background-color:#5bff07;
+    background-color:#01FF70;
 }
 .metascore-greener{
-    background-color: #338b06;
+    background-color: #2ECC40;
 }
 
 .metascore{
     width: 50px;
     font-size: 25px;
     color: white;
-    margin-right: 5%;
+    margin-left: 0px;
     margin-top: 5px;
-    float: right;
+    text-align: center;
 }
 #metascore-box{
     padding: 5px;
@@ -79,8 +87,9 @@
 }
 
 .section-plot-comments{
-    margin-left: 40px;
-    margin-right: 40px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
 }
 
 .container{
@@ -96,4 +105,44 @@
     margin-left: auto;
     margin-right: auto;
 }
+.background-image{
+    width: 100%;
+    height: 300px;
+    position: relative;
+    opacity: 0.92;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
 
+    /* scrol normal*/
+    background-attachment: fixed;
+}
+.ptext{
+    position: absolute;
+    top: 50%;
+    width:100%;
+    text-align: center;
+    color: black;
+    font-size: 27px;
+    letter-spacing: 8px;
+    text-transform: uppercase;
+}
+
+.ptext .border{
+    background-color: #111;
+    color:white;
+    padding: 20px;
+}
+.ptext .border.trans{
+    background-color: transparent;
+}
+
+
+.progress{
+    
+    margin-top: -10px;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    z-index: 10000;
+}

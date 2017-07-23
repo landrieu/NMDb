@@ -48,4 +48,13 @@ export class BioComponent implements OnInit {
     }
   }
 
+  arrayNotEmpty(){
+    if(this.comments){
+      if(this.comments.length > 0){
+        return true;
+      }
+    }
+    return false;
+  }
+
 }

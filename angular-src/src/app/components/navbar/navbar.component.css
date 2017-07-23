@@ -22,6 +22,14 @@
     border-radius: 0px;
 }
 
-/*#ffbb33 orange
-    #33b5e5 blue
-        #ff4444 red*/
+.progress{
+    display: none;
+    width:30%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: -45px;
+    z-index: 100;
+    left:35%;
+    position:absolute;
+
+}

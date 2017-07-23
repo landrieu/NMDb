@@ -17,14 +17,33 @@ router.post('/postMovie',(req,res,next)=>{
         metascore: req.body.metascore,
         imdbId: req.body.imdbId
     });
-
-    Movie.addMovie(newMovie, (err,movie)=>{
+    
+    if(newMovie.director === ""){
+        Movie.getMovieFromIMDb(req.body.imdbId, (data) =>{
+            newMovie.director = data.Director;
+            newMovie.actors = data.Actors;
+            newMovie.poster = data.Poster;
+            newMovie.location = data.Country;
+            newMovie.metascore = data.Metascore;
+            console.log(newMovie);
+            Movie.addMovie(newMovie, (err,movie)=>{
+                if(err){
+                    res.json({success:false,msg:"Failed to post the movie"});
+                }else{
+                    res.json({success:true,msg:"Movie posted"});
+                }
+            });
+        });
+    }else{
+        Movie.addMovie(newMovie, (err,movie)=>{
         if(err){
+            console.log(err);
             res.json({success:false,msg:"Failed to post the movie"});
         }else{
             res.json({success:true,msg:"Movie posted"});
         }
-    })
+        });
+    }
 });
 
 router.get('/movie/:title',(req,res,next)=>{
@@ -75,7 +94,7 @@ router.get('/movieById/:id',(req,res,next)=>{
     });  
 });
 
-
+/******************API OMDb*******************/
 router.get('/movieFromIMDb/:id',(req,res,next)=>{
     Movie.getMovieFromIMDb(req.params.id, (data) =>{
         res.json(data);
@@ -90,6 +109,33 @@ router.get('/searchFromIMDb',(req,res,next)=>{
         year: req.query.year
     }
     Movie.searchMovieFromIMDb(param, (data) =>{
+        res.json(data);
+    });
+});
+
+/*****************API The Movie Db ***************/
+router.get('/movieFromTMDb/:id',(req,res,next)=>{
+    let param = {
+        id: req.params.id,
+        type: req.query.type
+    }
+
+
+    Movie.getMovieFromTMDb(param, (data) =>{
+        res.json(data);
+    });
+});
+
+router.get('/searchFromTMDb',(req,res,next)=>{
+    
+    let quer = req.query.query.split(' ').join('+');
+
+    let param = {
+        query: quer,
+        year: req.query.year,
+        type: req.query.type
+    }
+    Movie.searchMovieFromTMDb(param, (data) =>{
         res.json(data);
     });
 });

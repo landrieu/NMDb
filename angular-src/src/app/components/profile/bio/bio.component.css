@@ -10,6 +10,26 @@
 #label-bio{
     margin-right: 1.6%;
 }
+.btn:focus,.btn:active {
+   outline: none !important;
+}
+
+.btn-update{
+    /*border-radius: 0px;*/
+    background-color: #2ECC40;
+    opacity: 0.9;
+    box-shadow: 5px 5px 5px #888888;
+}
+.btn-update:hover{
+     transform: scale(0.95, 0.95);
+     opacity: 1;
+     box-shadow: none;
+}
+.btn-update:active{
+     background-color: #2ECC40;
+     opacity: 1;
+     box-shadow: none;
+}
 .btn-update-form{
     display: table;
     margin-left: auto;
@@ -26,5 +46,38 @@
   display:block; /* for use on default inline elements like span */
   margin: 9px 0;
   overflow: hidden;
+  background-color: #777;
+}
+.divider-comment {
+  height: 1px;
+  width:100%;
+  display:block; /* for use on default inline elements like span */
+  margin: 1px 0;
+  overflow: hidden;
   background-color: #e5e5e5;
 }
+
+.comments-users{
+    background-color: white;
+    padding: 5px;
+    margin: 5px;
+}
+.no-comments{
+    text-align: center;
+    padding: 20px;
+    background-color: white;
+    margin: 30px;
+}
+.bio{
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
+}
+
+.desc{
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+
+

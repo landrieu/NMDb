@@ -7,6 +7,22 @@ export class NotificationService {
 
   constructor() { }
 
+  initProgressBar(){
+    $('.progress').css('display', 'inline');
+  }
+
+  removeProgressBar(){
+    $('.progress').css('display', 'none');
+  }
+
+  changeTextProgress(percent){
+    $('.text-percent').text(percent + "%");
+    $('.progress-bar').css("width", percent + "%" );
+    if(percent === 100){
+      $('.progress').fadeOut(2000);
+    }
+  }
+
   showNotifSuccess(msg){
     $(".notification").css("background-color","#00C851");
     $('.notification-text').text(msg);

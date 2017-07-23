@@ -111,30 +111,30 @@ export class PostMovieComponent implements OnInit {
   }
 
   onMovieSearch(){
-    /*console.log(this.requestTitle);
-    this.movieService.getMovieByIMDbTitle(this.requestTitle).subscribe( movie => {
-      console.log(movie);
-      this.requestMovie = movie;
-      //document.getElementById('section-request-movie').scrollIntoView();
-      
-    });*/
+   
     this.emptyMovie(this.requestMovies);
-    this.movieService.searchMovieIMDBack(this.requestMovie.title,this.requestMovie.type,this.requestMovie.year).subscribe( movies => {
+    this.movieService.searchMovieTMDBack(this.requestMovie.title,this.requestMovie.year, this.requestMovie.type).subscribe( movies => {
       if(movies.Error){
         this.flashMessages.show(movies.Error,{cssClass: 'alert-danger',timeout:3000});
         this.requestMovies = null;
         return false;
       }
-      this.requestMovies = movies.Search.slice(0,5);
-      document.getElementById('scroll').scrollIntoView();
+      //this.requestMovies = movies.Search.slice(0,5);
+      //document.getElementById('scroll').scrollIntoView();
+      this.requestMovies = movies.results.slice(0,10);
+      console.log(this.requestMovies);
     });
   }
 
   postMovieFromIMDb(id){
-    this.movieService.getMovieByIMDbIdShort(id).subscribe(movie =>{
-      this.copyMovie(movie);
+   
+    this.movieService.getMovieTMDb(id, this.requestMovie.type).subscribe(movie =>{
+      if(this.requestMovie.type === "movie"){
+        this.copyTMDbMovie(movie);
+        this.postMovie(this.movie);
+      }
+       console.log(this.movie);
       
-      this.postMovie(this.movie);
       
     });
   }
@@ -150,6 +150,32 @@ export class PostMovieComponent implements OnInit {
     this.movie.plot = movie.Plot;
     this.movie.metascore = movie.Metascore;
     this.movie.imdbId = movie.imdbID;
+  }
+
+  copyTMDbMovie(movie){
+    this.movie.title = movie.title;
+    this.movie.director = "";
+    this.movie.actors = "";
+    this.movie.location = "";
+    this.movie.budget = movie.budget;
+    this.movie.releaseDate = movie.release_date;
+    this.movie.poster = movie.poster_path;
+    this.movie.plot = movie.overview;
+    this.movie.metascore = (parseInt(movie.vote_average)*10);
+    this.movie.imdbId = movie.imdb_id;
+  }
+
+  copyTMDbSerie(movie){
+    this.movie.title = movie.name;
+    this.movie.director = "";
+    this.movie.actors = "";
+    this.movie.location = "";
+    this.movie.budget = "";
+    this.movie.releaseDate = movie.first_air_date;
+    this.movie.poster = movie.poster_path;
+    this.movie.plot = movie.overview;
+    this.movie.metascore = (parseInt(movie.vote_average)*10);
+    this.movie.imdbId = "";
   }
 
   emptyMovie(obj){
@@ -181,20 +207,20 @@ export class PostMovieComponent implements OnInit {
     budget: string;
     poster: string;
     plot : string;
-    metascore: string;
+    metascore: number;
     imdbId: string;
 }
 
 class RequestMovie{
   title: String;
   year: String;
-  type: String;
+  type: String = "movie";
   movie: Movie[];
 
   constructor(){
     this.title = "";
     this.year = "";
-    this.type = "";
+    this.type = "movie";
   }
 }
 

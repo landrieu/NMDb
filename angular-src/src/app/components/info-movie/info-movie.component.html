@@ -1,13 +1,17 @@
-<div class="container">
-<div *ngIf=movie class="well">
+<!--div class="container"-->
+
+<div *ngIf=movie>
 <div *ngIf="imdbMovie;else other_section">
-<div class="title-movie block-center"><h1 class="text-center">{{movie.Title}}
-  <div class="metascore"> 
-          <div [class]="getStyleMetascore(movie.Metascore)" id="metascore-box">
-            {{movie.Metascore}} 
-          </div>
-  </div>  
-  </h1></div>
+  <div [ngStyle]="{'background-image': 'url(https://image.tmdb.org/t/p/w780' + movie.BackgroundImage + ')'}" class="background-image">
+  <div class="ptext">
+    <span class="border">
+      {{movie.Title}}
+    </span>
+  </div>
+</div>
+<!--div class="title-movie block-center"><h1 class="text-center">{{movie.Title}}
+  
+  </h1></div-->
   <div class="info">
     <div class="image-movie">
       <img [src]="movie.Poster" alt="Image" style="width:200px;">
@@ -22,8 +26,15 @@
       <p><b>Genre: </b>{{movie.Genre}}</p>
       <p><b>Language: </b>{{movie.Language}}</p>
       <p><b>Runtime: </b>{{movie.Runtime}}</p>
-      <p><b>Type: </b>{{movie.Type}}</p>
+      <p *ngIf=movie.Tagline><b>Tagline: </b>{{movie.Tagline}}</p>
       </div>
+    </div>
+    <div class="rating">
+     <div class="metascore"> 
+          <div [class]="getStyleMetascore(movie.Metascore)" id="metascore-box">
+            {{movie.Metascore}} 
+          </div>
+  </div>  
     </div>
   </div>
 <div class="divider">  
@@ -114,4 +125,4 @@
 
 </ng-template>
 </div>
-</div>
+<!--/div-->

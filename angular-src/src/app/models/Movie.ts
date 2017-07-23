@@ -9,7 +9,7 @@ export class Movie {
     public budget: string,
     public poster: string,
     public plot : string,
-    public metascore: string,
+    public metascore: number,
     public imdbId: string
   ) {  }
 }
