@@ -1,10 +1,10 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, AfterViewInit } from '@angular/core';
 import { LocationService } from '../../../services/location.service';
 import { NotificationService } from '../../../services/notification.service';
 import { AuthService } from '../../../services/auth.service';
 declare var google: any;
-declare var jquery:any;
-declare var $ :any;
+declare var jquery: any;
+declare var $: any;
 
 
 @Component({
@@ -12,11 +12,11 @@ declare var $ :any;
   templateUrl: './places.component.html',
   styleUrls: ['./places.component.css']
 })
-export class PlacesComponent implements OnInit, OnDestroy {
-  @Input () placesUser;
+export class PlacesComponent implements OnInit, OnDestroy, AfterViewInit {
+  @Input() placesUser;
   latitude: number = 0;
   longitude: number = 0;
-  
+
   zoom: number = 7;
   location: String;
   type: String;
@@ -39,129 +39,116 @@ export class PlacesComponent implements OnInit, OnDestroy {
 
       });
     })*/
-
-    var options = {
-      zoom: 4,
-      center: {
-        lat:42,
-        lng: -10
-      },
-      fullscreenControlOptions: {
-        position: 'LEFT_TOP'
-      },
-      mapTypeId: 'satellite'
-    }
-    this.map = new google.maps.Map(document.getElementById('map'),options);
   }
 
-  showMapToSee(){
-    if(this.placesUser.placesToSee.length === 0){
-      this.notificationService.showNotifWarning("There is no places to see")
-    }else{
-      this.setMarkers(this.placesUser.placesToSee);
-      this.addTitleDisplayed = false;
-    }
+  ngAfterViewInit(){
+  
   }
 
-  showMapSeen(){
-    if(this.placesUser.placesSeen.length === 0){
-      this.notificationService.showNotifWarning("There is no places see")
-    }else{
-      this.setMarkers(this.placesUser.placesSeen);
-      this.addTitleDisplayed = false;
-    }
+  showMapToSee() {
+    this.locationService.callComponentMethod(this.placesUser.placesToSee, this.zoom);
   }
 
-  setMarkers(places){
+  showMapSeen() {
+    this.locationService.callComponentMethod(this.placesUser.placesSeen, this.zoom);
+  }
+
+  setMarkers(places) {
     this.deleteMarkers();
     this.displayMap();
-    
+
     places.forEach(element => {
       this.addMarker(
-          {
-            coords:{lat: element.latitude, lng: element.longitude},
-            content: element.title
+        {
+          coords: { lat: element.latitude, lng: element.longitude },
+          content: element.title
         });
-        this.latitude = element.latitude;
-        this.longitude = element.longitude;
+      this.latitude = element.latitude;
+      this.longitude = element.longitude;
     });
-      this.setCenterMap();
-      this.setBounds();
+    this.setCenterMap();
+    this.setBounds();
   }
 
-  setBounds(){
-    if(this.markers.length > 1){
-    var bounds = new google.maps.LatLngBounds();
+  setBounds() {
+    if (this.markers.length > 1) {
+      var bounds = new google.maps.LatLngBounds();
       for (var i = 0; i < this.markers.length; i++) {
         bounds.extend(this.markers[i].getPosition());
       }
-
       this.map.fitBounds(bounds);
     }
   }
 
-  setCenterMap(){
-    this.map.panTo(new google.maps.LatLng(this.latitude,this.longitude));
+  setCenterMap() {
+    this.map.panTo(new google.maps.LatLng(this.latitude, this.longitude));
   }
-   hideMap(){
+  hideMap() {
     google.maps.event.clearInstanceListeners(window);
     google.maps.event.clearInstanceListeners(document);
   }
-  displayMap(){
-  
-    $('#map').css('height','400px');
+  displayMap() {
+    let coords = {
+      latitude: this.latitude,
+      longitude: this.longitude
+    }
+    this.locationService.callComponentMethod([coords], this.zoom);
+    /*$('#map').css('height', '400px');
     google.maps.event.trigger(document.getElementById('map'), 'resize');
-    this.map.panTo(new google.maps.LatLng(this.latitude,this.longitude));
-    this.map.setZoom(this.zoom);
+    this.map.panTo(new google.maps.LatLng(this.latitude, this.longitude));
+    this.map.setZoom(this.zoom);*/
   }
 
-  checkLocation(){
-    if(this.location === undefined){
+  checkLocation() {
+    if (this.location === undefined) {
       return false;
     }
-   
-    this.locationService.getLocation(this.location).subscribe(location =>{
-      if(location.results.length != 0){
+
+    this.locationService.getLocation(this.location).subscribe(location => {
+      if (location.results.length != 0) {
         this.location = location.results[0].formatted_address;
         this.latitude = location.results[0].geometry.location.lat;
         this.longitude = location.results[0].geometry.location.lng;
-        this.deleteMarkers();
-        this.addMarker({coords:{
-          lat: this.latitude,
-          lng: this.longitude
-        }})
-        this.displayMap();
+        //this.deleteMarkers();
+        /*this.addMarker({
+          coords: {
+            lat: this.latitude,
+            lng: this.longitude
+          }
+        })*/
+        //this.displayMap();
         this.zoom = 4;
-        if(location.results[0].address_components.length >= 3){
+        if (location.results[0].address_components.length >= 3) {
           this.zoom = 7;
         }
-        if(location.results[0].address_components.length >= 5){
+        if (location.results[0].address_components.length >= 5) {
           this.zoom = 12;
         }
-        if(location.results[0].address_components.length >= 7){
+        if (location.results[0].address_components.length >= 7) {
           this.zoom = 16;
         }
         this.addTitleDisplayed = true;
-      }else{
+      } else {
         this.notificationService.showNotifWarning("Place not found");;
-      }    
+      }
     });
   }
 
-  deleteMarkers(){
-    if(this.markers){
-          for(let i=0; i<this.markers.length; i++){
-            this.markers[i].setMap(null);
-          }
+  deleteMarkers() {
+    
+    if (this.markers) {
+      for (let i = 0; i < this.markers.length; i++) {
+        this.markers[i].setMap(null);
+      }
     }
     this.markers = [];
   }
 
-  addPlace(){
+  addPlace() {
     let type;
-    if(this.type === "toSee"){
+    if (this.type === "toSee") {
       type = false;
-    }else{
+    } else {
       type = true;
     }
 
@@ -173,67 +160,71 @@ export class PlacesComponent implements OnInit, OnDestroy {
       id: this.placesUser._id,
       address: this.location
     }
-    
-    this.locationService.addPlace(obj).subscribe( data =>{
-      if(data.success === true){
+
+    this.locationService.addPlace(obj).subscribe(data => {
+      if (data.success === true) {
         this.notificationService.showNotifSuccess(data.msg);
-        this.authService.getProfile().subscribe( user => {
-          if(user){
+        this.authService.getProfile().subscribe(user => {
+          if (user) {
             this.placesUser = user.user;
             this.title = "";
             console.log(this.placesUser);
           }
         })
-      }else{
+      } else {
         this.notificationService.showNotifSuccess(data.msg);
       }
     });
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
+    this.locationService.Destroy();
+    google.maps.event.clearInstanceListeners(window);
+    google.maps.event.clearInstanceListeners(document);
+    this.deleteMarkers();
     
   }
 
-  addMarker(props){
+  addMarker(props) {
     var marker = new google.maps.Marker({
       position: props.coords,
-      map:this.map
+      map: this.map
     })
 
-    if(props.content){
+    if (props.content) {
       var infoWindow = new google.maps.InfoWindow({
-      content: props.content
-    })
-    
-    marker.addListener('click',function(){
-        infoWindow.open(this.map,marker);
-    });
-  }
+        content: props.content
+      })
+
+      marker.addListener('click', function () {
+        infoWindow.open(this.map, marker);
+      });
+    }
     this.markers.push(marker);
   }
 
-  deletePlace(timeStamp, type){
+  deletePlace(timeStamp, type) {
     let param = {
       type: type,
       timeStamp: timeStamp,
       id: this.placesUser._id
     }
-    this.locationService.deletePlace(param).subscribe( data =>{
-      if(data.success === true){
+    this.locationService.deletePlace(param).subscribe(data => {
+      if (data.success === true) {
         this.notificationService.showNotifSuccess(data.msg);
-        this.authService.getProfile().subscribe( user => {
-          if(user){
+        this.authService.getProfile().subscribe(user => {
+          if (user) {
             this.placesUser = user.user;
           }
         })
-      }else{
+      } else {
         this.notificationService.showNotifDanger(data.msg);
       }
     })
   }
-  arrayNotEmpty(array){
-    if(array){
-      if(array.length > 0){
+  arrayNotEmpty(array) {
+    if (array) {
+      if (array.length > 0) {
         return true;
       }
     }

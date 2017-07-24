@@ -1,35 +1,47 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
-import { FlashMessagesService } from 'angular2-flash-messages';
-import { NotificationService } from '../../services/notification.service'
-declare var jquery:any;
-declare var $ :any;
+import { LocationService } from '../../services/location.service';
+import { NotificationService } from '../../services/notification.service';
+
+declare var jquery: any;
+declare var $: any;
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent implements OnInit, AfterViewInit {
+export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  constructor(private authService: AuthService,private notificationService: NotificationService, private router: Router, private flashMessagesSercice: FlashMessagesService) { }
+  constructor(private locationService: LocationService, private authService: AuthService, private notificationService: NotificationService, private router: Router) {
+ 
+   }
 
   ngOnInit() {
   }
 
-  onLogoutClick(){
+  onLogoutClick() {
     this.authService.logout();
     //this.flashMessagesSercice.show("You are logged out", {cssClass: 'alert-success', timeout: 3000});
     this.notificationService.showNotifSuccess("You are logged out");
     this.router.navigate(['/login']);
     return false;
   }
-  ngAfterViewInit(){
+  ngAfterViewInit() {
     $('.notification').hide();
-    $('.notification').click(function(){
+    $('.notification').click(function () {
       $('.notification').hide();
     });
   }
- 
+
+  test(){
+    console.log(" i");
+    
+  }
+
+  ngOnDestroy(){
+    console.log("biu");
+  }
+
 }

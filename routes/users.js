@@ -6,7 +6,7 @@ const User = require('../models/user');
 const config = require('../config/database');
 
 //Register
-router.post('/register',(req,res,next)=>{
+router.post('/register', (req, res, next) => {
     let newUser = new User({
         name: req.body.name,
         email: req.body.email,
@@ -16,40 +16,40 @@ router.post('/register',(req,res,next)=>{
         birthDate: null,
         likedMovies: [],
         ratedMovies: [],
-        placesToSee: [], 
+        placesToSee: [],
         placesSaw: [],
         description: "",
         comments: []
     });
 
-    User.addUser(newUser, (err,user)=>{
-        if(err){
-            res.json({success:false,msg:"Failed to register user"});
-        }else{
-            res.json({success:true,msg:"User registered"});
+    User.addUser(newUser, (err, user) => {
+        if (err) {
+            res.json({ success: false, msg: "Failed to register user" });
+        } else {
+            res.json({ success: true, msg: "User registered" });
         }
     })
 });
 
 //Authentication
-router.post('/authenticate',(req,res,next)=>{
+router.post('/authenticate', (req, res, next) => {
     const username = req.body.username;
     const password = req.body.password;
 
-    User.getUserByUsername(username,(err,user)=>{
-        if(err) throw err; 
-        if(!user){
-            return res.json({success:false, msg: "User not found"});
+    User.getUserByUsername(username, (err, user) => {
+        if (err) throw err;
+        if (!user) {
+            return res.json({ success: false, msg: "User not found" });
         }
 
-        User.comparePassword(password, user.password,(err,isMatch)=>{
-            if(err) throw err;
-            if(isMatch){
-                const token = jwt.sign(user, config.secret,{
+        User.comparePassword(password, user.password, (err, isMatch) => {
+            if (err) throw err;
+            if (isMatch) {
+                const token = jwt.sign(user, config.secret, {
                     expiresIn: 604800 //1 week
                 });
                 res.json({
-                    success:true,
+                    success: true,
                     token: 'JWT ' + token,
                     user: {
                         id: user._id,
@@ -58,43 +58,44 @@ router.post('/authenticate',(req,res,next)=>{
                         email: user.email
                     }
                 });
-            }else{
-                return res.json({succes:false, msg: "Wrong Password"});            }
+            } else {
+                return res.json({ succes: false, msg: "Wrong Password" });
+            }
         })
     })
 });
 
-router.get('/profile',passport.authenticate('jwt',{session:false}),(req,res,next)=>{
-        console.log("AA");
+router.get('/profile', passport.authenticate('jwt', { session: false }), (req, res, next) => {
+    console.log("AA");
     console.log(req.connection.remoteAddress);
-    res.json({user: req.user});
+    res.json({ user: req.user });
 });
 
-router.get('/number', (req,res,next)=>{
-    User.getNumberUsers((err,number)=>{
-        if(err){
-            res.json({success:false,msg:"Failed to get number of users"});
-        }else{
+router.get('/number', (req, res, next) => {
+    User.getNumberUsers((err, number) => {
+        if (err) {
+            res.json({ success: false, msg: "Failed to get number of users" });
+        } else {
             res.json(number);
         }
     });
 });
 
-router.patch('/edit/addContentProfile/:id',(req,res,next)=>{
+router.patch('/edit/addContentProfile/:id', (req, res, next) => {
     console.log(req.body);
     console.log(req.params.id)
     let type = req.body.type;
     let data = req.body;
 
-    User.getUserById(req.params.id,(err,user)=>{
-        if(err){
-            res.json({success:false,msg:"Failed to add liked Movie"});
-        }else{
-            if(type === "likedMovie"){
+    User.getUserById(req.params.id, (err, user) => {
+        if (err) {
+            res.json({ success: false, msg: "Failed to add liked Movie" });
+        } else {
+            if (type === "likedMovie") {
                 let likedMovies = user.likedMovies;
                 let movie = {
-                    id : data.id,
-                    title : data.title,
+                    id: data.id,
+                    title: data.title,
                 }
                 likedMovies.push(movie);
 
@@ -103,20 +104,20 @@ router.patch('/edit/addContentProfile/:id',(req,res,next)=>{
                     userId: user.id
                 }
 
-                User.addLikedMovie(param, (err,count,status)=>{
-                    if(err){
-                        res.json({success:false,msg:"Failed to add liked movie"});
-                    }else{
-                        res.json({success:true,msg:"Liked movie added"});
+                User.addLikedMovie(param, (err, count, status) => {
+                    if (err) {
+                        res.json({ success: false, msg: "Failed to add liked movie" });
+                    } else {
+                        res.json({ success: true, msg: "Liked movie added" });
                     }
                 });
-              
+
             }
-            if(type === "ratedMovie"){
+            if (type === "ratedMovie") {
                 let ratedMovies = user.ratedMovies;
                 let movie = {
-                    id : data.id,
-                    title : data.title,
+                    id: data.id,
+                    title: data.title,
                     rate: data.rate
                 }
 
@@ -127,29 +128,29 @@ router.patch('/edit/addContentProfile/:id',(req,res,next)=>{
                     userId: user.id
                 }
 
-                User.addRatedMovie(param, (err,count,status)=>{
-                    if(err){
-                        res.json({success:false,msg:"Failed to add rated movie"});
-                    }else{
-                        res.json({success:true,msg:"Rated movie added"});
+                User.addRatedMovie(param, (err, count, status) => {
+                    if (err) {
+                        res.json({ success: false, msg: "Failed to add rated movie" });
+                    } else {
+                        res.json({ success: true, msg: "Rated movie added" });
                     }
                 });
-                
+
             }
-            if(type === "placesSeen"){
-                
+            if (type === "placesSeen") {
+
             }
-            if(type === "placesToSee"){
-                
+            if (type === "placesToSee") {
+
             }
             //console.log(type);
-           // res.send(user);
+            // res.send(user);
         }
     });
 
 
-   
-    
+
+
 
     /*User.editUser(newUser, (err,user)=>{
         if(err){
@@ -160,7 +161,7 @@ router.patch('/edit/addContentProfile/:id',(req,res,next)=>{
     })*/
 });
 
-router.patch('/edit/updateProfile/:id',(req,res,next)=>{
+router.patch('/edit/updateProfile/:id', (req, res, next) => {
 
     let param = {
         name: req.body.name,
@@ -169,17 +170,17 @@ router.patch('/edit/updateProfile/:id',(req,res,next)=>{
         description: req.body.description,
         id: req.params.id
     }
-    User.updateProfile(param, (err,count,status)=>{
-        if(err){
-            res.json({success:false,msg:"Failed to update profile"});
-        }else{
-            res.json({success:true,msg:"Profile updated"});
+    User.updateProfile(param, (err, count, status) => {
+        if (err) {
+            res.json({ success: false, msg: "Failed to update profile" });
+        } else {
+            res.json({ success: true, msg: "Profile updated" });
         }
     });
 });
 
-router.patch('/edit/addPlace/:id',(req,res,next)=>{
-    
+router.patch('/edit/addPlace/:id', (req, res, next) => {
+
     let id = req.params.id;
 
     let param = {
@@ -191,17 +192,17 @@ router.patch('/edit/addPlace/:id',(req,res,next)=>{
         address: req.body.address
     }
 
-    User.addPlace(param, id, (err,count,status)=>{
-        if(err){
-            res.json({success:false,msg:"Failed to add place"});
-        }else{
-            res.json({success:true,msg:"Place added"});
+    User.addPlace(param, id, (err, count, status) => {
+        if (err) {
+            res.json({ success: false, msg: "Failed to add place" });
+        } else {
+            res.json({ success: true, msg: "Place added" });
         }
     });
 });
 
-router.patch('/edit/deletePlace/:id',(req,res,next)=>{
-    
+router.patch('/edit/deletePlace/:id', (req, res, next) => {
+
     let id = req.params.id;
 
     let param = {
@@ -209,16 +210,16 @@ router.patch('/edit/deletePlace/:id',(req,res,next)=>{
         type: req.body.type
     }
 
-    User.deletePlace(param, id, (err,count,status)=>{
-        if(err){
-            res.json({success:false,msg:"Failed to delete place"});
-        }else{
-            res.json({success:true,msg:"Place deleted"});
+    User.deletePlace(param, id, (err, count, status) => {
+        if (err) {
+            res.json({ success: false, msg: "Failed to delete place" });
+        } else {
+            res.json({ success: true, msg: "Place deleted" });
         }
     });
 });
 
 
 
- 
+
 module.exports = router;

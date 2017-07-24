@@ -33,6 +33,7 @@ import { LikeComponent } from './components/profile/like/like.component';
 import { RatingComponent } from './components/profile/rating/rating.component';
 import { PlacesComponent } from './components/profile/places/places.component';
 import { InfoMovieComponent } from './components/info-movie/info-movie.component';
+import { MapComponent } from './components/map/map.component';
 
 
 const appRoutes: Routes = [
@@ -63,7 +64,8 @@ const appRoutes: Routes = [
     LikeComponent,
     RatingComponent,
     PlacesComponent,
-    InfoMovieComponent
+    InfoMovieComponent,
+    MapComponent
   ],
   imports: [
     BrowserModule,

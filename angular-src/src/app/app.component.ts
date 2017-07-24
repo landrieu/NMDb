@@ -1,17 +1,22 @@
-import { Component } from '@angular/core';
+import { Component, AfterViewInit } from '@angular/core';
 import { AuthService } from './services/auth.service';
 import { AppSettings } from './settings/app.settings';
+import { LocationService } from './services/location.service';
+declare var jquery: any;
+declare var $: any;
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent{
   title = 'app';
 
-  constructor(private authService: AuthService){
+
+  constructor(private authService: AuthService, private locationService: LocationService){
     console.log("APP INIT");
+
     this.authService.getProfile().subscribe(profile => {
       AppSettings.USER_ID = profile.user._id;
     },
@@ -19,5 +24,6 @@ export class AppComponent {
       console.log(err);
       return false;
     });
+
   }
 }

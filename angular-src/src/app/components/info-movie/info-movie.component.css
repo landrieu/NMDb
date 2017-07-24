@@ -82,7 +82,7 @@
 }
 
 .plot-movie{
-     text-align: justify;
+    text-align: justify;
     text-justify: inter-word;
 }
 
@@ -139,7 +139,6 @@
 
 
 .progress{
-    
     margin-top: -10px;
     width: 50%;
     margin-left: auto;

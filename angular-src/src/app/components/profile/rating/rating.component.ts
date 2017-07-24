@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { LocationService } from '../../../services/location.service';
 
 @Component({
   selector: 'app-rating',
@@ -8,9 +9,10 @@ import { Component, OnInit, Input } from '@angular/core';
 export class RatingComponent implements OnInit {
   @Input () ratingUser;
 
-  constructor() { }
+  constructor(private locationService: LocationService) { }
 
   ngOnInit() {
+  
   }
 
 }

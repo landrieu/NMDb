@@ -1,82 +1,77 @@
-
 <div class="location">
   <div *ngIf="placesUser">
-  <div *ngIf="arrayNotEmpty(placesUser.placesSeen)">
-<h3><b>Places I went:</b></h3>
-<div class="divider">  
-</div> 
+    <div *ngIf="arrayNotEmpty(placesUser.placesSeen)">
+      <h3><b>Places I went:</b></h3>
+      <div class="divider">
+      </div>
 
-  <ul class="list-group">
-    <div *ngFor="let place of placesUser.placesSeen">
-    <li class="block-place list-group-item"><div class="info-place">{{place.title}} - {{place.address}}<br>
-        Latitude: {{place.latitude}} - Longitude: {{place.longitude}}
+      <ul class="list-group">
+        <div *ngFor="let place of placesUser.placesSeen">
+          <li class="block-place list-group-item">
+            <div class="info-place">{{place.title}} - {{place.address}}<br> Latitude: {{place.latitude}} - Longitude: {{place.longitude}}
+            </div>
+            <div>
+              <!--button class="btn-delete-place btn btn-danger center-block" (click)="deletePlace(place.timeStamp,'Seen')">Delete</button-->
+              <div class="delete-icon center-block" (click)="deletePlace(place.timeStamp,'Seen')">
+                <img src="/assets/images/icons/delete-grey.png" />
+              </div>
+            </div>
+          </li>
         </div>
-        <div>
-          <!--button class="btn-delete-place btn btn-danger center-block" (click)="deletePlace(place.timeStamp,'Seen')">Delete</button-->
-         <div class="delete-icon center-block" (click)="deletePlace(place.timeStamp,'Seen')">
-          <img src="/assets/images/icons/delete-grey.png" />
-         </div>
-        </div>
-    </li>
+      </ul>
+
+
+
+      <button class="btn-show-map btn btn-info center-block" (click)="showMapSeen()"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Show the map </button>
+
     </div>
-  </ul>
-
-  
-
-<button class="btn-show-map btn btn-info center-block" (click)="showMapSeen()"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Show the map </button>
-
-</div>
-</div>
-<div *ngIf="placesUser">
+  </div>
+  <div *ngIf="placesUser">
     <div *ngIf="arrayNotEmpty(placesUser.placesToSee)">
-<h3><b>Places I want to go:</b></h3>
-<div class="divider">  
-</div> 
+      <h3><b>Places I want to go:</b></h3>
+      <div class="divider">
+      </div>
 
-  <ul class="list-group">
-    <div *ngFor="let place of placesUser.placesToSee">
-    <li class="block-place list-group-item"><div class="info-place">{{place.title}} - {{place.address}} <br>
-        Latitude: {{place.latitude}} - Longitude: {{place.longitude}}
+      <ul class="list-group">
+        <div *ngFor="let place of placesUser.placesToSee">
+          <li class="block-place list-group-item">
+            <div class="info-place">{{place.title}} - {{place.address}} <br> Latitude: {{place.latitude}} - Longitude: {{place.longitude}}
+            </div>
+            <div>
+              <!--button class="btn-delete-place btn btn-danger center-block" (click)="deletePlace(place.timeStamp,'ToSee')">Delete</button-->
+              <div class="delete-icon center-block" (click)="deletePlace(place.timeStamp,'ToSee')">
+                <img src="/assets/images/icons/delete-grey.png" />
+              </div>
+            </div>
+          </li>
         </div>
-        <div>
-          <!--button class="btn-delete-place btn btn-danger center-block" (click)="deletePlace(place.timeStamp,'ToSee')">Delete</button-->
-          <div class="delete-icon center-block" (click)="deletePlace(place.timeStamp,'ToSee')">
-          <img src="/assets/images/icons/delete-grey.png" />
-         </div>
-        </div>
-    </li>
+      </ul>
+      <button class="btn btn-info btn-show-map center-block" (click)="showMapToSee()"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Show the map </button>
+
     </div>
-  </ul>
-  <button class="btn btn-info btn-show-map center-block" (click)="showMapToSee()"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Show the map </button>
-
-</div>
-</div>
+  </div>
 
 
-   <h3><b>Add a place:</b></h3>
-  <div class="divider">  
-</div> 
+  <h3><b>Add a place:</b></h3>
+  <div class="divider">
+  </div>
 
-<form>
+  <form>
     <label>Location</label>
     <input type="text" [(ngModel)]="location" name="location" class="form-control">
-     <label>To see or seen</label>
-     <select id="select" class="form-control" [(ngModel)]="type" name="type">
+    <label>To see or seen</label>
+    <select id="select" class="form-control" [(ngModel)]="type" name="type">
       <option value="toSee">To See</option> 
       <option value="Seen">See</option>
     </select>
     <button class="btn-check-location btn btn-success center-block" (click)="checkLocation()"><span class="glyphicon glyphicon-check" aria-hidden="true"></span> Check location </button>
     <div *ngIf=addTitleDisplayed>
-<button class="btn-center-marker btn btn-info center-block" (click)="displayMap()"><span class="glyphicon glyphicon-screenshot" aria-hidden="true"></span> Center on the marker </button>
-<label>Tilte fo this place</label>
-    <input type="text" [(ngModel)]="title" name="title" class="form-control">
-    <button class="btn btn-info center-block" (click)="addPlace()"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add the place </button>
+      <button class="btn-center-marker btn btn-info center-block" (click)="displayMap()"><span class="glyphicon glyphicon-screenshot" aria-hidden="true"></span> Show The Map </button>
+      <label>Tilte fo this place</label>
+      <input type="text" [(ngModel)]="title" name="title" class="form-control">
+      <button class="btn btn-info center-block" (click)="addPlace()"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add the place </button>
 
-       <h3><b>Map:</b></h3>
-  <div class="divider">  
-</div> 
-</div>
-    <div  id="map">
-</div>
+    </div>
   </form>
 </div>
+

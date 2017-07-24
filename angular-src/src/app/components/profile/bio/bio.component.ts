@@ -11,46 +11,46 @@ import { DatePipe } from '@angular/common';
   styleUrls: ['./bio.component.css']
 })
 export class BioComponent implements OnInit {
-   @Input() childUser:User;
-   @Output() userUpdated = new EventEmitter();
-   comments= [];
-   updateUser: boolean= false;
+  @Input() childUser: User;
+  @Output() userUpdated = new EventEmitter();
+  comments = [];
+  updateUser: boolean = false;
 
   constructor(private authService: AuthService, private notificationService: NotificationService, private commentService: CommentService) { }
 
   ngOnInit() {
-    this.commentService.getCommentsUser(this.authService.getUser().id).subscribe( data => {
-      
+    this.commentService.getCommentsUser(this.authService.getUser().id).subscribe(data => {
+
       this.comments = data.comments;
       console.log(this.comments);
     });
   }
 
-  submitFormProfile(){
+  submitFormProfile() {
     //if(this.isValid()){
     this.updateUser = !this.updateUser;
-    this.authService.updateProfile(this.childUser).subscribe( data =>{
+    this.authService.updateProfile(this.childUser).subscribe(data => {
       this.userUpdated.emit(this.childUser);
       this.notificationService.showNotifSuccess("The profile has been updated !");
     });
     //}
   }
 
-  updateProfile(){
+  updateProfile() {
     this.updateUser = !this.updateUser;
   }
 
-  isValid(){
-    if(this.childUser.name && ""){
+  isValid() {
+    if (this.childUser.name && "") {
       return true;
-    }else{
+    } else {
       return false;
     }
   }
 
-  arrayNotEmpty(){
-    if(this.comments){
-      if(this.comments.length > 0){
+  arrayNotEmpty() {
+    if (this.comments) {
+      if (this.comments.length > 0) {
         return true;
       }
     }

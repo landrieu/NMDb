@@ -3,8 +3,8 @@ import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { User } from '../../models/User';
 import { FlashMessagesService } from 'angular2-flash-messages';
-declare var jquery:any;
-declare var $ :any;
+declare var jquery: any;
+declare var $: any;
 
 @Component({
   selector: 'app-profile',
@@ -13,7 +13,7 @@ declare var $ :any;
 })
 export class ProfileComponent implements OnInit, AfterViewInit {
   user: User;
-  childTitle= "test";
+  childTitle = "test";
   userName: String;
   backgroundImagePath = "/assets/images/GR1.JPG";
   constructor(private authService: AuthService, private router: Router, private flashMessagesSercice: FlashMessagesService) {
@@ -26,10 +26,10 @@ export class ProfileComponent implements OnInit, AfterViewInit {
       this.userName = profile.user.name;
       console.log(profile.user);
     },
-    err => {
-      console.log(err);
-      return false;
-    });
+      err => {
+        console.log(err);
+        return false;
+      });
   }
 
   handleUserUpdated(user) {
@@ -39,20 +39,20 @@ export class ProfileComponent implements OnInit, AfterViewInit {
       this.userName = profile.user.name;
       console.log(profile.user);
     },
-    err => {
-      console.log(err);
-      return false;
-    });
+      err => {
+        console.log(err);
+        return false;
+      });
     console.log("UPD");
   }
-  ngAfterViewInit(){
+  ngAfterViewInit() {
     $(".btn-pref .btn").click(function () {
-        $(".btn-pref .btn").removeClass("btn-primary").addClass("btn-default");
-        // $(".tab").addClass("active"); // instead of this do the below 
-        $(this).removeClass("btn-default").addClass("btn-primary");   
+      $(".btn-pref .btn").removeClass("btn-primary").addClass("btn-default");
+      // $(".tab").addClass("active"); // instead of this do the below 
+      $(this).removeClass("btn-default").addClass("btn-primary");
     });
-    
-    
+
+
   }
 
 }

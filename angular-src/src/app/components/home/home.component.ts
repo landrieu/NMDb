@@ -15,22 +15,22 @@ export class HomeComponent implements OnInit, AfterViewInit {
   ngOnInit() {
   }
 
-  displayNotifSuccess(msg){
+  displayNotifSuccess(msg) {
     this.notificationService.showNotifSuccess(msg);
   }
-  displayNotifInfo(msg){
+  displayNotifInfo(msg) {
     this.notificationService.showNotifInfo(msg);
   }
-  displayNotifWarning(msg){
+  displayNotifWarning(msg) {
     this.notificationService.showNotifWarning(msg);
   }
-  displayNotifDanger(msg){
+  displayNotifDanger(msg) {
     this.notificationService.showNotifDanger(msg);
   }
 
-  ngAfterViewInit(){
-    $('a').hover(function(){
-    
+  ngAfterViewInit() {
+    $('a').hover(function () {
+
     })
 
   }

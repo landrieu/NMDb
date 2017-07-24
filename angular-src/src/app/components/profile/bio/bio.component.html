@@ -1,80 +1,80 @@
 <div class="bio">
 
-<div *ngIf="updateUser;else form_update">
-<form  class="form-horizontal">
-  <div class="form-group">
-    <label for="inputUsername3" class="col-sm-2 control-label">Username: </label>
-    <div class="col-sm-8">
-      <input type="text" [(ngModel)]="childUser.username" name="username" class="form-control" id="inputUsername3" placeholder="Username" disabled>
+  <div *ngIf="updateUser;else form_update">
+    <form class="form-horizontal">
+      <div class="form-group">
+        <label for="inputUsername3" class="col-sm-2 control-label">Username: </label>
+        <div class="col-sm-8">
+          <input type="text" [(ngModel)]="childUser.username" name="username" class="form-control" id="inputUsername3" placeholder="Username"
+            disabled>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="inputName3" class="col-sm-2 control-label">Name: </label>
+        <div class="col-sm-8">
+          <input type="text" [(ngModel)]="childUser.name" name="name" class="form-control" id="inputName3" placeholder="Name">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="inputPassword3" class="col-sm-2 control-label">Email: </label>
+        <div class="col-sm-8">
+          <input type="email" [(ngModel)]="childUser.email" name="email" class="form-control" id="inputPassword3" placeholder="Email">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="inputPassword3" class="col-sm-2 control-label">BirthDate: </label>
+        <div class="col-sm-8">
+          <input type="text" [(ngModel)]="childUser.birthDate" name="birthDate" class="form-control" id="inputPassword3" placeholder="BirthDate">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="inputBio" id="label-bio" class="col-sm-2 control-label">Bio: </label>
+        <textarea [(ngModel)]="childUser.description" name="description" class="form-control" rows="5" id="inputBio"></textarea>
+      </div>
+      <div class="btn-update-form center-block">
+        <button type="button" class="btn btn-success" (click)="submitFormProfile()">Submit</button>
+        <button type="button" class="btn btn-danger" (click)="updateProfile()">Cancel</button>
+      </div>
+    </form>
+  </div>
+
+
+  <ng-template #form_update>
+    <div *ngIf=childUser class="info-user">
+      <h3><b>Information:</b></h3>
+      <div class="divider">
+      </div>
+      <p><b>Username:</b> {{childUser.username}}</p>
+      <p><b>Name:</b> {{childUser.name}}</p>
+      <p><b>Email:</b> {{childUser.email}}</p>
+      <p *ngIf=childUser.birthDate><b>Birthdate:</b> {{childUser.birthDate | date:fullDate }}</p>
+      <p><b>Registration Date:</b> {{childUser.registrationDate | date:fullDate}}</p>
+      <p *ngIf=childUser.description class="desc"><b>Bio:</b> {{childUser.description}}</p>
+
+      <button class="btn btn-success center-block btn-update" (click)="updateProfile()">Update profile</button>
     </div>
-  </div>
-  <div class="form-group">
-    <label for="inputName3" class="col-sm-2 control-label">Name: </label>
-    <div class="col-sm-8">
-      <input type="text" [(ngModel)]="childUser.name" name="name" class="form-control" id="inputName3" placeholder="Name">
+
+    <h3><b>Comments posted:</b></h3>
+    <div class="divider">
     </div>
-  </div>
-  <div class="form-group">
-    <label for="inputPassword3" class="col-sm-2 control-label">Email: </label>
-    <div class="col-sm-8">
-      <input type="email" [(ngModel)]="childUser.email" name="email" class="form-control" id="inputPassword3" placeholder="Email">
+
+
+    <div *ngIf="arrayNotEmpty();else no_comments">
+      <div *ngIf=comments>
+        <div *ngFor="let comment of comments" class="comments-users">
+          <div class="title-comment"><b>{{comment.title}}</b></div>
+          <div class="text-comment">{{comment.text}}</div>
+          <div class="divider-comment">
+          </div>
+          <div class="info-comment"><i>Movie: {{comment.titleMovie}}, on {{comment.date | date:fullDate}}</i></div>
+        </div>
+      </div>
     </div>
-  </div>
-  <div class="form-group">
-    <label for="inputPassword3" class="col-sm-2 control-label">BirthDate: </label>
-    <div class="col-sm-8">
-      <input type="text" [(ngModel)]="childUser.birthDate" name="birthDate" class="form-control" id="inputPassword3" placeholder="BirthDate">
-    </div>
-  </div>
-  <div class="form-group">
-    <label for="inputBio" id="label-bio" class="col-sm-2 control-label">Bio: </label>
-    <textarea [(ngModel)]="childUser.description" name="description" class="form-control" rows="5" id="inputBio"></textarea>
-  </div>
-    <div class="btn-update-form center-block">
-    <button type="button" class="btn btn-success" (click)="submitFormProfile()">Submit</button>
-    <button type="button" class="btn btn-danger" (click)="updateProfile()">Cancel</button>
-    </div>
-</form>
+
+    <ng-template #no_comments>
+      <div class="no-comments">
+        <p><b>No Comments Posted</b></p>
+      </div>
+    </ng-template>
+  </ng-template>
 </div>
-
-
-<ng-template #form_update>
-  <div *ngIf=childUser class="info-user">
-     <h3><b>Information:</b></h3>
-    <div class="divider">  
-    </div> 
-    <p><b>Username:</b> {{childUser.username}}</p>
-    <p><b>Name:</b> {{childUser.name}}</p>
-    <p><b>Email:</b> {{childUser.email}}</p>
-    <p *ngIf=childUser.birthDate><b>Birthdate:</b> {{childUser.birthDate | date:fullDate }}</p>
-    <p><b>Registration Date:</b> {{childUser.registrationDate | date:fullDate}}</p>
-    <p *ngIf=childUser.description class="desc"><b>Bio:</b> {{childUser.description}}</p>
-
-    <button class="btn btn-success center-block btn-update" (click)="updateProfile()">Update profile</button>
-  </div>
-
- <h3><b>Comments posted:</b></h3>
- <div class="divider">  
-</div> 
-
-
-<div *ngIf="arrayNotEmpty();else no_comments">
-<div *ngIf=comments>
-<div *ngFor="let comment of comments" class="comments-users">
-  <div class="title-comment"><b>{{comment.title}}</b></div>
-  <div class="text-comment">{{comment.text}}</div>
-   <div class="divider-comment">  
-</div>
-  <div class="info-comment"><i>Movie: {{comment.titleMovie}}, on {{comment.date | date:fullDate}}</i></div>
-</div>
-</div>
-</div>
-
-<ng-template #no_comments>
-  <div class="no-comments">
-  <p><b>No Comments Posted</b></p>
-  </div>
-</ng-template>
-</ng-template>
-</div>
-

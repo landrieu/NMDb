@@ -44,22 +44,20 @@
     </div>
 
     <div class="well">
-      <div class="tab-content">
-        <div class="tab-pane fade in active" id="tab1">
-          <app-bio  [childUser]='user' (userUpdated)="handleUserUpdated($event)"></app-bio>
+        <div class="tab-content">
+            <div class="tab-pane fade in active" id="tab1">
+                <app-bio [childUser]='user' (userUpdated)="handleUserUpdated($event)"></app-bio>
+            </div>
+            <div class="tab-pane fade in" id="tab2">
+                <app-like [likeUser]='user'></app-like>
+            </div>
+            <div class="tab-pane fade in" id="tab4">
+                <app-rating [ratingUser]='user'></app-rating>
+            </div>
+            <div class="tab-pane fade in" id="tab3">
+                <app-places [placesUser]='user'></app-places>
+            </div>
         </div>
-        <div class="tab-pane fade in" id="tab2">
-          <app-like [likeUser]='user'></app-like>
-        </div>
-        <div class="tab-pane fade in" id="tab4">
-          <app-rating [ratingUser]='user'></app-rating>
-        </div>
-        <div class="tab-pane fade in" id="tab3">
-          <app-places [placesUser]='user'></app-places>
-        </div>
-      </div>
-    </div>
-    
     </div>
 
-    
+</div>

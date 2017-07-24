@@ -1,12 +1,12 @@
-import { Component, OnInit, AfterViewInit} from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { MovieService } from '../../services/movie.service';
 import { AuthService } from '../../services/auth.service';
 import { NotificationService } from '../../services/notification.service';
 import { Movie } from '../../models/movie';
 import { User } from '../../models/user';
 import { Router } from '@angular/router';
-declare var jquery:any;
-declare var $ :any;
+declare var jquery: any;
+declare var $: any;
 
 @Component({
   selector: 'app-show-movies',
@@ -19,14 +19,14 @@ export class ShowMoviesComponent implements OnInit, AfterViewInit {
   likedMovies = [];
   imagePath = "/assets/images/icons/empty-heart.png";
   fullHeart = "/assets/images/icons/full-heart.png";
-  emptyHeart =  "/assets/images/icons/empty-heart.png";
+  emptyHeart = "/assets/images/icons/empty-heart.png";
   heartArray: Array<boolean>;
 
-  constructor(private movieService: MovieService,private notificationService: NotificationService, private authService: AuthService,  private router: Router) { }
+  constructor(private movieService: MovieService, private notificationService: NotificationService, private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
-    
-    this.movieService.getMovies().subscribe( res => {
+
+    this.movieService.getMovies().subscribe(res => {
       this.movies = res.movies;
       /*for(let i=0; i<this.movies.length; i++){
         if(this.user.likedMovies[i].id === this.movies[i]._id){
@@ -38,69 +38,69 @@ export class ShowMoviesComponent implements OnInit, AfterViewInit {
       this.user = profile.user;
       this.likedMovies = this.user.likedMovies;
     },
-    err => {
-      console.log(err);
-      return false;
-    });
+      err => {
+        console.log(err);
+        return false;
+      });
 
-  
-    
+
+
   }
 
-  isEmpty(stuff){
-    if(stuff !== null && stuff !== undefined && stuff !== "" && stuff !== "N/A"){
+  isEmpty(stuff) {
+    if (stuff !== null && stuff !== undefined && stuff !== "" && stuff !== "N/A") {
       return true;
-    }else{
+    } else {
       return false;
     }
   }
 
-  getStyleMetascore(metascore){
-    if(metascore != null){
-      if(metascore === "N/A"){
+  getStyleMetascore(metascore) {
+    if (metascore != null) {
+      if (metascore === "N/A") {
         return 'no-metascore';
       }
-      if(metascore  < 40){
+      if (metascore < 40) {
         return 'metascore-red';
       }
-      if(metascore <60){
+      if (metascore < 60) {
         return 'metascore-orange';
       }
-      if(metascore < 75){
+      if (metascore < 75) {
         return 'metascore-yellow';
       }
-      if(metascore < 90){
+      if (metascore < 90) {
         return 'metascore-green';
       }
-      if(metascore <= 100){
+      if (metascore <= 100) {
         return 'metascore-greener';
       }
     }
   }
 
-  editMovie(){
+  editMovie() {
     console.log("edit");
-    
+
   }
 
-  deleteMovie(id){
+  deleteMovie(id) {
     console.log(id);
-    this.movieService.deleteMovie(id).subscribe( data =>{
-      if(data.success === true){
+    this.movieService.deleteMovie(id).subscribe(data => {
+      if (data.success === true) {
         this.notificationService.showNotifSuccess(data.msg);
-        this.movieService.getMovies().subscribe( res => {
+        this.movieService.getMovies().subscribe(res => {
           this.movies = res.movies;
         });
-      }else{
+      } else {
         this.notificationService.showNotifDanger(data.msg);
       }
     });
   }
 
-  addLikedMovie(id, title){
+  addLikedMovie(id, title) {
 
-    for(let i=0; i<this.likedMovies.length; i++){
-      if(this.likedMovies[i].id === id){
+    for (let i = 0; i < this.likedMovies.length; i++) {
+      if (this.likedMovies[i].id === id) {
         console.log("Movie Already in Db");
         return false;
       }
@@ -112,31 +112,30 @@ export class ShowMoviesComponent implements OnInit, AfterViewInit {
       type: "likedMovie"
     };
     this.authService.addLikedMovie(movie).subscribe(data => {
-      
+
     });
-    
+
   }
 
 
-  getHeart(movieId){
-    for(let i=0; i < this.likedMovies.length; i++){
-      if(this.likedMovies[i].id === movieId){
+  getHeart(movieId) {
+    for (let i = 0; i < this.likedMovies.length; i++) {
+      if (this.likedMovies[i].id === movieId) {
         return this.fullHeart;
       }
     }
     return this.emptyHeart;
-  } 
+  }
 
-  ngAfterViewInit(){
-    console.log("vsdq");
+  ngAfterViewInit() {
 
-   $('#main-title').text("HALLO! ^_^");
-   $(".info-movie").hover(function(){
-    console.log("a");
-   });
+    $('#main-title').text("HALLO! ^_^");
+    $(".info-movie").hover(function () {
+      console.log("a");
+    });
 
   }
-  
+
 
 }
 

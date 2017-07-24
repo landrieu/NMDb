@@ -20,31 +20,31 @@ export class RegisterComponent implements OnInit {
   ngOnInit() {
   }
 
-  onRegisterSubmit(){
-    const user= {
+  onRegisterSubmit() {
+    const user = {
       name: this.name,
       username: this.username,
       email: this.email,
       password: this.password
     }
     //Validate Fields
-    if(!this.validateService.validateRegister(user)){
-      this.flashMessages.show("no00",{cssClass: 'alert-danger',timeout:3000});
+    if (!this.validateService.validateRegister(user)) {
+      this.flashMessages.show("no00", { cssClass: 'alert-danger', timeout: 3000 });
       return false;
     }
     //Validate email
-    if(!this.validateService.validateEmail(user.email)){
-      this.flashMessages.show("Fill the email",{cssClass: 'alert-danger',timeout:3000});
-      return false; 
+    if (!this.validateService.validateEmail(user.email)) {
+      this.flashMessages.show("Fill the email", { cssClass: 'alert-danger', timeout: 3000 });
+      return false;
     }
 
     //Register user
-    this.authService.registerUser(user).subscribe(data =>{
-      if(data.success){
-        this.flashMessages.show("You are now registered",{cssClass: 'alert-success',timeout:3000});
+    this.authService.registerUser(user).subscribe(data => {
+      if (data.success) {
+        this.flashMessages.show("You are now registered", { cssClass: 'alert-success', timeout: 3000 });
         this.router.navigate(['/login']);
-    }else{
-        this.flashMessages.show("Something went wrong",{cssClass: 'alert-danger',timeout:3000});
+      } else {
+        this.flashMessages.show("Something went wrong", { cssClass: 'alert-danger', timeout: 3000 });
         this.router.navigate(['/register']);
       }
     });
