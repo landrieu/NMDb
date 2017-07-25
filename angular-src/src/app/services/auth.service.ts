@@ -95,6 +95,7 @@ export class AuthService {
       .map(res => res.json());
   }
 
+
   updateProfile(profileUpdated) {
     let body = {
       name: profileUpdated.name,
@@ -109,6 +110,15 @@ export class AuthService {
     return this.http.patch(AppSettings.API_ENDPOINT + 'users/edit/updateProfile/' + profileUpdated._id, body, { headers: headers })
       .map(res => res.json());
 
+  }
+
+  updateFullProfile(user){
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    console.log(user._id);
+    
+    return this.http.put(AppSettings.API_ENDPOINT + 'users/user/' + user._id, user, { headers: headers })
+      .map(res => res.json());
   }
 
 }

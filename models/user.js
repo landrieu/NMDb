@@ -129,4 +129,8 @@ module.exports.deletePlace = function(param, id,callback){
     
 }
 
+module.exports.updateUser = function(user, id,callback){
+    User.update({"_id": id}, user, callback); 
+}
+
 

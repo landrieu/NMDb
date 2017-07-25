@@ -2,7 +2,13 @@
   <h3 class="page-header"><b>Movies liked</b></h3>
   <ul class="list-group">
     <div *ngFor="let movie of likeUser.likedMovies">
-      <li class="list-group-item">{{movie.title}}</li>
+      <li class="list-group-item">{{movie.title}}
+        <div class="right-section">
+          <img (click)="deleteLikedMovie(movie.id)" class="delete-image" src="/assets/images/icons/delete-grey.png"/>
+          <a class="title-link" [routerLink]="['/info-movie', movie.id]">
+            <img src="https://cdn2.iconfinder.com/data/icons/flat-ui-icons-24-px/24/eye-24-256.png"/></a>
+        </div>
+      </li>
     </div>
   </ul>
 </div>

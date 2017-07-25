@@ -12,49 +12,49 @@ declare var google: any;
 })
 export class MapComponent implements OnInit {
   mapDisplayed: boolean;
-  init =  true;
+  init = true;
   map;
-  markers =[];
+  markers = [];
   latitude: number = 0;
   longitude: number = 0;
   zoom = 1;
-  
+
   constructor(private locationService: LocationService, private notificationService: NotificationService) {
     console.log("ini map");
-    
+
     locationService.componentMethodCalled$.subscribe(
       data => {
         if (data === 0) {
           this.notificationService.showNotifWarning("There is no places to see")
-      } else {
+        } else {
           this.zoom = data.zoom;
           this.setMarkers(data);
-          $("#overlay").css("display","inline");
+          $("#overlay").css("display", "inline");
           this.mapDisplayed = true;
-           if(this.init){
-             this.init = false;
+          if (this.init) {
+            this.init = false;
           }
           this.setCenterMap();
-          if(data.length !== 1){
+          if (data.length !== 1) {
             this.setBounds();
           }
-          
-      }
-              
+
+        }
+
       });
 
     locationService.onDestroy$.subscribe(
       data => {
-        $("#overlay").css("display","none");
+        $("#overlay").css("display", "none");
       });
 
     locationService.addMarker$.subscribe(
       data => {
         this.addMarker(data);
-    });
+      });
   }
 
-  displayMap(){
+  displayMap() {
     var options = {
       zoom: this.zoom,
       center: {
@@ -80,16 +80,16 @@ export class MapComponent implements OnInit {
         content: props.content
       })
 
-      /*marker.addListener('click', function () {
+      marker.addListener('click', function () {
         infoWindow.open(this.map, marker);
-      });*/
+      });
     }
     this.markers.push(marker);
   }
-   setCenterMap() {
-      google.maps.event.trigger(document.getElementById('map1'), 'resize');
-      this.map.panTo(new google.maps.LatLng(this.latitude, this.longitude));
-      this.map.setZoom(this.zoom);
+  setCenterMap() {
+    google.maps.event.trigger(document.getElementById('map1'), 'resize');
+    this.map.panTo(new google.maps.LatLng(this.latitude, this.longitude));
+    this.map.setZoom(this.zoom);
   }
 
   setMarkers(places) {
@@ -104,12 +104,12 @@ export class MapComponent implements OnInit {
       this.latitude = element.latitude;
       this.longitude = element.longitude;
     });
-    
+
     //this.setBounds();
   }
 
   deleteMarkers() {
-    
+
     if (this.markers) {
       for (let i = 0; i < this.markers.length; i++) {
         this.markers[i].setMap(null);
@@ -129,35 +129,38 @@ export class MapComponent implements OnInit {
     }
   }
 
-  ngAfterViewInit(){
+  ngAfterViewInit() {
     let me = this;
     window.onload = function () {
       $("#map1").css("display", "block");
-      me.displayMap(); 
-       console.log("v_i");
+      me.displayMap();
+      console.log("v_i");
     }
-     //google.maps.event.trigger(document.getElementById('map1'), 'resize');
+    //google.maps.event.trigger(document.getElementById('map1'), 'resize');
 
-     $(document).click(function(event) {
-        google.maps.event.trigger(document.getElementById('map1'), 'resize');
-      });
-    $(document).click(function(event) { 
-      let targ = $(event.target)[0].toString();
-      let substring = "HTMLButtonElement";
+    $(document).click(function (event) {
+      google.maps.event.trigger(document.getElementById('map1'), 'resize');
+    });
+    $(document).click(function (event) {
+      let targ = $(event.target).attr('class');
+      let substring = "btn-show-map";
 
-    if(targ.indexOf(substring) === -1){
-    if(!$(event.target).closest('#map1').length) {
-      if(me.mapDisplayed){
-        if($('#overlay').is(":visible")) {
-           $("#overlay").css("display","none"); 
-           me.mapDisplayed = false;
+      if (targ !== undefined) {
+        if (targ.indexOf(substring) === -1) {
+          if (!$(event.target).closest('#map1').length) {
+            if (me.mapDisplayed) {
+              if ($('#overlay').is(":visible")) {
+                $("#overlay").css("display", "none");
+                me.deleteMarkers();
+                me.mapDisplayed = false;
+              }
+            }
+          }
         }
       }
-    }
-    }        
-  })
+    })
 
- }
+  }
 
   ngOnInit() {
   }

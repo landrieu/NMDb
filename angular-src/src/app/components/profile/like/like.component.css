@@ -15,3 +15,34 @@ h3{
 .btn:focus,.btn:active {
    outline: none !important;
 }
+a{
+  text-decoration: none;
+  color: black;
+}
+a:hover{
+  color: #113355;
+}
+
+a img{
+  width: 24px;
+  opacity: 0.8;
+}
+
+a img:hover{
+  transform: scale(1.05, 1.05);
+  opacity: 1;
+}
+.delete-image{
+  width: 24px;
+  opacity: 0.8;
+  margin-right: 15px;
+  cursor: pointer;
+}
+
+.delete-image:hover{
+  transform: scale(1.05, 1.05);
+  opacity: 1;
+}
+.right-section{
+  float: right;
+}

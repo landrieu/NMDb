@@ -17,7 +17,7 @@ router.post('/register', (req, res, next) => {
         likedMovies: [],
         ratedMovies: [],
         placesToSee: [],
-        placesSaw: [],
+        placesSeen: [],
         description: "",
         comments: []
     });
@@ -215,6 +215,36 @@ router.patch('/edit/deletePlace/:id', (req, res, next) => {
             res.json({ success: false, msg: "Failed to delete place" });
         } else {
             res.json({ success: true, msg: "Place deleted" });
+        }
+    });
+});
+
+router.put('/user/:id', (req, res, next) => {
+    console.log("b_i");
+    let id = req.params.id;
+
+    let user = {
+        _id: req.body._id,
+        name: req.body.name,
+        email: req.body.email,
+        username: req.body.username,
+        password: req.body.password,
+        registrationDate: req.body.registrationDate,
+        birthDate: req.body.birthDate,
+        likedMovies: req.body.likedMovies,
+        ratedMovies: req.body.ratedMovies,
+        placesToSee: req.body.placesToSee,
+        placesSeen: req.body.placesSeen,
+        description: req.body.description,
+    }
+
+    console.log(user);
+
+    User.updateUser(user, id, (err, count, status) => {
+        if (err) {
+            res.json({ success: false, msg: "Failed to update the user" });
+        } else {
+            res.json({ success: true, msg: "User updated" });
         }
     });
 });
