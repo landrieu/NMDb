@@ -15,7 +15,9 @@ router.post('/postMovie',(req,res,next)=>{
         poster: req.body.poster,
         plot: req.body.plot,
         metascore: req.body.metascore,
-        imdbId: req.body.imdbId
+        imdbId: req.body.imdbId,
+        rating: -1,
+        nbVotes: 0
     });
     
     if(newMovie.director === ""){
@@ -44,6 +46,17 @@ router.post('/postMovie',(req,res,next)=>{
         }
         });
     }
+});
+
+router.put('/updateMovie/:id',(req,res,next)=>{
+    var id = req.params.id;
+    Movie.updateMovie(id, req.body, (err,re) =>{
+        if(err){
+            res.json({success: true});
+        }else{
+            res.json({success: false});
+        }
+    })
 });
 
 router.get('/movie/:title',(req,res,next)=>{

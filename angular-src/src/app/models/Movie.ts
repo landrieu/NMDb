@@ -9,7 +9,9 @@ export class Movie {
     public budget: string,
     public poster: string,
     public plot : string,
-    public metascore: number,
-    public imdbId: string
+    public metascore: number, 
+    public imdbId: string,
+    public rating: number,
+    public nbVotes: number
   ) {  }
 }

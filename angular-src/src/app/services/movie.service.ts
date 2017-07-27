@@ -16,6 +16,13 @@ export class MovieService {
     .map( res => res.json());
   }
 
+  updateMovie(movie){
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.put( AppSettings.API_ENDPOINT + 'movies/updateMovie/' + movie._id, movie,{headers: headers})
+    .map( res => res.json());
+  }
+
   getMovies(){
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
@@ -99,5 +106,28 @@ export class MovieService {
     let headers = new Headers();
     return this.http.delete(AppSettings.API_ENDPOINT + 'movies/deleteMovie/' + id,{headers: headers})
     .map(res => res.json());
+  }
+
+  getColorMetascore(metascore) {
+    if (metascore != null) {
+      if (metascore === "N/A") {
+        return 'no-metascore';
+      }
+      if (metascore < 40) {
+        return 'metascore-red';
+      }
+      if (metascore < 60) {
+        return 'metascore-orange';
+      }
+      if (metascore < 75) {
+        return 'metascore-yellow';
+      }
+      if (metascore < 90) {
+        return 'metascore-green';
+      }
+      if (metascore <= 100) {
+        return 'metascore-greener';
+      }
+    }
   }
 }

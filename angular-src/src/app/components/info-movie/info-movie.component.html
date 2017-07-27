@@ -1,6 +1,5 @@
 <!--div class="container"-->
-
-<div *ngIf=movie>
+<div *ngIf=movie class="full-page">
   <div *ngIf="imdbMovie;else other_section">
     <div [ngStyle]="{'background-image': 'url(https://image.tmdb.org/t/p/w780' + movie.BackgroundImage + ')'}" class="background-image">
       <div class="ptext">
@@ -30,10 +29,15 @@
         </div>
       </div>
       <div class="rating">
+        <div class="contain-metascore">
         <div class="metascore">
           <div [class]="getStyleMetascore(movie.Metascore)" id="metascore-box">
             {{movie.Metascore}}
           </div>
+        </div>
+        </div>
+        <div class="rating-block center-block">
+        <rating [(ngModel)]="starsCount" [float]=true [titles]=false (click)="rate()"></rating>
         </div>
       </div>
     </div>
@@ -78,7 +82,7 @@
               </div>
             </div>
             <div class="btn-post-comment center-block">
-              <button type="button" class="btn btn-success" (click)="postComment()">Post</button>
+              <button type="button" class="btn btn-success btn-post" (click)="postComment()">Post</button>
             </div>
           </form>
 

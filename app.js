@@ -21,6 +21,7 @@ const app = express();
 const users = require('./routes/users');
 const movies = require('./routes/movies');
 const comments = require('./routes/comments');
+const ips = require('./routes/ips');
 
 //const port = process.env.PORT || 8080;
 const port = 3008;
@@ -41,6 +42,7 @@ require('./config/passport')(passport);
 app.use('/users',users);
 app.use('/movies',movies);
 app.use('/comments',comments);
+app.use('/ips',ips);
 
 //Index route
 app.get('/',(req,res) => {
@@ -48,7 +50,6 @@ app.get('/',(req,res) => {
 });
 
 app.get('*',(req, res) => {
-    console.log("Sta");
     res.sendFile(path.join(__dirname, 'public/index.html'));
 });
 

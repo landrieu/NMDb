@@ -26,6 +26,7 @@ import { MovieService } from './services/movie.service';
 import { LocationService } from './services/location.service';
 import { NotificationService } from './services/notification.service';
 import { CommentService } from './services/comment.service';
+import { IpService } from './services/ip.service';
 
 import { ShowMoviesComponent } from './components/show-movies/show-movies.component';
 import { BioComponent } from './components/profile/bio/bio.component';
@@ -34,6 +35,7 @@ import { RatingComponent } from './components/profile/rating/rating.component';
 import { PlacesComponent } from './components/profile/places/places.component';
 import { InfoMovieComponent } from './components/info-movie/info-movie.component';
 import { MapComponent } from './components/map/map.component';
+import { RatingModule} from "ngx-rating";
 
 
 const appRoutes: Routes = [
@@ -76,9 +78,10 @@ const appRoutes: Routes = [
     FlashMessagesModule,
     AgmCoreModule.forRoot({
       apiKey: AppSettings.GOOGLE_MAP_KEY
-    })
+    }),
+    RatingModule
   ],
-  providers: [ValidateService, AuthService, MovieService, LocationService, NotificationService, CommentService, AuthGuard, AdminGuard],
+  providers: [ValidateService, AuthService, MovieService, LocationService, NotificationService, CommentService,IpService, AuthGuard, AdminGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

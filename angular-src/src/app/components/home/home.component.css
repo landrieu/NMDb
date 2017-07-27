@@ -64,17 +64,17 @@ ul{
 
 .pimg1{
     background-image: url("/assets/images/background/CI.jpeg");
-    min-height: 600px;
+    min-height: 100vh;
 }
 
 .pimg2{
     background-image: url("/assets/images/background/FO.jpeg");
-    min-height: 400px;
+    min-height: 60vh;
 }
 
 .pimg3{
     background-image: url("/assets/images/background/CA.jpeg");
-    min-height: 400px;
+    min-height: 60vh;
 }
 .linkedin-logo{
     height: 40px;

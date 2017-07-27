@@ -20,7 +20,7 @@ export class ShowMoviesComponent implements OnInit, AfterViewInit {
   imagePath = "/assets/images/icons/empty-heart.png";
   fullHeart = "/assets/images/icons/full-heart.png";
   emptyHeart = "/assets/images/icons/empty-heart.png";
-  heartArray: Array<boolean>;
+  heartArray: Array<boolean> = [];
 
   constructor(private movieService: MovieService, private notificationService: NotificationService, private authService: AuthService, private router: Router) { }
 
@@ -28,20 +28,25 @@ export class ShowMoviesComponent implements OnInit, AfterViewInit {
 
     this.movieService.getMovies().subscribe(res => {
       this.movies = res.movies;
-      /*for(let i=0; i<this.movies.length; i++){
-        if(this.user.likedMovies[i].id === this.movies[i]._id){
-
+      this.authService.getProfile().subscribe(profile => {
+        this.user = profile.user;
+        this.likedMovies = this.user.likedMovies;
+        for (let i = 0; i < this.movies.length; i++) {
+          this.heartArray[i] = false;
+          for (let j = 0; j < this.likedMovies.length; j++) {
+            if (this.movies[i]._id === this.likedMovies[j].id) {
+              this.heartArray[i] = true;
+            }
+          }
         }
-      }*/
+        console.log(this.heartArray);
+      },
+        err => {
+          console.log(err);
+          return false;
+        });
     });
-    this.authService.getProfile().subscribe(profile => {
-      this.user = profile.user;
-      this.likedMovies = this.user.likedMovies;
-    },
-      err => {
-        console.log(err);
-        return false;
-      });
+
 
 
 
@@ -56,26 +61,7 @@ export class ShowMoviesComponent implements OnInit, AfterViewInit {
   }
 
   getStyleMetascore(metascore) {
-    if (metascore != null) {
-      if (metascore === "N/A") {
-        return 'no-metascore';
-      }
-      if (metascore < 40) {
-        return 'metascore-red';
-      }
-      if (metascore < 60) {
-        return 'metascore-orange';
-      }
-      if (metascore < 75) {
-        return 'metascore-yellow';
-      }
-      if (metascore < 90) {
-        return 'metascore-green';
-      }
-      if (metascore <= 100) {
-        return 'metascore-greener';
-      }
-    }
+    return this.movieService.getColorMetascore(metascore);
   }
 
   editMovie() {
@@ -97,7 +83,8 @@ export class ShowMoviesComponent implements OnInit, AfterViewInit {
     });
   }
 
-  addLikedMovie(id, title) {
+  addLikedMovie(id, title, i) {
+    this.heartArray[i] = true;
 
     for (let i = 0; i < this.likedMovies.length; i++) {
       if (this.likedMovies[i].id === id) {
@@ -105,7 +92,7 @@ export class ShowMoviesComponent implements OnInit, AfterViewInit {
         return false;
       }
     }
-
+    
     let movie = {
       id: id,
       title: title,
@@ -114,7 +101,20 @@ export class ShowMoviesComponent implements OnInit, AfterViewInit {
     this.authService.addLikedMovie(movie).subscribe(data => {
 
     });
+  }
 
+  deleteLikedMovie(id, title, i){
+    this.heartArray[i] = false;
+
+      for(let i = 0; i < this.user.likedMovies.length; i++){
+      if(this.user.likedMovies[i].id === id){
+        this.user.likedMovies.splice(i, 1);
+      }
+    }
+    console.log(this.user);
+    this.authService.updateFullProfile(this.user).subscribe( data => {      
+    })
+    
   }
 
 

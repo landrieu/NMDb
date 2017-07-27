@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const config = require('../config/database');
 
+
 //Register
 router.post('/register', (req, res, next) => {
     let newUser = new User({
@@ -33,6 +34,7 @@ router.post('/register', (req, res, next) => {
 
 //Authentication
 router.post('/authenticate', (req, res, next) => {
+
     const username = req.body.username;
     const password = req.body.password;
 
@@ -66,8 +68,6 @@ router.post('/authenticate', (req, res, next) => {
 });
 
 router.get('/profile', passport.authenticate('jwt', { session: false }), (req, res, next) => {
-    console.log("AA");
-    console.log(req.connection.remoteAddress);
     res.json({ user: req.user });
 });
 

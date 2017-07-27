@@ -34,6 +34,12 @@ const MovieSchema = mongoose.Schema({
     },
     imdbId: {
         type: String,
+    },
+    rating: {
+        type: Number,
+    },
+    nbVotes: {
+        type: Number,
     }
 });
 
@@ -57,6 +63,9 @@ module.exports.addMovie = function(newMovie, callback){
     newMovie.save(callback);
 }
 
+module.exports.updateMovie = function(id, movie, callback){ 
+    Movie.update({"_id": id}, movie, callback); 
+}
 
 module.exports.deleteMovie = function(id, callback){
     console.log(id);
