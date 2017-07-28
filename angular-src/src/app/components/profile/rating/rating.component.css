@@ -1,0 +1,50 @@
+ #map {
+   
+        width: 100%;
+      }
+.rating{
+  width:70%;
+  margin-left: auto;
+  margin-right: auto;
+}
+h3{
+  border-bottom-color: #777;
+  margin-top: 15px;
+}
+
+.btn:focus,.btn:active {
+   outline: none !important;
+}
+a{
+  text-decoration: none;
+  color: black;
+}
+a:hover{
+  color: #113355;
+}
+
+a img{
+  width: 24px;
+  opacity: 0.8;
+   margin-top: 10px;
+}
+
+a img:hover{
+  transform: scale(1.05, 1.05);
+  opacity: 1;
+}
+
+.left-section{
+    width: 70%;
+    float: left;
+    margin-top: 10px;
+}
+
+.list-group-item{
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.rating-block{
+    float: left;
+    margin-right: 20px;
+}

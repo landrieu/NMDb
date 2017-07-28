@@ -1,3 +1,19 @@
-<p> 
-  rating works!
-</p>
+<div *ngIf="ratingUser" class="rating">
+  <h3 class="page-header"><b>Movies rated</b></h3>
+  <ul class="list-group">
+    <div *ngFor="let movie of ratingUser.ratedMovies">
+      <li class="list-group-item">
+        <div class="left-section">
+          {{movie.title}}
+        </div>
+        <div class="right-section">
+          <div class="rating-block center-block">
+            <rating [(ngModel)]="movie.rate" [float]=true [titles]=false (click)="rate(movie.id, movie.rate)"></rating>
+          </div>
+          <a class="title-link" [routerLink]="['/info-movie', movie.id]">
+            <img src="https://cdn2.iconfinder.com/data/icons/flat-ui-icons-24-px/24/eye-24-256.png"/></a>
+        </div>
+      </li>
+    </div>
+  </ul>
+</div>
