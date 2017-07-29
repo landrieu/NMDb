@@ -40,6 +40,12 @@ const MovieSchema = mongoose.Schema({
     },
     nbVotes: {
         type: Number,
+    },
+    contentAddedInfo: {
+        type: Array,
+    },
+    contentAddedSection: {
+        type: Array,
     }
 });
 
@@ -68,7 +74,6 @@ module.exports.updateMovie = function(id, movie, callback){
 }
 
 module.exports.deleteMovie = function(id, callback){
-    console.log(id);
     Movie.deleteOne({_id:id},callback);
 }
 
@@ -129,7 +134,7 @@ module.exports.searchMovieFromIMDb = function(param,callback){
 };
 /****************TMDb********************/
 module.exports.searchMovieFromTMDb = function(param,callback){
-    console.log(param.query);
+
     var options = { 
         hostname: 'api.themoviedb.org',
         headers: { 'Content-Type': 'application/json' },
@@ -194,7 +199,27 @@ module.exports.getMovieFromTMDb = function(param,callback){
     http.request(options, call).end();
 };
 
+module.exports.getVideosMovie = function(id,callback){
 
+    var options = { 
+        hostname: 'api.themoviedb.org',
+        headers: { 'Content-Type': 'application/json' },
+        method: 'GET', 
+        path: '/3/movie/' + id + '/videos?api_key=' + config.TMDb_API_KEY,
+    };
+    
+    call = function(response) {
+    var str = '';
 
+    response.on('data', function (chunk) {
+        str += chunk;
+    });
 
+    response.on('end', function () {
+        callback(JSON.parse(str));
+    });
+    }
+
+    http.request(options, call).end();
+};
 

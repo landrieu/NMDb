@@ -64,7 +64,7 @@ export class LocationService {
     };
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    console.log(body);
+    console.log(param);
     return this.http.patch( AppSettings.API_ENDPOINT + 'users/edit/deletePlace/' + param.id, body ,{headers: headers})
     .map( res => res.json());
   }

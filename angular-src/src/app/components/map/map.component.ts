@@ -134,7 +134,6 @@ export class MapComponent implements OnInit {
     window.onload = function () {
       $("#map1").css("display", "block");
       me.displayMap();
-      console.log("v_i");
     }
     //google.maps.event.trigger(document.getElementById('map1'), 'resize');
 

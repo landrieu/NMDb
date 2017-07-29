@@ -12,18 +12,28 @@ import { DatePipe } from '@angular/common';
 })
 export class BioComponent implements OnInit {
   @Input() childUser: User;
+  @Input () isMyProfile;
   @Output() userUpdated = new EventEmitter();
   comments = [];
   updateUser: boolean = false;
 
+
   constructor(private authService: AuthService, private notificationService: NotificationService, private commentService: CommentService) { }
 
   ngOnInit() {
-    this.commentService.getCommentsUser(this.authService.getUser().id).subscribe(data => {
+    /*this.commentService.getCommentsUser(this.authService.getUser().id).subscribe(data => {
 
       this.comments = data.comments;
       console.log(this.comments);
+    });*/
+  }
+
+  ngOnChanges(childUser) {
+    if(this.childUser){
+        this.commentService.getCommentsUser(this.childUser._id).subscribe(data => {
+      this.comments = data.comments;
     });
+    }
   }
 
   submitFormProfile() {
@@ -55,6 +65,17 @@ export class BioComponent implements OnInit {
       }
     }
     return false;
+  }
+
+  deleteComment(id) {
+    this.commentService.deleteComment(id).subscribe(data => {
+      console.log(data);
+      if (data.success === true) {
+        this.commentService.getCommentsUser(this.childUser._id).subscribe(data => {
+          this.comments = data.comments;
+        });
+      }
+    })
   }
 
 }

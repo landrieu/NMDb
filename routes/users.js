@@ -71,6 +71,16 @@ router.get('/profile', passport.authenticate('jwt', { session: false }), (req, r
     res.json({ user: req.user });
 });
 
+router.get('/user/:id', (req, res, next) => {
+    User.getUserById( req.params.id ,(err, user) => {
+        if (err) {
+            res.json({ success: false, msg: "Failed to get user" });
+        } else {
+            res.json(user);
+        }
+    });
+});
+
 router.get('/number', (req, res, next) => {
     User.getNumberUsers((err, number) => {
         if (err) {
@@ -82,8 +92,6 @@ router.get('/number', (req, res, next) => {
 });
 
 router.patch('/edit/addContentProfile/:id', (req, res, next) => {
-    console.log(req.body);
-    console.log(req.params.id)
     let type = req.body.type;
     let data = req.body;
 
@@ -220,7 +228,6 @@ router.patch('/edit/deletePlace/:id', (req, res, next) => {
 });
 
 router.put('/user/:id', (req, res, next) => {
-    console.log("b_i");
     let id = req.params.id;
 
     let user = {
@@ -237,8 +244,6 @@ router.put('/user/:id', (req, res, next) => {
         placesSeen: req.body.placesSeen,
         description: req.body.description,
     }
-
-    console.log(user);
 
     User.updateUser(user, id, (err, count, status) => {
         if (err) {

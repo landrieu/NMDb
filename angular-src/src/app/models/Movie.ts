@@ -12,6 +12,8 @@ export class Movie {
     public metascore: number, 
     public imdbId: string,
     public rating: number,
-    public nbVotes: number
+    public nbVotes: number,
+    public contentAddedInfo: Array<Object>,
+    public contentAddedSection: Array<Object>
   ) {  }
 }

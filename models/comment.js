@@ -45,5 +45,10 @@ module.exports.getCommentsByUserId = function(id, callback){
     Comment.find({idUser: id},callback)
 }
 
+module.exports.deleteComment = function(id, callback){
+    Comment.deleteOne({_id:id},callback);
+}
+
+
 
 

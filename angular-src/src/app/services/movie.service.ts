@@ -9,7 +9,6 @@ export class MovieService {
   constructor(private http: Http) { }
 
   postMovie(movie){
-    console.log(movie);
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     return this.http.post( AppSettings.API_ENDPOINT + 'movies/postMovie',movie,{headers: headers})
@@ -27,6 +26,13 @@ export class MovieService {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     return this.http.get( AppSettings.API_ENDPOINT + 'movies/movies',{headers: headers})
+    .map( res => res.json());
+  }
+
+  getVideoMovie(id){
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.get( AppSettings.API_ENDPOINT + 'movies/videos/' + id,{headers: headers})
     .map( res => res.json());
   }
 
@@ -86,7 +92,6 @@ export class MovieService {
 
    searchMovieTMDBack(query, year, type){
      query = query.replace(" ","+");
-     console.log(query);
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     return this.http.get( AppSettings.API_ENDPOINT + 'movies/searchFromTMDb?query=' + query + '&year=' + year + '&type=' + type)

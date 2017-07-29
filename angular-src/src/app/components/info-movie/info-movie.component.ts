@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { MovieService } from '../../services/movie.service';
@@ -7,17 +7,19 @@ import { NotificationService } from '../../services/notification.service';
 import { Movie } from '../../models/Movie';
 import { RatingModule } from "ngx-rating";
 import { Observable } from 'rxjs/Observable';
+import { Router } from '@angular/router';
 import 'rxjs/add/observable/forkJoin';
 import 'rxjs/add/operator/map';
+import { DomSanitizer } from '@angular/platform-browser';
 declare var $: any;
-
+declare var YT: any;
 
 @Component({
   selector: 'app-info-movie',
   templateUrl: './info-movie.component.html',
   styleUrls: ['./info-movie.component.css']
 })
-export class InfoMovieComponent implements OnInit {
+export class InfoMovieComponent implements OnInit, AfterViewInit {
   id: String;
   private sub: any;
   movie;
@@ -29,11 +31,17 @@ export class InfoMovieComponent implements OnInit {
   comments = [];
   percent = 0;
   starsCount: number;
+  srcYoutube;
+  addContentData: addContent1;
 
-  constructor(private route: ActivatedRoute, private authService: AuthService, private movieService: MovieService, private notificationService: NotificationService, private commentService: CommentService) { }
+  constructor(private router: Router, public sanitizer: DomSanitizer, private route: ActivatedRoute, private authService: AuthService, private movieService: MovieService, private notificationService: NotificationService, private commentService: CommentService) { }
 
   ngOnInit() {
+    this.addContentData = new addContent1();
+    this.addContentData.type = "info";
+
     this.notificationService.initProgressBar();
+    // Get the id of the movie
     this.sub = this.route.params.subscribe(params => {
       this.id = params['id'];
       this.percent = 10;
@@ -41,13 +49,13 @@ export class InfoMovieComponent implements OnInit {
 
       this.movieService.getMovieById(this.id).subscribe(data => {
         this.movieFromDb = data.movie;
+        // Test if movie is on IMDb
         if (data.movie.imdbId === null || data.movie.imdbId === "" || data.movie.imdbId === undefined) {
           this.movie = data.movie;
           console.log(this.movie);
           this.getComments();
           return true;
         } else {
-          console.log(this.movieFromDb);
           //let a = data.movie.rating;
           //this.movie.NbVotes = data.movie.nbVotes;
 
@@ -59,6 +67,7 @@ export class InfoMovieComponent implements OnInit {
 
             this.User = this.authService.getProfile().subscribe(data => {
               this.User = data.user;
+
               for (let i = 0; i < data.user.ratedMovies.length; i++) {
                 if (data.user.ratedMovies[i].id === this.movieFromDb._id) {
                   this.starsCount = data.user.ratedMovies[i].rate;
@@ -75,13 +84,21 @@ export class InfoMovieComponent implements OnInit {
               this.movie.Budget = data.budget;
               this.movie.BackgroundImage = data.backdrop_path;
               this.movie.Tagline = data.tagline;
-              this.movie.Rating = this.movieFromDb.rating;
+              this.movie.Rating = Math.round(this.movieFromDb.rating * 100) / 100;
               this.movie.NbVotes = this.movieFromDb.nbVotes;
-              console.log(this.movie);
+              this.movie.ContentAddedInfo = this.movieFromDb.contentAddedInfo;
+              this.movie.ContentAddedSection = this.movieFromDb.contentAddedSection;
+              this.movieService.getVideoMovie(this.movieFromDb.imdbId).subscribe(data => {
+                this.srcYoutube = this.sanitizer.bypassSecurityTrustResourceUrl("https://www.youtube.com/embed/" + data.results[0].key + "?enablejsapi=1&origin=http://andrieu.herokuapp.com");
+                console.log(this.movie);
+
+              });
             })
 
             this.getComments();
             this.getRating();
+
+
           });
         }
       });
@@ -96,6 +113,10 @@ export class InfoMovieComponent implements OnInit {
 
   }
 
+  ngAfterViewInit() {
+
+  }
+
   getStyleMetascore(metascore) {
     return this.movieService.getColorMetascore(metascore);
   }
@@ -105,7 +126,7 @@ export class InfoMovieComponent implements OnInit {
       title: this.titleComment,
       text: this.textComment,
       username: this.User.username,
-      idUser: this.User.id,
+      idUser: this.User._id,
       idMovie: this.id,
       titleMovie: this.movie.Title
     }
@@ -141,22 +162,28 @@ export class InfoMovieComponent implements OnInit {
   }
 
   rate() {
-    console.log(this.starsCount);
     this.addRatingMovie();
+  }
+
+  showUser(id) {
+    console.log(id);
+    console.log(this.User);
+
+    if (id === this.User._id) {
+      this.router.navigate(['/profile']);
+    } else {
+      this.router.navigate(['/profile/' + id]);
+    }
   }
 
   addRatingMovie() {
     let alreadyRated = false;
-    let toUpdate = true
+    let index;
 
     for (let i = 0; i < this.User.ratedMovies.length; i++) {
       if (this.User.ratedMovies[i].id === this.movieFromDb._id) {
+        index = i;
         alreadyRated = true;
-        if (this.User.ratedMovies[i].rate === this.starsCount) {
-          toUpdate = false;
-        } else {
-          this.User.ratedMovies[i].rate = this.starsCount;
-        }
       }
     }
 
@@ -168,25 +195,81 @@ export class InfoMovieComponent implements OnInit {
       });
     }
 
-    if (toUpdate === true) {
+    if (alreadyRated === false) {
+      this.movieFromDb.rating = ((this.movieFromDb.rating * this.movieFromDb.nbVotes) + this.starsCount) / (this.movieFromDb.nbVotes + 1);
+      this.movieFromDb.nbVotes = this.movieFromDb.nbVotes + 1;
 
-      this.authService.updateFullProfile(this.User).subscribe(data => {
-        if (data.success !== true) {
-          this.notificationService.showNotifDanger("User not updated");
-        }
-      });
-
-      if (alreadyRated === false) {
-        this.movieFromDb.rating = ((this.movieFromDb.rating * this.movieFromDb.nbVotes) + this.starsCount) / (this.movieFromDb.nbVotes + 1);
-        this.movieFromDb.nbVotes = this.movieFromDb.nbVotes + 1;
-      } else {
-        this.movieFromDb.rating = ((this.movieFromDb.rating * (this.movieFromDb.nbVotes - 1)) + this.starsCount) / (this.movieFromDb.nbVotes);
-      }
-
-      this.movieService.updateMovie(this.movieFromDb).subscribe(data => {
-
-      });
+    } else {
+      this.movieFromDb.rating = ((this.movieFromDb.rating * this.movieFromDb.nbVotes) - this.User.ratedMovies[index].rate + this.starsCount) / (this.movieFromDb.nbVotes);
+      this.User.ratedMovies[index].rate = this.starsCount;
     }
+    this.movie.Rating = this.movieFromDb.rating;
+
+
+    this.authService.updateFullProfile(this.User).subscribe(data => {
+      if (data.success !== true) {
+        this.notificationService.showNotifDanger("User not updated");
+      }
+    });
+
+
+    this.movieService.updateMovie(this.movieFromDb).subscribe(data => {
+
+    });
   }
 
+  addContent() {
+
+    console.log(this.addContentData.title);
+    console.log(this.addContentData.content);
+
+
+    if (this.addContentData.title !== "" && this.addContentData.content !== "" && this.addContentData.title !== undefined && this.addContentData.content !== undefined) {
+      let content = {
+        title: this.addContentData.title,
+        content: this.addContentData.content,
+        idUser: this.User._id,
+        username: this.User.username,
+        date: new Date()
+      }
+
+      if (this.addContentData.type === "info") {
+        this.movieFromDb.contentAddedInfo.push(content);
+      } else {
+        this.movieFromDb.contentAddedSection.push(content);
+      }
+      this.movieService.updateMovie(this.movieFromDb).subscribe(data => {
+        this.notificationService.showNotifSuccess("Content has been add to the page");
+        this.addContentData.title = "";
+        this.addContentData.content = "";
+        $('#accordion').click();
+      });
+    } else {
+      this.notificationService.showNotifWarning("You have to fill every field");
+    }
+  }
+  deleteAddedContent(date) {
+    for(let i = 0; i < this.movieFromDb.contentAddedSection.length; i++){
+      if(this.movie.ContentAddedSection[i].date === date){
+        this.movieFromDb.contentAddedSection.splice(i,1);
+        break;
+      }
+    }
+    this.movieService.updateMovie(this.movieFromDb).subscribe(data => {
+      if(data.success === true){
+        this.notificationService.showNotifSuccess("The content has been deleted");
+      }else{
+        this.notificationService.showNotifWarning("A problem occured");
+      }
+    });
+  }
+}
+
+class addContent1 {
+  title: string;
+  content: string;
+  idUser: string;
+  username: string;
+  date: Date;
+  type: string;
 }

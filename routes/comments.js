@@ -5,7 +5,6 @@ const config = require('../config/database');
 
 //Register
 router.post('/postComment',(req,res,next)=>{
-    console.log("BIU");
     let newComment = new Comment({
         title: req.body.title,
         text: req.body.text,
@@ -49,6 +48,18 @@ router.get('/commentsMovie/:idMovie',(req,res,next)=>{
             return res.json({success:true, comments: comments});
         }
     });  
+});
+
+router.delete('/comment/:id',(req,res,next)=>{
+    var id = req.params.id;
+
+    Comment.deleteComment(id, (err)=>{
+        if(err){
+            return res.json({success:false, msg: "Comment not found"});
+        }else{
+            return res.json({success:true, msg: "Comment deleted"});
+        }
+    }); 
 });
 
 module.exports = router;

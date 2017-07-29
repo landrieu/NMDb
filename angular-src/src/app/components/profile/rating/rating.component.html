@@ -8,7 +8,7 @@
         </div>
         <div class="right-section">
           <div class="rating-block center-block">
-            <rating [(ngModel)]="movie.rate" [float]=true [titles]=false (click)="rate(movie.id, movie.rate)"></rating>
+            <rating [(ngModel)]="movie.rate" [float]=true [titles]=false (click)="rate(movie.id, movie.rate)" [readonly]=!isMyProfile></rating>
           </div>
           <a class="title-link" [routerLink]="['/info-movie', movie.id]">
             <img src="https://cdn2.iconfinder.com/data/icons/flat-ui-icons-24-px/24/eye-24-256.png"/></a>

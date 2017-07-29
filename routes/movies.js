@@ -52,9 +52,9 @@ router.put('/updateMovie/:id',(req,res,next)=>{
     var id = req.params.id;
     Movie.updateMovie(id, req.body, (err,re) =>{
         if(err){
-            res.json({success: true});
-        }else{
             res.json({success: false});
+        }else{
+            res.json({success: true});
         }
     })
 });
@@ -149,6 +149,13 @@ router.get('/searchFromTMDb',(req,res,next)=>{
         type: req.query.type
     }
     Movie.searchMovieFromTMDb(param, (data) =>{
+        res.json(data);
+    });
+});
+/***************************************/
+router.get('/videos/:id',(req,res,next)=>{
+    let id = req.params.id;
+    Movie.getVideosMovie(id, (data) =>{
         res.json(data);
     });
 });

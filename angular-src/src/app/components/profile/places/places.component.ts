@@ -14,6 +14,7 @@ declare var $: any;
 })
 export class PlacesComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input() placesUser;
+  @Input () isMyProfile;
   latitude: number = 0;
   longitude: number = 0;
 
@@ -209,9 +210,12 @@ export class PlacesComponent implements OnInit, OnDestroy, AfterViewInit {
       timeStamp: timeStamp,
       id: this.placesUser._id
     }
+    
     this.locationService.deletePlace(param).subscribe(data => {
       if (data.success === true) {
         this.notificationService.showNotifSuccess(data.msg);
+
+        
         this.authService.getProfile().subscribe(user => {
           if (user) {
             this.placesUser = user.user;

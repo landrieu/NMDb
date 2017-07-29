@@ -79,5 +79,23 @@
     text-justify: inter-word;
 }
 
+.delete-image{
+  width: 24px;
+  opacity: 0.8;
+  margin-right: 15px;
+  cursor: pointer;
+}
 
+.delete-image:hover{
+  transform: scale(1.05, 1.05);
+  opacity: 1;
+}
+
+.right-part{
+    float: right;
+    margin-top: 3px;
+}
+.left-part{
+    float: left;
+}
 

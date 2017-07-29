@@ -29,6 +29,12 @@ export class CommentService {
     .map( res => res.json());
   }
 
+  deleteComment(id){
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.delete( AppSettings.API_ENDPOINT + 'comments/comment/' + id, {headers: headers})
+    .map( res => res.json());
+  }
   
 
 }

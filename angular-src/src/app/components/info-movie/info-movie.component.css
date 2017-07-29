@@ -193,3 +193,32 @@
 .full-page{
     margin-bottom: 60px;
 }
+.video{
+   text-align: center;
+}
+
+.link:hover{
+    color: #0000ff;
+    cursor: pointer;
+}
+
+.btn-add-content{
+    margin-top: 30px;
+    text-align: center;
+}
+
+.section-publisher{
+    float: right;
+    margin-top: 7px;
+}
+
+.header-section b{
+    float: left;
+}
+.delete-link{
+    margin-right: 10px;
+}
+.delete-link:hover{
+    color: #0000ff;
+    cursor: pointer;
+}

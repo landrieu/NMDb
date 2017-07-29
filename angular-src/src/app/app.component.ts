@@ -18,7 +18,9 @@ export class AppComponent{
   constructor(private authService: AuthService, private locationService: LocationService, private ipService: IpService){
     console.log("APP INIT");
     this.ipService.postIP().subscribe(data =>{
-      console.log(data);
+      if(data.success === true){
+          console.log(data);
+      }
     });
     this.authService.getProfile().subscribe(profile => {
       AppSettings.USER_ID = profile.user._id;

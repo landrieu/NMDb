@@ -39,6 +39,13 @@ export class AuthService {
       .map(res => res.json());
   }
 
+  getUserById(id) {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.get(AppSettings.API_ENDPOINT + 'users/user/' + id, { headers: headers })
+      .map(res => res.json());
+  }
+
   loadToken() {
     const token = localStorage.getItem('id_token');
     this.authToken = token;

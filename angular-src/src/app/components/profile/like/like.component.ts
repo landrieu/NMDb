@@ -12,6 +12,7 @@ declare var $ :any;
 })
 export class LikeComponent implements OnInit, AfterViewInit {
   @Input () likeUser;
+  @Input () isMyProfile;
 
   constructor(private authService: AuthService) { }
   ngAfterViewInit(){
@@ -20,7 +21,7 @@ export class LikeComponent implements OnInit, AfterViewInit {
   }
   
   ngOnInit() {
-    console.log(this.likeUser);
+
     
   }
 
