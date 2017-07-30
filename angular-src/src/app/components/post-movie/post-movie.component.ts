@@ -23,9 +23,6 @@ export class PostMovieComponent implements OnInit {
   date: DateModel;
   options: DatePickerOptions;
   param: DateModel;
-  requestTitle: String;
-  requestYear: String;
-  requestType: String;
   requestMovie: RequestMovie;
   requestMovies: Movie[];
   postFromIMDb: boolean = false;

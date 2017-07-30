@@ -27,6 +27,7 @@ const ips = require('./routes/ips');
 const port = 3008;
 //Cors midlleware
 app.use(cors());
+app.enable('trust proxy');
 
 //Set Static Folder
 app.use(express.static(path.join(__dirname,'public')));

@@ -27,7 +27,7 @@ router.post('/postMovie',(req,res,next)=>{
             newMovie.poster = data.Poster;
             newMovie.location = data.Country;
             newMovie.metascore = data.Metascore;
-            console.log(newMovie);
+
             Movie.addMovie(newMovie, (err,movie)=>{
                 if(err){
                     res.json({success:false,msg:"Failed to post the movie"});
@@ -160,4 +160,31 @@ router.get('/videos/:id',(req,res,next)=>{
     });
 });
 
-module.exports = router;
+router.get('/stats-1',(req,res,next)=>{
+
+    Movie.getBestRating((err, bestRatingMovies) =>{
+        if(!err){
+            Movie.getMostRated((error, mostRatedMovies) =>{
+                if(!error){
+                    res.json({
+                        bestRatingMovies,
+                        mostRatedMovies
+                    })
+                }
+            });
+        }
+    });
+});
+
+router.get('/stats',(req,res,next)=>{
+    Movie.getStats((err,resu)=>{
+        let resulats = {
+            bestRatingMovies: resu[0],
+            mostRatedMovies: resu[1],
+            numberMovies: resu[2]
+        }
+        res.json(resulats);
+    });
+});
+
+module.exports = router; 

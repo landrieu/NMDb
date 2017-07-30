@@ -25,10 +25,12 @@ export class ShowMoviesComponent implements OnInit, AfterViewInit {
   constructor(private movieService: MovieService, private notificationService: NotificationService, private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
-
+    this.notificationService.initProgressBar();
     this.movieService.getMovies().subscribe(res => {
+      this.notificationService.changeTextProgress(90);
       this.movies = res.movies;
       this.authService.getProfile().subscribe(profile => {
+        this.notificationService.changeTextProgress(100);
         this.user = profile.user;
         this.likedMovies = this.user.likedMovies;
         for (let i = 0; i < this.movies.length; i++) {
@@ -128,12 +130,13 @@ export class ShowMoviesComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-
-    $('#main-title').text("HALLO! ^_^");
     $(".info-movie").hover(function () {
       console.log("a");
     });
 
+  }
+    ngOnDestroy() {
+    this.notificationService.removeProgressBar();
   }
 
 

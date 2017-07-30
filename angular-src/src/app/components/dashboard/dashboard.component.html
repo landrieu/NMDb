@@ -1,8 +1,40 @@
-<h2 class="page-header">Dashboard</h2>
-<p id="Jquery">Welcome to your dashboard</p>
-<p>Number of users: {{numberUsers}} </p>
-<div id="outer-circle">
-  <div id="inner-circle">
+<div class="dashboard col-md-10 col-md-offset-1">
+  <h2 class="page-header">Dashboard</h2>
+  <p><b>Number of users:</b> {{numberUsers}} </p>
+  <p><b>Number of movies:</b> {{numberMovies}} </p>
+  <p><b>Number of comments:</b> {{numberComments}} </p>
 
+  <div class="top">
+    <div class="top-5 left">
+      <p><b>Top 5 rating movies</b></p>
+      <div class="list-group">
+        <a *ngFor="let movie of moviesBestRating" [routerLink]="['/info-movie', movie._id]" class="list-group-item">
+    {{movie.title}}
+    <div class="rating-block center-block">
+      <rating [(ngModel)]="movie.rating" [float]=true [titles]=false [readonly]="true"></rating>
+    </div>
+  </a>
+      </div>
+    </div>
+
+    <div class="top-5 right">
+      <p><b>Top 5 most rating movies</b></p>
+      <div class="list-group">
+        <a *ngFor="let movie of moviesMostRated" [routerLink]="['/info-movie', movie._id]" class="list-group-item">
+    {{movie.title}} - Number of votes: {{movie.nbVotes}}
+    <div class="rating-block center-block">
+      <rating [(ngModel)]="movie.rating" [float]=true [titles]=false [readonly]="true"></rating>
+    </div>
+  </a>
+      </div>
+    </div>
+  </div>
+
+
+  <p>Top 5, the movies like</p>
+  <div id="outer-circle">
+    <div id="inner-circle">
+
+    </div>
   </div>
 </div>

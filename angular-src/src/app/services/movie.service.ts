@@ -135,4 +135,11 @@ export class MovieService {
       }
     }
   }
+
+  getStatsMovies(){
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.get( AppSettings.API_ENDPOINT + 'movies/stats',{headers: headers})
+    .map( res => res.json());
+  }
 }

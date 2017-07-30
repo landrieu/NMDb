@@ -7,33 +7,56 @@ const config = require('../config/database');
 
 router.post('/postIP', (req, res, next) => {
 
-    IP.findLocationIP(req.connection.remoteAddress, (data) =>{
-        if(data.status === 'success'){
+    let ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+    let ip2 = req.headers["x-forwarded-for"];
+    if (ip2) {
+        var list = ip2.split(",");
+        ip2 = list[list.length - 1];
+    }
+    console.log(req.ip);
+
+    IP.findLocationIP(ip, (data) => {
+        if (data.status === 'success') {
 
             let newIP = new IP({
-                    address: data.query,
-                    country: data.country,
-                    countryCode: data.countryCode,
-                    region: data.region,
-                    regionName: data.regionName,
-                    city: data.city,
-                    zip: data.zip,
-                    lat: data.lat,
-                    lon: data.lon,
-                    date: new Date()
+                address: data.query,
+                country: data.country,
+                countryCode: data.countryCode,
+                region: data.region,
+                regionName: data.regionName,
+                city: data.city,
+                zip: data.zip,
+                lat: data.lat,
+                lon: data.lon,
+                date: new Date()
             });
 
-            IP.storeIP(newIP, (err,rep) =>{
-                if(err){
-                    res.json({success: false});
-                }else{
-                    res.json({success: true});
+            IP.storeIP(newIP, (err, rep) => {
+                if (err) {
+                    res.json({
+                        success: false,
+                        ip: req.connection.remoteAddress,
+                        msg: "Db problem",
+                        err: err,
+                        other: req.ip,
+                        ip2: ip2
+                    });
+                } else {
+                    res.json({
+                        success: true,
+                        ip: req.connection.remoteAddress,
+                        msg: "OK"
+                    });
                 }
 
             });
-        }else{
+        } else {
             res.json({
-                success: false
+                success: false,
+                ip: req.connection.remoteAddress,
+                msg: "Locale",
+                other: req.ip, 
+                ip2: ip2
             });
         }
     });

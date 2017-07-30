@@ -223,3 +223,29 @@ module.exports.getVideosMovie = function(id,callback){
     http.request(options, call).end();
 };
 
+module.exports.getBestRating = function(callback){
+    Movie.find({}, callback).sort({ rating: -1}).limit(5);
+}
+
+module.exports.getMostRated = function(callback){
+    Movie.find({}, callback).sort({ nbVotes: -1}).limit(5);
+}
+
+module.exports.getStats = function(callback){
+    //Movie.count(callback);
+var bestRating = new Promise((resolve,reject) => {
+  resolve(Movie.find().sort({ rating: -1}).limit(5));
+});
+var mostRated = new Promise((resolve,reject) => {
+  resolve(Movie.find().sort({ nbVotes: -1}).limit(5));
+});
+var numberMovies = new Promise((resolve, reject) => {
+  resolve(Movie.count());
+}); 
+var err = false;
+
+Promise.all([bestRating, mostRated, numberMovies]).then(values => { 
+  callback(err, values);
+});
+   
+}

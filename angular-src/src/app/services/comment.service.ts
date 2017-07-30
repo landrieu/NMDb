@@ -35,6 +35,12 @@ export class CommentService {
     return this.http.delete( AppSettings.API_ENDPOINT + 'comments/comment/' + id, {headers: headers})
     .map( res => res.json());
   }
+  getStats(){
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.get( AppSettings.API_ENDPOINT + 'comments/stats', {headers: headers})
+    .map( res => res.json());
+  }
   
 
 }

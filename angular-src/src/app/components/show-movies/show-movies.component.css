@@ -115,3 +115,7 @@
 .btn-danger{
   background-color: #FF4136;
 }
+
+.content{
+  min-height: 1800px;
+}

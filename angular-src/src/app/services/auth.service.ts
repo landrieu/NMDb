@@ -66,7 +66,7 @@ export class AuthService {
     this.loadUser();
     user = JSON.parse(this.user);
 
-    if (this.loggedIn() && AppSettings.USER_ID === AppSettings.ADMIN_ID) {
+    if (this.loggedIn() && (AppSettings.USER_ID === AppSettings.ADMIN_ID || AppSettings.USER_ID === AppSettings.ADMIN_ID_2)) {
       return true;
     } else {
       return false;

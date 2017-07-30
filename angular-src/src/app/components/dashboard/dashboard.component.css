@@ -26,3 +26,22 @@
     minus half of the width and minus half of the height 
    */
  }
+
+ .top-5{
+   width: 40%;
+   margin-right: 9%;
+ }
+ .left{
+   display: inline-block;
+ }
+ .right{
+  display: inline-block;
+ }
+ .top{
+   margin-top: 50px;
+   margin-bottom: 50px;
+ }
+ .top-5 p{
+   text-align: center;
+   font-size: 15px;
+ }

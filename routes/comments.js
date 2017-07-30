@@ -62,4 +62,14 @@ router.delete('/comment/:id',(req,res,next)=>{
     }); 
 });
 
+
+router.get('/stats',(req,res,next)=>{
+    Comment.getStats((err,resu)=>{
+        let resulats = {
+            numberComments: resu[0],
+        }
+        res.json(resulats);
+    });
+});
+
 module.exports = router;
