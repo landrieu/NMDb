@@ -7,13 +7,15 @@ const config = require('../config/database');
 
 router.post('/postIP', (req, res, next) => {
 
-    let ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-    let ip2 = req.headers["x-forwarded-for"];
-    if (ip2) {
-        var list = ip2.split(",");
-        ip2 = list[list.length - 1];
+    let ip = req.headers["x-forwarded-for"];
+    if (ip) {
+        var list = ip.split(",");
+        ip = list[list.length - 1];
     }
-    console.log(req.ip);
+
+    if(ip){
+
+    ip = ip.replace(/\s/g, '');
 
     IP.findLocationIP(ip, (data) => {
         if (data.status === 'success') {
@@ -35,16 +37,14 @@ router.post('/postIP', (req, res, next) => {
                 if (err) {
                     res.json({
                         success: false,
-                        ip: req.connection.remoteAddress,
+                        ip: ip,
                         msg: "Db problem",
                         err: err,
-                        other: req.ip,
-                        ip2: ip2
                     });
                 } else {
                     res.json({
                         success: true,
-                        ip: req.connection.remoteAddress,
+                        ip: ip,
                         msg: "OK"
                     });
                 }
@@ -53,13 +53,12 @@ router.post('/postIP', (req, res, next) => {
         } else {
             res.json({
                 success: false,
-                ip: req.connection.remoteAddress,
                 msg: "Locale",
-                other: req.ip, 
-                ip2: ip2
+                ip: ip
             });
         }
     });
+    }
 });
 
 module.exports = router;

@@ -152,14 +152,16 @@ export class PlacesComponent implements OnInit, OnDestroy, AfterViewInit {
     } else {
       type = true;
     }
-
+    console.log(new Date());
+    
     let obj = {
       longitude: this.longitude,
       latitude: this.latitude,
       seen: type,
       title: this.title,
       id: this.placesUser._id,
-      address: this.location
+      address: this.location,
+      timeStamp: new Date()
     }
 
     this.locationService.addPlace(obj).subscribe(data => {
@@ -205,6 +207,10 @@ export class PlacesComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   deletePlace(timeStamp, type) {
+    console.log(this.placesUser);
+    
+    console.log(timeStamp);
+    
     let param = {
       type: type,
       timeStamp: timeStamp,

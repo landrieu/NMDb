@@ -8,6 +8,9 @@ import { NotificationService } from '../../services/notification.service';
 import { DatePickerOptions, DateModel } from 'ng2-datepicker';
 import { AppSettings } from '../../settings/app.settings';
 
+declare var jquery: any;
+declare var $: any;
+
 @Component({
   selector: 'app-post-movie',
   templateUrl: './post-movie.component.html',
@@ -48,7 +51,6 @@ export class PostMovieComponent implements OnInit {
 
     if(!this.validateService.validateMovie(this.movie)){
       this.notificationService.showNotifDanger("Cannot add movie");
-     // this.flashMessages.show("no00",{cssClass: 'alert-danger',timeout:3000});
       return false;
     }
     this.postMovie(this.movie);
@@ -69,6 +71,7 @@ export class PostMovieComponent implements OnInit {
         this.notificationService.showNotifSuccess(data.msg);
         this.emptyMovie(this.movie);
         this.displayMap = false;
+        $('input').prop('disabled', false);
       }else{
         this.notificationService.showNotifDanger(data.msg);
       }
@@ -116,19 +119,18 @@ export class PostMovieComponent implements OnInit {
         this.requestMovies = null;
         return false;
       }
-      //this.requestMovies = movies.Search.slice(0,5);
-      //document.getElementById('scroll').scrollIntoView();
       this.requestMovies = movies.results.slice(0,10);
-      console.log(this.requestMovies);
     });
   }
 
   postMovieFromIMDb(id){
-   
+   $('input').prop('disabled', true);
+
     this.movieService.getMovieTMDb(id, this.requestMovie.type).subscribe(movie =>{
       if(this.requestMovie.type === "movie"){
         this.copyTMDbMovie(movie);
         this.postMovie(this.movie);
+
       }
        console.log(this.movie);
       

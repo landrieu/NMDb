@@ -192,7 +192,7 @@ router.patch('/edit/addPlace/:id', (req, res, next) => {
     let id = req.params.id;
 
     let param = {
-        timeStamp: new Date(),
+        timeStamp: req.body.timeStamp,
         latitude: req.body.latitude,
         longitude: req.body.longitude,
         title: req.body.title,

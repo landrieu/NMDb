@@ -37,7 +37,8 @@ export class LocationService {
     {
       params:{
         address: location,
-        key: AppSettings.GOOGLE_MAP_KEY
+        key: AppSettings.GOOGLE_MAP_KEY,
+        language: 'en'
       }
     })
     .map(res => res.json())
@@ -49,7 +50,8 @@ export class LocationService {
       longitude: param.longitude,
       latitude: param.latitude,
       seen: param.seen,
-      address: param.address
+      address: param.address,
+      timeStamp: param.timeStamp
     };
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');

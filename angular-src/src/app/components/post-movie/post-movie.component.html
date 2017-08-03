@@ -19,12 +19,12 @@
         <input type="text" [(ngModel)]="movie.actors" name="actors" class="form-control">
       </div>
       <div class="form-group">
-        <label>Location</label>
+        <label>Country</label>
         <input type="text" [(ngModel)]="movie.location" name="location" class="form-control">
-        <button class="btn-check-location btn btn-success center-block" (click)="checkLocation($event)">Check location </button>
+        <!--button class="btn-check-location btn btn-success center-block" (click)="checkLocation($event)">Check location </button>
         <agm-map *ngIf=displayMap [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
           <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
-        </agm-map>
+        </agm-map-->
       </div>
       <div class="form-group">
         <label>Release Date</label>
@@ -34,7 +34,18 @@
         <label>Budget (Millions of $)</label>
         <input type="text" [(ngModel)]="movie.budget" name="budget" class="form-control">
       </div>
-
+      <div class="form-group">
+        <label>Metascore</label>
+        <input type="text" [(ngModel)]="movie.metascore" name="metascore" class="form-control">
+      </div>
+      <div class="form-group">
+        <label>Path Poster</label>
+        <input type="text" [(ngModel)]="movie.poster" name="poster" class="form-control">
+      </div>
+      <div class="form-group">
+        <label>Plot:</label>
+        <textarea class="form-control" rows="5" [(ngModel)]="movie.plot" name="plot"></textarea>
+      </div>
       <input type="submit" class="btn-register btn btn-primary center-block" value="Post">
     </form>
   </div>

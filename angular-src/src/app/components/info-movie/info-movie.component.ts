@@ -51,9 +51,24 @@ export class InfoMovieComponent implements OnInit, AfterViewInit {
         this.movieFromDb = data.movie;
         // Test if movie is on IMDb
         if (data.movie.imdbId === null || data.movie.imdbId === "" || data.movie.imdbId === undefined) {
-          this.movie = data.movie;
-          console.log(this.movie);
+          //this.movie = data.movie;
+          this.movie = {};
+          //this.imdbMovie = true;
+          this.copyInfoMovie(data.movie);
+
+          this.User = this.authService.getProfile().subscribe(data => {
+            this.User = data.user;
+            console.log(this.movie);
+            
+            for (let i = 0; i < data.user.ratedMovies.length; i++) {
+              if (data.user.ratedMovies[i].id === this.movie._id) {
+                this.starsCount = data.user.ratedMovies[i].rate;
+              }
+            }
+          });
+
           this.getComments();
+          this.notificationService.changeTextProgress(100);
           return true;
         } else {
           //let a = data.movie.rating;
@@ -115,6 +130,24 @@ export class InfoMovieComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
 
+  }
+
+  copyInfoMovie(movie) {
+    console.log(movie);
+    this.movie.Title = movie.title;
+    this.movie.Director = movie.director;
+    this.movie.Actors = movie.actors;
+    this.movie.Country = movie.location;
+    this.movie.Metascore = movie.metascore;
+    this.movie.Plot = movie.plot;
+    this.movie.Budget = movie.budget;
+    this.movie.Poster = movie.poster;
+    this.movie.Rating = Math.round(movie.rating * 100) / 100;
+    this.movie.NbVotes = movie.nbVotes;
+    this.movie.Released = movie.releaseDate;
+    this.movie._id = movie._id;
+    this.movie.ContentAddedInfo = movie.contentAddedInfo;
+    this.movie.ContentAddedSection = movie.contentAddedSection;
   }
 
   getStyleMetascore(metascore) {
@@ -249,16 +282,16 @@ export class InfoMovieComponent implements OnInit, AfterViewInit {
     }
   }
   deleteAddedContent(date) {
-    for(let i = 0; i < this.movieFromDb.contentAddedSection.length; i++){
-      if(this.movie.ContentAddedSection[i].date === date){
-        this.movieFromDb.contentAddedSection.splice(i,1);
+    for (let i = 0; i < this.movieFromDb.contentAddedSection.length; i++) {
+      if (this.movie.ContentAddedSection[i].date === date) {
+        this.movieFromDb.contentAddedSection.splice(i, 1);
         break;
       }
     }
     this.movieService.updateMovie(this.movieFromDb).subscribe(data => {
-      if(data.success === true){
+      if (data.success === true) {
         this.notificationService.showNotifSuccess("The content has been deleted");
-      }else{
+      } else {
         this.notificationService.showNotifWarning("A problem occured");
       }
     });

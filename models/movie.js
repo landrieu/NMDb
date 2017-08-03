@@ -94,6 +94,8 @@ module.exports.getMovieFromIMDb = function(id,callback){
     });
 
     response.on('end', function () {
+        console.log(str);
+        console.log(config.OMDb_API_KEY);
         callback(JSON.parse(str));
     });
     }

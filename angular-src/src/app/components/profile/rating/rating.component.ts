@@ -15,6 +15,7 @@ export class RatingComponent implements OnInit {
   @Input () isMyProfile;
   movies: Movie[];
   ratings= [];
+  formerRate = [];
 
   constructor(private locationService: LocationService, private notificationService: NotificationService, private authService: AuthService, private movieService: MovieService) { }
 
@@ -30,6 +31,9 @@ export class RatingComponent implements OnInit {
   ngOnChanges(childUser) {
     if(this.ratingUser){
       this.ratings = this.ratingUser.ratedMovies;
+      for(let i = 0; i < this.ratingUser.ratedMovies.length; i++){
+        this.formerRate.push(this.ratingUser.ratedMovies[i].rate);
+      }
     }
   }
 
@@ -47,12 +51,19 @@ export class RatingComponent implements OnInit {
 
     for(let i = 0; i < this.ratings.length; i++){
       if(this.ratings[i].id === id){
-        formerRate = this.ratings[i].rate;
+        console.log(this.ratings[i]);
+        formerRate = this.formerRate[i];
       }
     }
+    
 
     let movie = this.movies[index];
     movie.rating = ((movie.rating * movie.nbVotes) - formerRate + newRate) / (movie.nbVotes);
+
+    console.log(this.formerRate);
+    console.log(newRate);
+    
+    
 
     this.authService.updateFullProfile(this.ratingUser).subscribe(data => {
         if (data.success !== true) {

@@ -8,6 +8,7 @@ export class NotificationService {
   constructor() { }
 
   initProgressBar(){
+    $('.progress').css('display', 'none');
     $('.progress').css('display', 'inline');
     $('.text-percent').text(0 + "%");
     $('.progress-bar').css("width", 0 + "%" );
