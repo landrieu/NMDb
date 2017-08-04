@@ -119,3 +119,27 @@
 .content{
   min-height: 1800px;
 }
+
+@media only screen and (max-width: 500px) {
+  
+  .request-movie-info{
+    width: 100%;
+  }
+
+  .request-movie-image{
+    width: 100%;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+
+  .request-movie-image img{
+    width: 100px;
+  }
+  .title-movie{
+    margin-bottom: 10px;
+    text-align: unset;
+  }
+  .metascore{
+    text-align: center;
+  }
+}

@@ -48,3 +48,12 @@ a img:hover{
     float: left;
     margin-right: 20px;
 }
+@media only screen and (max-width: 500px) {
+
+  .left-section{
+    width: 100%;
+  }
+  .rating{
+    width: 100%;
+  }
+}

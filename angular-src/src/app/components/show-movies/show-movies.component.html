@@ -3,16 +3,19 @@
   <div *ngFor="let movie of movies; let i = index" class="list-group">
     <a class="list-group-item active request-movie-container">
       <div class="info-movie">
+        <div *ngIf=isEmpty(movie.poster) class="request-movie-image">
+          <img [src]="movie.poster" alt="Image" style="width:110px;">
+        </div>
         <div class="request-movie-info">
           <h4 class="list-group-item-heading title-movie"><a class="title-link" [routerLink]="['/info-movie', movie._id]">{{movie.title}}</a>
             <div class="left-title">
               <div class="left-title-image">
-                  <div *ngIf="heartArray[i]; else empty">
-                     <img id="heart-{{i}}" [src]=fullHeart  alt="Image" style="width:20px;" (click)="deleteLikedMovie(movie._id,movie.title,i)">
-                  </div>
-                  <ng-template #empty>
-                     <img id="heart-{{i}}" [src]=emptyHeart  alt="Image" style="width:20px;" (click)="addLikedMovie(movie._id,movie.title,i)">
-                  </ng-template>
+                <div *ngIf="heartArray[i]; else empty">
+                  <img id="heart-{{i}}" [src]=fullHeart alt="Image" style="width:20px;" (click)="deleteLikedMovie(movie._id,movie.title,i)">
+                </div>
+                <ng-template #empty>
+                  <img id="heart-{{i}}" [src]=emptyHeart alt="Image" style="width:20px;" (click)="addLikedMovie(movie._id,movie.title,i)">
+                </ng-template>
 
               </div>
               <div class="metascore">
@@ -24,7 +27,8 @@
           </h4>
           <p class="list-group-item-text">
             Director: {{movie.director}} <br> Actors: {{movie.actors}}<br> Location: {{movie.location}}<br> ReleaseDate:
-            {{movie.releaseDate}}<br>
+            {{movie.releaseDate}}
+            <br>
             <!--Budget: {{movie.budget}}<br>-->
             <!--Metascore: {{movie.metascore}}--><br>
             <p class="plot-movie">
@@ -32,9 +36,7 @@
 
             </p>
         </div>
-        <div *ngIf=isEmpty(movie.poster) class="request-movie-image">
-          <img [src]="movie.poster" alt="Image" style="width:110px;">
-        </div>
+
       </div>
     </a>
     <div *ngIf="authService.isAdmin()" class="btn-edit-delete">

@@ -222,3 +222,42 @@
     color: #0000ff;
     cursor: pointer;
 }
+
+.section-content{
+    text-align: justify;
+}
+
+@media only screen and (max-width: 500px) {
+    iframe{
+        width: 260px;
+        height: 200px;
+    }
+    .rating{
+        width: 100%;
+    }
+    .image-movie{
+        width: 100%;
+    }
+    .image-movie img{
+        width: 180px;
+    }
+    .background-image{
+    background-attachment: scroll;
+    }
+    .detail-movie-imdb{
+        width:100%;
+        padding: 10px;
+    }
+    .section-plot-comments{
+        width: 100%;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    .comments-users{
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    .rating-block{
+        padding-left: 15px;
+    }
+}

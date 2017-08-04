@@ -44,9 +44,11 @@
           <rating [(ngModel)]="movie.Rating" [float]=true [titles]=false [readonly]="true"></rating>
         </div>
         </div>
-        <br> Your rating
-        <div class="rating-block center-block">
+        <br>
+        <div class="rating-block center-block">Your rating
+          <div>
           <rating [(ngModel)]="starsCount" [float]=true [titles]=false (click)="rate()"></rating>
+          </div>
         </div>
       </div>
     </div>

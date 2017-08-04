@@ -46,3 +46,9 @@ a img:hover{
 .right-section{
   float: right;
 }
+
+@media only screen and (max-width: 500px) {
+.liked{
+    width: 100%;
+  }
+}

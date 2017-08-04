@@ -99,3 +99,8 @@
     float: left;
 }
 
+@media only screen and (max-width: 500px) {
+.bio{
+    width: 100%;
+  }
+}
