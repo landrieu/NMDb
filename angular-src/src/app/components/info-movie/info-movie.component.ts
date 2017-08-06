@@ -33,6 +33,7 @@ export class InfoMovieComponent implements OnInit, AfterViewInit {
   starsCount: number;
   srcYoutube;
   addContentData: addContent1;
+  theHtmlString = "";
 
   constructor(private router: Router, public sanitizer: DomSanitizer, private route: ActivatedRoute, private authService: AuthService, private movieService: MovieService, private notificationService: NotificationService, private commentService: CommentService) { }
 
@@ -252,10 +253,9 @@ export class InfoMovieComponent implements OnInit, AfterViewInit {
   }
 
   addContent() {
-
-    console.log(this.addContentData.title);
     console.log(this.addContentData.content);
-
+    
+    this.addContentData.content = this.addContentData.content.replace(/\r?\n/g, '<br />');
 
     if (this.addContentData.title !== "" && this.addContentData.content !== "" && this.addContentData.title !== undefined && this.addContentData.content !== undefined) {
       let content = {

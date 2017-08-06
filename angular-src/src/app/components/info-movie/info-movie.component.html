@@ -2,13 +2,20 @@
 <div *ngIf=movie class="full-page">
   <!--div *ngIf="imdbMovie;else other_section"-->
   <div>
-    <div *ngIf="imdbMovie" [ngStyle]="{'background-image': 'url(https://image.tmdb.org/t/p/w780' + movie.BackgroundImage + ')'}" class="background-image">
+    <div *ngIf="imdbMovie;else other_section" [ngStyle]="{'background-image': 'url(https://image.tmdb.org/t/p/w780' + movie.BackgroundImage + ')'}" class="background-image">
       <div class="ptext">
         <span class="border">
       {{movie.Title}}
     </span>
       </div>
     </div>
+    <ng-template #other_section>
+            <div class="title-not-imdb">
+        <span class="border">
+      {{movie.Title}}
+    </span>
+      </div>
+    </ng-template>
 
     <div class="info">
       <div class="image-movie">
@@ -76,8 +83,7 @@
           </div>
           <div class="divider">
           </div>
-          <div class="section-content">
-            {{section.content}}
+          <div class="section-content" [innerHTML]="section.content">
           </div>
         </div>
       </div>
@@ -101,6 +107,10 @@
           <div class="info-comment"><i>Posted by <span class="link" (click)="showUser(comment.idUser)">{{comment.username}}</span>, on {{comment.date | date:fullDate}}</i></div>
         </div>
       </div>
+
+      <div [innerHTML]="theHtmlString">
+      </div>
+
       <div class="post-comment">
         <h3><b>Post your comment:</b></h3>
         <div class="divider">
@@ -155,7 +165,7 @@
   </div>
 
 
-  <ng-template #other_section>
+  <!--ng-template #other_section>
     <div class="title-movie block-center">
       <h1 class="text-center">{{movie.title}}
         <div class="metascore">
@@ -191,6 +201,6 @@
     </div>
 
 
-  </ng-template>
+  </ng-template-->
 </div>
 <!--/div-->

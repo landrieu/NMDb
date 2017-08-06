@@ -137,13 +137,26 @@
     text-transform: uppercase;
 }
 
-.ptext .border{
+.ptext .border,
+.title-not-imdb .border{
     background-color: #111;
     color:white;
     padding: 20px;
 }
-.ptext .border.trans{
+.ptext .border.trans,
+.title-not-imdb .border.trans{
     background-color: transparent;
+}
+
+.title-not-imdb{
+    position: relative;
+    margin: 50px auto;
+    width:100%;
+    text-align: center;
+    color: black;
+    font-size: 27px;
+    letter-spacing: 8px;
+    text-transform: uppercase;
 }
 
 

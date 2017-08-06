@@ -5,6 +5,7 @@ import { NotificationService } from '../../services/notification.service';
 import { Movie } from '../../models/movie';
 import { User } from '../../models/user';
 import { Router } from '@angular/router';
+import { RatingModule } from "ngx-rating";
 declare var jquery: any;
 declare var $: any;
 
@@ -15,6 +16,9 @@ declare var $: any;
 })
 export class ShowMoviesComponent implements OnInit, AfterViewInit {
   movies: Movie[];
+  moviesToDisplay: Movie[];
+  searchTitle: String = "";
+  searchDirector: String = "";
   user: User;
   likedMovies = [];
   imagePath = "/assets/images/icons/empty-heart.png";
@@ -26,9 +30,12 @@ export class ShowMoviesComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.notificationService.initProgressBar();
+
     this.movieService.getMovies().subscribe(res => {
       this.notificationService.changeTextProgress(90);
       this.movies = res.movies;
+      this.moviesToDisplay = res.movies;
+
       this.authService.getProfile().subscribe(profile => {
         this.notificationService.changeTextProgress(100);
         this.user = profile.user;
@@ -41,17 +48,31 @@ export class ShowMoviesComponent implements OnInit, AfterViewInit {
             }
           }
         }
-        console.log(this.heartArray);
       },
         err => {
           console.log(err);
           return false;
         });
+
     });
 
+  }
 
-
-
+  filterByTitle() {
+    this.moviesToDisplay = this.movies.filter((el) =>
+      el.title.toLowerCase().indexOf(this.searchTitle.toLowerCase()) > -1
+    );
+    this.moviesToDisplay = this.moviesToDisplay.filter((el) =>
+      el.director.toLowerCase().indexOf(this.searchDirector.toLowerCase()) > -1
+    );
+  }
+  filterByDirector() {
+    this.moviesToDisplay = this.movies.filter((el) =>
+      el.director.toLowerCase().indexOf(this.searchDirector.toLowerCase()) > -1
+    );
+    this.moviesToDisplay = this.moviesToDisplay.filter((el) =>
+      el.title.toLowerCase().indexOf(this.searchTitle.toLowerCase()) > -1
+    );
   }
 
   isEmpty(stuff) {
@@ -72,12 +93,12 @@ export class ShowMoviesComponent implements OnInit, AfterViewInit {
   }
 
   deleteMovie(id) {
-    console.log(id);
     this.movieService.deleteMovie(id).subscribe(data => {
       if (data.success === true) {
         this.notificationService.showNotifSuccess(data.msg);
         this.movieService.getMovies().subscribe(res => {
           this.movies = res.movies;
+          this.moviesToDisplay = res.movies;
         });
       } else {
         this.notificationService.showNotifDanger(data.msg);
@@ -90,11 +111,10 @@ export class ShowMoviesComponent implements OnInit, AfterViewInit {
 
     for (let i = 0; i < this.likedMovies.length; i++) {
       if (this.likedMovies[i].id === id) {
-        console.log("Movie Already in Db");
         return false;
       }
     }
-    
+
     let movie = {
       id: id,
       title: title,
@@ -105,18 +125,17 @@ export class ShowMoviesComponent implements OnInit, AfterViewInit {
     });
   }
 
-  deleteLikedMovie(id, title, i){
+  deleteLikedMovie(id, title, i) {
     this.heartArray[i] = false;
 
-      for(let i = 0; i < this.user.likedMovies.length; i++){
-      if(this.user.likedMovies[i].id === id){
+    for (let i = 0; i < this.user.likedMovies.length; i++) {
+      if (this.user.likedMovies[i].id === id) {
         this.user.likedMovies.splice(i, 1);
       }
     }
-    console.log(this.user);
-    this.authService.updateFullProfile(this.user).subscribe( data => {      
+    this.authService.updateFullProfile(this.user).subscribe(data => {
     })
-    
+
   }
 
 
@@ -135,7 +154,7 @@ export class ShowMoviesComponent implements OnInit, AfterViewInit {
     });
 
   }
-    ngOnDestroy() {
+  ngOnDestroy() {
     this.notificationService.removeProgressBar();
   }
 

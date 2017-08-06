@@ -17,6 +17,11 @@
 
 .info-movie{
   width: 100%;
+  text-align: initial;
+}
+
+.lbtn-edit-delete{
+  margin-bottom: 20px;
 }
 .btn-edit-delete{
   text-align: center;
@@ -118,6 +123,17 @@
 
 .content{
   min-height: 1800px;
+  text-align: center;
+}
+
+form{
+  margin: 20px;
+}
+
+#filterByTitle,
+#filterByDirector{
+  width: 400px;
+  margin-right: 15px;
 }
 
 @media only screen and (max-width: 500px) {
@@ -142,4 +158,124 @@
   .metascore{
     text-align: center;
   }
+  #filterByTitle,
+  #filterByDirector{
+  width: 100%;
+  }
 }
+
+.card-movie{
+  width: 300px;
+  border-radius: 1px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  position: relative;
+  margin: 30px;
+  text-align: initial;
+  /*overflow: hidden;*/
+}
+.card-overlay{
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  right: 0;
+  background-color: black;
+  opacity: 0.8;
+  overflow: hidden;
+  width: 100%;
+  height:0;
+  transition: .5s ease;
+  cursor: pointer;
+}
+
+.card-top{
+  width: 100%;
+  height: 175px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.card-movie:hover .card-overlay{
+  bottom: 0;
+  height: 100%;
+}
+
+.card-poster{
+  width: 48%;
+  height: 162px;
+  margin-bottom: 10px;
+  margin-right: 10px;
+  float: left;
+}
+.card-poster img{
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+
+.card-metascore-like{
+  height: 162px;
+  width: 48%;
+  margin-left: auto;
+  margin-right: auto;
+  float: right;
+}
+
+.card-info{
+  width: 250px;
+  height: 130px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: justify;
+  margin-top: 8px;
+}
+
+.card-info .title-movie{
+  font-size: 18px;
+}
+.card-plot{
+  margin-top: 16px;
+  text-align: justify;
+  width: 260px;
+  margin-left: auto;
+  margin-right: auto;
+  color: white;
+  font-size: 16x;
+  position: relative;
+  overflow: hidden;
+  max-height: 240px;
+}
+
+.list-movies{
+  display: inline;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.card-movie .metascore{
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+}
+
+.card-movie .rating{
+    font-size: 10px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.list-down{
+  margin-bottom: 20px;
+}
+.divider {
+  height: 1px;
+  width:80%;
+  display:block; /* for use on default inline elements like span */
+  margin: 1px auto;
+  overflow: hidden;
+  background-color: #e5e5e5;
+}
+

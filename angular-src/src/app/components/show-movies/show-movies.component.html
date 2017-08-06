@@ -1,6 +1,56 @@
 <div *ngIf=user class="content col-md-10 col-md-offset-1">
   <h2 class="page-header text-center" id="main-title">List of Movies</h2>
-  <div *ngFor="let movie of movies; let i = index" class="list-group">
+
+  <form class="form-inline" role="form">
+    <div class="form-group">
+      <label>Filter by title: </label>
+      <input type="text" name="searchTitle" [(ngModel)]="searchTitle" class="form-control" id="filterByTitle" (keyup)="filterByTitle()">
+    </div>
+    <div class="form-group">
+      <label>Filter by director: </label>
+      <input type="text" name="searchDirector" [(ngModel)]="searchDirector" class="form-control" id="filterByDirector" (keyup)="filterByDirector()">
+    </div>
+  </form>
+
+  <div *ngFor="let movie of moviesToDisplay; let i = index" class="list-group list-movies">
+    <td>
+      <div class="card-movie">
+        <div class="card-top">
+          <div class="card-poster">
+            <img [src]="movie.poster" alt="Image" style="width:110px;">
+          </div>
+          <div class="card-metascore-like">
+            <div class="metascore">
+              <div [class]="getStyleMetascore(movie.metascore)">
+                {{movie.metascore}}
+              </div>
+            </div>
+            <div *ngIf="movie.nbVotes > 0" class="rating">
+              <rating [(ngModel)]="movie.rating" [float]=true [titles]=false [readonly]="true"></rating>
+            </div>
+          </div>
+        </div>
+        <div class="divider">
+        </div>
+        <div class="card-info">
+          <h6 class="list-group-item-heading title-movie"><a class="title-link" [routerLink]="['/info-movie', movie._id]">{{movie.title}}</a></h6>
+
+          <p class="list-group-item-text">
+            <b>Director:</b> {{movie.director}} <br> <b>Actors:</b> {{movie.actors}}<br> <b>Location:</b> {{movie.location}}<br>            <b>ReleaseDate:</b> {{movie.releaseDate | date:fullDate}}
+        </div>
+        <a class="title-link" [routerLink]="['/info-movie', movie._id]">
+          <div class="card-overlay">
+            <div class="card-plot">
+              Plot: {{movie.plot}}
+            </div>
+          </div>
+        </a>
+      </div>
+    </td>
+  </div>
+
+
+  <div *ngFor="let movie of moviesToDisplay; let i = index" class="list-group list-movies list-down">
     <a class="list-group-item active request-movie-container">
       <div class="info-movie">
         <div *ngIf=isEmpty(movie.poster) class="request-movie-image">
@@ -26,11 +76,11 @@
             </div>
           </h4>
           <p class="list-group-item-text">
-            Director: {{movie.director}} <br> Actors: {{movie.actors}}<br> Location: {{movie.location}}<br> ReleaseDate:
-            {{movie.releaseDate}}
+            <b>Director:</b> {{movie.director}} <br> <b>Actors:</b> {{movie.actors}}<br> <b>Location:</b> {{movie.location}}<br>            <b>ReleaseDate:</b> {{movie.releaseDate | date:fullDate }}
             <br>
             <!--Budget: {{movie.budget}}<br>-->
-            <!--Metascore: {{movie.metascore}}--><br>
+            <!--Metascore: {{movie.metascore}}-->
+            <br>
             <p class="plot-movie">
               Plot: {{movie.plot}}
 
