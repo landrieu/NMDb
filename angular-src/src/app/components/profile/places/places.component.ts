@@ -20,7 +20,7 @@ export class PlacesComponent implements OnInit, OnDestroy, AfterViewInit {
 
   zoom: number = 7;
   location: String;
-  type: String;
+  type: String= "toSee";
   title: String;
 
   markersToSee = [];

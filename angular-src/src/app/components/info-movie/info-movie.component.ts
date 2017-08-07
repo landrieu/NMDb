@@ -34,6 +34,9 @@ export class InfoMovieComponent implements OnInit, AfterViewInit {
   srcYoutube;
   addContentData: addContent1;
   theHtmlString = "";
+  like: boolean = false;
+  fullHeart = "/assets/images/icons/full-heart.png";
+  emptyHeart = "/assets/images/icons/empty-heart.png";
 
   constructor(private router: Router, public sanitizer: DomSanitizer, private route: ActivatedRoute, private authService: AuthService, private movieService: MovieService, private notificationService: NotificationService, private commentService: CommentService) { }
 
@@ -60,21 +63,24 @@ export class InfoMovieComponent implements OnInit, AfterViewInit {
           this.User = this.authService.getProfile().subscribe(data => {
             this.User = data.user;
             console.log(this.movie);
-            
+
             for (let i = 0; i < data.user.ratedMovies.length; i++) {
               if (data.user.ratedMovies[i].id === this.movie._id) {
                 this.starsCount = data.user.ratedMovies[i].rate;
               }
             }
+            for (let i = 0; i < data.user.likedMovies.length; i++) {
+              if (data.user.likedMovies[i].id === this.movieFromDb._id) {
+                this.like = true;
+              }
+            }
           });
+
 
           this.getComments();
           this.notificationService.changeTextProgress(100);
           return true;
         } else {
-          //let a = data.movie.rating;
-          //this.movie.NbVotes = data.movie.nbVotes;
-
           let id = data.movie.imdbId;
           // GET movie from OMDb
           this.movieService.getMovieIMDbByIdBack(id).subscribe(movie => {
@@ -89,6 +95,13 @@ export class InfoMovieComponent implements OnInit, AfterViewInit {
                   this.starsCount = data.user.ratedMovies[i].rate;
                 }
               }
+              for (let i = 0; i < data.user.likedMovies.length; i++) {
+                if (data.user.likedMovies[i].id === this.movieFromDb._id) {
+                  this.like = true;
+                }
+              }
+              console.log(this.like);
+
             });
 
             //GET movie from TMDb
@@ -134,7 +147,6 @@ export class InfoMovieComponent implements OnInit, AfterViewInit {
   }
 
   copyInfoMovie(movie) {
-    console.log(movie);
     this.movie.Title = movie.title;
     this.movie.Director = movie.director;
     this.movie.Actors = movie.actors;
@@ -254,7 +266,7 @@ export class InfoMovieComponent implements OnInit, AfterViewInit {
 
   addContent() {
     console.log(this.addContentData.content);
-    
+
     this.addContentData.content = this.addContentData.content.replace(/\r?\n/g, '<br />');
 
     if (this.addContentData.title !== "" && this.addContentData.content !== "" && this.addContentData.title !== undefined && this.addContentData.content !== undefined) {
@@ -295,6 +307,35 @@ export class InfoMovieComponent implements OnInit, AfterViewInit {
         this.notificationService.showNotifWarning("A problem occured");
       }
     });
+  }
+  deleteLikedMovie() {
+    console.log("u");
+    for (let i = 0; i < this.User.likedMovies.length; i++) {
+      if (this.User.likedMovies[i].id === this.movieFromDb._id) {
+        this.User.likedMovies.splice(i, 1);
+        this.like = false;
+      }
+    }
+
+    this.authService.updateFullProfile(this.User).subscribe(data => {
+      console.log(data);
+    })
+
+
+  }
+
+  addLikedMovie() {
+
+    this.like = true;
+    let movie = {
+      id: this.movieFromDb._id,
+      title: this.movieFromDb.title
+    };
+
+    this.User.likedMovies.push(movie);
+    this.authService.updateFullProfile(this.User).subscribe(data => {
+      console.log(data);
+    })
   }
 }
 

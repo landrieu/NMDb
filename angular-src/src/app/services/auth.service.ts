@@ -61,7 +61,6 @@ export class AuthService {
   }
 
   isAdmin() {
-    //if(this.user.username)
     let user;
     this.loadUser();
     user = JSON.parse(this.user);
@@ -96,7 +95,6 @@ export class AuthService {
   addLikedMovie(body) {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-
     let id = JSON.parse(this.user).id;
     return this.http.patch(AppSettings.API_ENDPOINT + 'users/edit/addContentProfile/' + id, body, { headers: headers })
       .map(res => res.json());
@@ -112,8 +110,6 @@ export class AuthService {
     };
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    console.log(profileUpdated);
-    console.log("rf");
     return this.http.patch(AppSettings.API_ENDPOINT + 'users/edit/updateProfile/' + profileUpdated._id, body, { headers: headers })
       .map(res => res.json());
 
@@ -122,8 +118,6 @@ export class AuthService {
   updateFullProfile(user){
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    console.log(user._id);
-    
     return this.http.put(AppSettings.API_ENDPOINT + 'users/user/' + user._id, user, { headers: headers })
       .map(res => res.json());
   }

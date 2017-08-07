@@ -45,7 +45,7 @@ const appRoutes: Routes = [
   {path:'dashboard', component: DashboardComponent, canActivate:[AuthGuard]},
   {path:'profile', component: ProfileComponent, canActivate:[AuthGuard]},
   {path:'profile/:id', component: ProfileComponent, canActivate:[AuthGuard]},
-  {path: 'post-movie', component: PostMovieComponent, canActivate:[AdminGuard]},
+  {path: 'post-movie', component: PostMovieComponent, canActivate:[AuthGuard]},
   {path: 'show-movies', component: ShowMoviesComponent, canActivate:[AuthGuard]},
   {path: 'info-movie/:id', component: InfoMovieComponent, canActivate:[AuthGuard]},
   {path:'**', component: HomeComponent}

@@ -33,6 +33,7 @@
     display: inline-block;
     padding-top:20px;
     vertical-align: top;
+    text-align: center;
 }
 
 
@@ -93,6 +94,10 @@
 .plot-movie{
     text-align: justify;
     text-justify: inter-word;
+}
+
+.like{
+    margin-top: 10px;
 }
 
 .section-plot-comments{
