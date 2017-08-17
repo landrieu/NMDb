@@ -2,6 +2,11 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({name: 'capitalize'})
 export class CapitalizePipe implements PipeTransform {
+
+  /*
+   *  Transform the first char of a string to an uppercase
+   *  Ex: movie -> Movie
+   */
   transform(value: string, args: string[]): any {
     if (!value) return value;
 

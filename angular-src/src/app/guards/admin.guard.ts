@@ -8,6 +8,9 @@ export class AdminGuard implements CanActivate{
 
     }
 
+    /*
+    *  Check if the user is the Admin
+    */
     canActivate(){
         if(this.authService.isAdmin()){
             return true;

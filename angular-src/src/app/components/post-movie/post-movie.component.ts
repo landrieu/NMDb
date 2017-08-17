@@ -39,7 +39,6 @@ export class PostMovieComponent implements OnInit {
       this.options = new DatePickerOptions();
       this.options.maxDate = new Date();
       this.options.minDate = new Date(1900, 0, 1);
-      console.log(this.options.minDate);
   }
 
   ngOnInit() {
@@ -47,24 +46,21 @@ export class PostMovieComponent implements OnInit {
     this.requestMovie = new RequestMovie();
   }
 
+  /*
+   *  Verify if the fields are filled
+   */
   onMovieSubmit(){
-
+    
     if(!this.validateService.validateMovie(this.movie)){
       this.notificationService.showNotifDanger("Cannot add movie");
       return false;
     }
     this.postMovie(this.movie);
-    /*this.movieService.postMovie(this.movie).subscribe( data => {
-      if(data.success){
-        this.flashMessages.show(data.msg,{cssClass: 'alert-success',timeout:3000});
-        this.emptyMovie(this.movie);
-        this.displayMap = false;
-      }else{
-        this.flashMessages.show(data.msg,{cssClass: 'alert-danger',timeout:3000});
-      }
-    });*/
   }
 
+  /*
+   *  Add the movie to the Db
+   */
   postMovie(movie){
     this.movieService.postMovie(movie).subscribe( data => {
       if(data.success){
@@ -79,6 +75,10 @@ export class PostMovieComponent implements OnInit {
     });
   }
 
+
+  /*
+   *  Deprecated
+   */
   checkLocation(event){
     event.preventDefault();
 
@@ -104,12 +104,14 @@ export class PostMovieComponent implements OnInit {
         }
       }else{
         this.notificationService.showNotifWarning("Address not found");
-        //this.flashMessages.show("Address not found",{cssClass: 'alert-danger',timeout:3000});
       }
       
     });
   }
 
+  /*
+   *  Get the movies from the TMDb API
+   */
   onMovieSearch(){
    
     this.emptyMovie(this.requestMovies);
@@ -123,6 +125,9 @@ export class PostMovieComponent implements OnInit {
     });
   }
 
+  /*
+   *  Post a movie from the APIs to the Db
+   */
   postMovieFromIMDb(id){
    $('input').prop('disabled', true);
 
@@ -132,12 +137,12 @@ export class PostMovieComponent implements OnInit {
         this.postMovie(this.movie);
 
       }
-       console.log(this.movie);
-      
-      
     });
   }
 
+  /*
+   *  Copy the data to add the movie to the Db
+   */
   copyMovie(movie){
     this.movie.title = movie.Title;
     this.movie.director = movie.Director;
@@ -151,6 +156,9 @@ export class PostMovieComponent implements OnInit {
     this.movie.imdbId = movie.imdbID;
   }
 
+  /*
+   *  Copy the data to add the movie to the Db
+   */
   copyTMDbMovie(movie){
     this.movie.title = movie.title;
     this.movie.director = "";
@@ -164,6 +172,9 @@ export class PostMovieComponent implements OnInit {
     this.movie.imdbId = movie.imdb_id;
   }
 
+  /*
+   *  Copy the data to add the serie to the Db
+   */
   copyTMDbSerie(movie){
     this.movie.title = movie.name;
     this.movie.director = "";
@@ -177,16 +188,25 @@ export class PostMovieComponent implements OnInit {
     this.movie.imdbId = "";
   }
 
+  /*
+   *  Check of an object is empty
+   */
   emptyMovie(obj){
     for (var key in obj) {
       obj[key] = "";
     }
   }
 
+  /*
+   *  Change the form
+   */
   changeForm(form){
     this.postFromIMDb = form;
   }
 
+  /*
+   *  Check of a variable is empty
+   */
   isEmpty(stuff){
     if(stuff !== null && stuff !== undefined && stuff !== "" && stuff !== "N/A"){
       return true;
@@ -222,12 +242,3 @@ class RequestMovie{
     this.type = "movie";
   }
 }
-
-/*interface Movie{
-    title: string;
-    director: string;
-    actors: string;
-    location: string;
-    releaseDate: Date;
-    budget: string;
-}*/

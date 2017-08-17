@@ -50,8 +50,8 @@
   </div>
 
 
-  <div *ngFor="let movie of moviesToDisplay; let i = index" class="list-group list-movies list-down">
-    <a class="list-group-item active request-movie-container">
+  <div *ngFor="let movie of moviesToDisplay; let i = index" class="list-group list-movies list-down list-movies-mobile">
+    <a class="list-group-item active request-movie-container list-movies-mobile">
       <div class="info-movie">
         <div *ngIf=isEmpty(movie.poster) class="request-movie-image">
           <img [src]="movie.poster" alt="Image" style="width:110px;">
@@ -89,7 +89,7 @@
 
       </div>
     </a>
-    <div *ngIf="authService.isAdmin()" class="btn-edit-delete">
+    <div *ngIf="authService.isAdmin()" class="btn-edit-delete list-movies-mobile">
       <button (click)="editMovie(movie._id)" class="btn btn-warning">Edit</button>
       <button (click)="deleteMovie(movie._id)" class="btn btn-danger">Delete</button>
     </div>

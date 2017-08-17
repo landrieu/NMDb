@@ -21,9 +21,11 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit() {
   }
 
+  /*
+   *  Logout and redirect to the login page
+   */
   onLogoutClick() {
     this.authService.logout();
-    //this.flashMessagesSercice.show("You are logged out", {cssClass: 'alert-success', timeout: 3000});
     this.notificationService.showNotifSuccess("You are logged out");
     this.router.navigate(['/login']);
     return false;
@@ -35,13 +37,8 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-  test(){
-    console.log(" i");
-    
-  }
-
   ngOnDestroy(){
-    console.log("biu");
+
   }
 
 }

@@ -19,6 +19,9 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
 
+  /*
+   *  Authenticate the user
+   */
   onLoginSubmit() {
     const user = {
       username: this.username,
@@ -26,15 +29,14 @@ export class LoginComponent implements OnInit {
     }
 
     this.authService.authenticateUser(user).subscribe(data => {
-      console.log(data);
       if (data.success) {
+        // Store the token and some user data
         this.authService.storeUserData(data.token, data.user);
         AppSettings.USER_ID = data.user.id;
-        //this.flashMessagesSercice.show("You are logged in",{cssClass: 'alert-success', timeout:5000});
         this.notificationService.showNotifSuccess("You are logged in");
+        // Redirect to the Dashboard
         this.router.navigate(['/dashboard']);
       } else {
-        //this.flashMessagesSercice.show(data.msg,{cssClass: 'alert-danger', timeout:5000});
         this.notificationService.showNotifWarning(data.msg);
         this.router.navigate(['/login']);
       }

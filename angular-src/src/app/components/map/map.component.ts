@@ -20,8 +20,12 @@ export class MapComponent implements OnInit {
   zoom = 1;
 
   constructor(private locationService: LocationService, private notificationService: NotificationService) {
-    console.log("ini map");
+    console.log("init map");
 
+    // Many observables, are called from the user profile
+    // A Google Map can be instanciate only once 
+
+    // Init the map, at the initialization of the website
     locationService.componentMethodCalled$.subscribe(
       data => {
         if (data === 0) {
@@ -48,12 +52,16 @@ export class MapComponent implements OnInit {
         $("#overlay").css("display", "none");
       });
 
+    // Observable to add markers to the map
     locationService.addMarker$.subscribe(
       data => {
         this.addMarker(data);
       });
   }
 
+  /*
+   *  Init the map
+   */
   displayMap() {
     var options = {
       zoom: this.zoom,
@@ -69,6 +77,9 @@ export class MapComponent implements OnInit {
     this.map = new google.maps.Map(document.getElementById('map1'), options);
   }
 
+  /*
+   *  Add marker to the map
+   */
   addMarker(props) {
     var marker = new google.maps.Marker({
       position: props.coords,
@@ -86,12 +97,19 @@ export class MapComponent implements OnInit {
     }
     this.markers.push(marker);
   }
+
+  /*
+   *  Resize the map, and display every marker on the map
+   */
   setCenterMap() {
     google.maps.event.trigger(document.getElementById('map1'), 'resize');
     this.map.panTo(new google.maps.LatLng(this.latitude, this.longitude));
     this.map.setZoom(this.zoom);
   }
 
+  /*
+   *  Add markers to the map
+   */
   setMarkers(places) {
     this.deleteMarkers();
 
@@ -104,12 +122,12 @@ export class MapComponent implements OnInit {
       this.latitude = element.latitude;
       this.longitude = element.longitude;
     });
-
-    //this.setBounds();
   }
 
+  /*
+   *  Remove markers to the map
+   */
   deleteMarkers() {
-
     if (this.markers) {
       for (let i = 0; i < this.markers.length; i++) {
         this.markers[i].setMap(null);
@@ -118,6 +136,9 @@ export class MapComponent implements OnInit {
     this.markers = [];
   }
 
+  /*
+   *  Set map bounds, with the markers
+   */
   setBounds() {
     if (this.markers.length > 1) {
       var bounds = new google.maps.LatLngBounds();
@@ -131,15 +152,17 @@ export class MapComponent implements OnInit {
 
   ngAfterViewInit() {
     let me = this;
+
+    // Display and hide the map
     window.onload = function () {
       $("#map1").css("display", "block");
       me.displayMap();
     }
-    //google.maps.event.trigger(document.getElementById('map1'), 'resize');
 
     $(document).click(function (event) {
       google.maps.event.trigger(document.getElementById('map1'), 'resize');
     });
+
     $(document).click(function (event) {
       let targ = $(event.target).attr('class');
       let substring = "btn-show-map";

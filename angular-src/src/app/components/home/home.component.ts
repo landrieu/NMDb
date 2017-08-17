@@ -15,6 +15,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   ngOnInit() {
   }
 
+  // Test Notification
   displayNotifSuccess(msg) {
     this.notificationService.showNotifSuccess(msg);
   }

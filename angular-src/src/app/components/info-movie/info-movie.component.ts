@@ -32,20 +32,31 @@ export class InfoMovieComponent implements OnInit, AfterViewInit {
   percent = 0;
   starsCount: number;
   srcYoutube;
-  addContentData: addContent1;
+  addContentData: addContent;
   theHtmlString = "";
   like: boolean = false;
+
+  // Path of the heart icons
   fullHeart = "/assets/images/icons/full-heart.png";
   emptyHeart = "/assets/images/icons/empty-heart.png";
 
   constructor(private router: Router, public sanitizer: DomSanitizer, private route: ActivatedRoute, private authService: AuthService, private movieService: MovieService, private notificationService: NotificationService, private commentService: CommentService) { }
 
-  ngOnInit() {
-    this.addContentData = new addContent1();
-    this.addContentData.type = "info";
+  // 1st Step: Get the IMDb ID from the Db
+  // 2nd A Step: If there is an IMDb ID, get the info of the movie from the OMDb and TMDb APIs
+  // 2nd B Step: If there isn't an IMDb ID, get the info from the Db
+  // 3rd Step: Copy the data from the Db or APIs
+  // 4th Step: Get the comments of the movie from the Db
+  // 5th Step: Get rating from the Db
 
+  ngOnInit() {
+    // Init AddContent
+    this.addContentData = new addContent();
+    this.addContentData.type = "info";
     this.notificationService.initProgressBar();
-    // Get the id of the movie
+
+
+    // Get the id of the movie from the URL
     this.sub = this.route.params.subscribe(params => {
       this.id = params['id'];
       this.percent = 10;
@@ -62,8 +73,8 @@ export class InfoMovieComponent implements OnInit, AfterViewInit {
 
           this.User = this.authService.getProfile().subscribe(data => {
             this.User = data.user;
-            console.log(this.movie);
 
+            // Get the user rating and if the movie is liked
             for (let i = 0; i < data.user.ratedMovies.length; i++) {
               if (data.user.ratedMovies[i].id === this.movie._id) {
                 this.starsCount = data.user.ratedMovies[i].rate;
@@ -76,13 +87,14 @@ export class InfoMovieComponent implements OnInit, AfterViewInit {
             }
           });
 
-
+          // Get the comments of the movie
           this.getComments();
           this.notificationService.changeTextProgress(100);
           return true;
+
         } else {
           let id = data.movie.imdbId;
-          // GET movie from OMDb
+          // Get movie from OMDb
           this.movieService.getMovieIMDbByIdBack(id).subscribe(movie => {
             this.percent = 60;
             this.notificationService.changeTextProgress(60);
@@ -100,12 +112,12 @@ export class InfoMovieComponent implements OnInit, AfterViewInit {
                   this.like = true;
                 }
               }
-              console.log(this.like);
-
             });
 
-            //GET movie from TMDb
+            //Get movie from TMDb
             this.movieService.getMovieTMDb(id, movie.Type).subscribe(data => {
+
+              //Copy the data
               this.percent = 100;
               this.notificationService.changeTextProgress(100);
               this.movie = movie;
@@ -118,16 +130,13 @@ export class InfoMovieComponent implements OnInit, AfterViewInit {
               this.movie.ContentAddedInfo = this.movieFromDb.contentAddedInfo;
               this.movie.ContentAddedSection = this.movieFromDb.contentAddedSection;
               this.movieService.getVideoMovie(this.movieFromDb.imdbId).subscribe(data => {
-                this.srcYoutube = this.sanitizer.bypassSecurityTrustResourceUrl("https://www.youtube.com/embed/" + data.results[0].key + "?enablejsapi=1&origin=http://andrieu.herokuapp.com");
-                console.log(this.movie);
-
+              this.srcYoutube = this.sanitizer.bypassSecurityTrustResourceUrl("https://www.youtube.com/embed/" + data.results[0].key + "?enablejsapi=1&origin=http://andrieu.herokuapp.com");
               });
             })
 
+            // Get comments and rating
             this.getComments();
             this.getRating();
-
-
           });
         }
       });
@@ -146,6 +155,10 @@ export class InfoMovieComponent implements OnInit, AfterViewInit {
 
   }
 
+  /*
+   *  Copy the data, if there isn't an IMDb ID
+   *  @input: movie to copy
+   */
   copyInfoMovie(movie) {
     this.movie.Title = movie.title;
     this.movie.Director = movie.director;
@@ -163,10 +176,17 @@ export class InfoMovieComponent implements OnInit, AfterViewInit {
     this.movie.ContentAddedSection = movie.contentAddedSection;
   }
 
+  /*
+   *  Return the background color of the metascore div
+   *  @input: movie metascore
+   */
   getStyleMetascore(metascore) {
     return this.movieService.getColorMetascore(metascore);
   }
 
+  /*
+   *  Post a comment on the Db
+   */
   postComment() {
     let comment = {
       title: this.titleComment,
@@ -187,15 +207,17 @@ export class InfoMovieComponent implements OnInit, AfterViewInit {
     })
   }
 
+  /*
+   *  Get comments from the Db
+   */
   getComments() {
     this.commentService.getComments(this.id).subscribe(data => {
       if (data.success === true) {
         this.comments = data.comments;
+        // Clear inputs
         this.titleComment = "";
         this.textComment = "";
-      } else {
-        console.log(data.msg);
-      }
+      } 
     })
   }
 
@@ -203,17 +225,17 @@ export class InfoMovieComponent implements OnInit, AfterViewInit {
 
   }
 
+  /*
+   *  Remove the progress bar when the component is destroyed
+   */
   ngOnDestroy() {
     this.notificationService.removeProgressBar();
   }
 
-  rate() {
-    this.addRatingMovie();
-  }
-
+  /*
+   *  Redirect to the profile
+   */
   showUser(id) {
-    console.log(id);
-    console.log(this.User);
 
     if (id === this.User._id) {
       this.router.navigate(['/profile']);
@@ -222,10 +244,14 @@ export class InfoMovieComponent implements OnInit, AfterViewInit {
     }
   }
 
+  /*
+   *  Add a rate to the movie
+   */
   addRatingMovie() {
     let alreadyRated = false;
     let index;
 
+    //Search if the movie has already been rated by the user
     for (let i = 0; i < this.User.ratedMovies.length; i++) {
       if (this.User.ratedMovies[i].id === this.movieFromDb._id) {
         index = i;
@@ -233,6 +259,7 @@ export class InfoMovieComponent implements OnInit, AfterViewInit {
       }
     }
 
+    // Add the rating to the user profile
     if (alreadyRated === false) {
       this.User.ratedMovies.push({
         id: this.movieFromDb._id,
@@ -241,6 +268,7 @@ export class InfoMovieComponent implements OnInit, AfterViewInit {
       });
     }
 
+    // Compute the new rating
     if (alreadyRated === false) {
       this.movieFromDb.rating = ((this.movieFromDb.rating * this.movieFromDb.nbVotes) + this.starsCount) / (this.movieFromDb.nbVotes + 1);
       this.movieFromDb.nbVotes = this.movieFromDb.nbVotes + 1;
@@ -251,22 +279,27 @@ export class InfoMovieComponent implements OnInit, AfterViewInit {
     }
     this.movie.Rating = this.movieFromDb.rating;
 
-
+    // Save the profile with the new rating
     this.authService.updateFullProfile(this.User).subscribe(data => {
       if (data.success !== true) {
         this.notificationService.showNotifDanger("User not updated");
       }
     });
 
-
+    // Save the rating
     this.movieService.updateMovie(this.movieFromDb).subscribe(data => {
 
     });
   }
 
+  /*
+   *  Add Content to the movie
+   *  There are two kinds of contents: Info and Section
+   *  Info is displayed in the description of the movie
+   */
   addContent() {
-    console.log(this.addContentData.content);
 
+    // Backline save in the Db
     this.addContentData.content = this.addContentData.content.replace(/\r?\n/g, '<br />');
 
     if (this.addContentData.title !== "" && this.addContentData.content !== "" && this.addContentData.title !== undefined && this.addContentData.content !== undefined) {
@@ -284,7 +317,7 @@ export class InfoMovieComponent implements OnInit, AfterViewInit {
         this.movieFromDb.contentAddedSection.push(content);
       }
       this.movieService.updateMovie(this.movieFromDb).subscribe(data => {
-        this.notificationService.showNotifSuccess("Content has been add to the page");
+        this.notificationService.showNotifSuccess("Content has been added to the page");
         this.addContentData.title = "";
         this.addContentData.content = "";
         $('#accordion').click();
@@ -293,6 +326,11 @@ export class InfoMovieComponent implements OnInit, AfterViewInit {
       this.notificationService.showNotifWarning("You have to fill every field");
     }
   }
+
+  /*
+   *  Delete a Content added
+   *  It can be deleted only by the user who added the content
+   */
   deleteAddedContent(date) {
     for (let i = 0; i < this.movieFromDb.contentAddedSection.length; i++) {
       if (this.movie.ContentAddedSection[i].date === date) {
@@ -308,8 +346,12 @@ export class InfoMovieComponent implements OnInit, AfterViewInit {
       }
     });
   }
+
+  /*
+   *  Remove a liked movie from the user data
+   */
   deleteLikedMovie() {
-    console.log("u");
+
     for (let i = 0; i < this.User.likedMovies.length; i++) {
       if (this.User.likedMovies[i].id === this.movieFromDb._id) {
         this.User.likedMovies.splice(i, 1);
@@ -318,12 +360,13 @@ export class InfoMovieComponent implements OnInit, AfterViewInit {
     }
 
     this.authService.updateFullProfile(this.User).subscribe(data => {
-      console.log(data);
+
     })
-
-
   }
 
+  /*
+   *  Add a like movie to the user profile
+   */
   addLikedMovie() {
 
     this.like = true;
@@ -334,12 +377,12 @@ export class InfoMovieComponent implements OnInit, AfterViewInit {
 
     this.User.likedMovies.push(movie);
     this.authService.updateFullProfile(this.User).subscribe(data => {
-      console.log(data);
+      //console.log(data);
     })
   }
 }
 
-class addContent1 {
+class addContent {
   title: string;
   content: string;
   idUser: string;
