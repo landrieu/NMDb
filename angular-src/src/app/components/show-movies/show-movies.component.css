@@ -1,5 +1,6 @@
 .request-movie-container{
   overflow:auto;
+  margin-bottom: 20px;
 }
 
 .request-movie-info{
@@ -20,9 +21,6 @@
   text-align: initial;
 }
 
-.lbtn-edit-delete{
-  margin-bottom: 20px;
-}
 .btn-edit-delete{
   text-align: center;
   padding: 10px;
@@ -30,6 +28,7 @@
   opacity: 0.9;
   border: solid 1px #ddd;
   border-top-style: none;
+  margin-bottom: 20px;
 }
 .btn-edit-delete button{
   margin: 0 20px;
@@ -122,7 +121,8 @@
 }
 
 .content{
-  min-height: 1800px;
+  
+  min-height: 100vh;
   text-align: center;
 }
 
@@ -164,8 +164,16 @@ form{
   }
 }
 
+
 .list-movies-mobile{
   display: none;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.form-inline .form-group{
+  margin-bottom: 10px;
 }
 
 .card-movie{
@@ -180,6 +188,7 @@ form{
   margin-top: 30px;
   margin-bottom: 30px;
   text-align: initial;
+  overflow: hidden;
   /*overflow: hidden;*/
 }
 .card-overlay{
@@ -285,4 +294,13 @@ form{
   overflow: hidden;
   background-color: #e5e5e5;
 }
+@media only screen and (max-width: 768px) {
+.list-movies-mobile{
+  display: inline;
+}
+.list-movies-desktop{
+  display: none;
+}
+}
+
 

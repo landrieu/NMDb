@@ -30,7 +30,7 @@ export class RegisterComponent implements OnInit {
     }
     //Validate Fields
     if (!this.validateService.validateRegister(user)) {
-      this.notificationService.showNotifDanger("i");
+      this.notificationService.showNotifDanger("Fill the fields");
       return false;
     }
     //Validate email

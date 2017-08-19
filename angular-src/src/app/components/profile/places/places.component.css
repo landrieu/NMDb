@@ -111,6 +111,7 @@ agm-map {
      opacity: 1;
      box-shadow: none;
 }
+
 @media only screen and (max-width: 500px) {
 .location{
     width: 100%;

@@ -94,3 +94,16 @@ ul{
     opacity: 1;
     filter: grayscale(0%);
 }
+
+.welcome-section p,
+.purpose-section p {
+    text-align: justify;
+}
+
+
+@media only screen and (max-width: 768px) {
+p{
+   text-align: justify;
+  }
+}
+    
