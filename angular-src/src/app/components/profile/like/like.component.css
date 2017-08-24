@@ -47,6 +47,17 @@ a img:hover{
   float: right;
 }
 
+.no-liked{
+    text-align: center;
+    padding: 30px;
+    background-color: white;
+    margin: 20px 0;
+    border-radius: 5px;
+}
+p{
+    margin: auto;
+}
+
 @media only screen and (max-width: 500px) {
 .liked{
     width: 100%;

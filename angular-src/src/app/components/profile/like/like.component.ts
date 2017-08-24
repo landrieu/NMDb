@@ -40,4 +40,9 @@ export class LikeComponent implements OnInit, AfterViewInit {
     
   }
 
+  noLikedMovies(){
+    console.log("vuy");
+    
+  }
+
 }

@@ -287,6 +287,10 @@
         padding-right: 10px;
     }
     .rating-block{
-        padding-left: 15px;
+       /* padding-left: 15px;*/
     }
+    .ptext .border,
+    .title-not-imdb .border{
+    padding: 2px;
+}
 }

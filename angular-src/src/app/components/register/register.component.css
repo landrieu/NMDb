@@ -1,3 +1,24 @@
 .btn-register{
     margin: 60px auto;
 }
+
+.icon-info{
+    float: right;
+    margin-top: 10px;
+    font-size: 15px;
+    cursor: pointer;
+}
+.icon-info:hover > .tuto-register { 
+  visibility: visible;
+}
+.tuto-register{
+    position: absolute;
+    width: 230px;
+    background-color: white;
+    border-radius: 3px;
+    border: 1px solid grey;
+    right: 20px;
+    font-family: initial;
+    padding: 5px;
+    visibility: hidden;
+}

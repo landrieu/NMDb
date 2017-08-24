@@ -1,5 +1,6 @@
 <div class="location">
   <div *ngIf="placesUser">
+    
     <div *ngIf="arrayNotEmpty(placesUser.placesSeen)">
       <h3><b>Places visited:</b></h3>
       <div class="divider">
@@ -52,7 +53,8 @@
   </div>
 
   <div *ngIf=isMyProfile>
-  <h3><b>Add a place:</b></h3>
+  <h3><b>Add a place:</b><span class="glyphicon glyphicon-info-sign icon-info" alt="Puce décoration"><span class="tuto-places">This Section is to add places </span></span> 
+  </h3>
   <div class="divider">
   </div>
 

@@ -9,7 +9,7 @@
       <p><b>Top 5 rating movies</b></p>
       <div class="list-group">
         <a *ngFor="let movie of moviesBestRating" [routerLink]="['/info-movie', movie._id]" class="list-group-item">
-    {{movie.title}}
+    {{movie.title}} - Rate: {{movie.rating}}
     <div class="rating-block center-block">
       <rating [(ngModel)]="movie.rating" [float]=true [titles]=false [readonly]="true"></rating>
     </div>
@@ -31,10 +31,10 @@
   </div>
 
 
-  <p>Top 5, the movies like</p>
+  <!--p>Top 5, the movies like</p>
   <div id="outer-circle">
     <div id="inner-circle">
 
     </div>
-  </div>
+  </div-->
 </div>

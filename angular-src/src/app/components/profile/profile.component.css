@@ -88,6 +88,7 @@
 .well{
     background-color: #ddd;
 }
+
 @media only screen and (max-width: 500px) {
     .card-background img{
         margin-top: -20px;

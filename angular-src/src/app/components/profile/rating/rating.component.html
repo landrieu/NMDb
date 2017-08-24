@@ -16,4 +16,9 @@
       </li>
     </div>
   </ul>
+  <div *ngIf="ratingUser.ratedMovies.length === 0">
+    <div class="no-rate">
+        <p><b>No Rated Movies</b></p>
+      </div>
+</div>
 </div>
