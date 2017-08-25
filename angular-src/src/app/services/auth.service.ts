@@ -16,6 +16,13 @@ export class AuthService {
     return JSON.parse(this.user);
   }
 
+  getUsers(){
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.get(AppSettings.API_ENDPOINT + 'users/users', { headers: headers })
+      .map(res => res.json());
+  }
+
   registerUser(user) {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');

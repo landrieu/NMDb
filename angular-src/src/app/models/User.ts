@@ -14,6 +14,7 @@ export class User {
     public ratedMovies: Array<Object>,
     public placesSeen: Array<Object>,
     public placesToSee: Array<Object>,
-    public description: String
+    public description: String,
+    public lastConnection: Date
   ) {  }
 }

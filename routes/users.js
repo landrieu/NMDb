@@ -14,6 +14,7 @@ router.post('/register', (req, res, next) => {
         username: req.body.username,
         password: req.body.password,
         registrationDate: new Date(),
+        lastConnection: undefined,
         birthDate: null,
         likedMovies: [],
         ratedMovies: [],
@@ -40,6 +41,7 @@ router.post('/authenticate', (req, res, next) => {
 
     User.getUserByUsername(username, (err, user) => {
         if (err) throw err;
+
         if (!user) {
             return res.json({ success: false, msg: "User not found" });
         }
@@ -50,6 +52,14 @@ router.post('/authenticate', (req, res, next) => {
                 const token = jwt.sign(user, config.secret, {
                     expiresIn: 604800 //1 week
                 });
+
+                user.lastConnection = new Date();
+                User.updateUser(user, user._id, (err)=>{
+                    if(err){
+                        console.log("err");
+                    }
+                });
+
                 res.json({
                     success: true,
                     token: 'JWT ' + token,
@@ -64,6 +74,12 @@ router.post('/authenticate', (req, res, next) => {
                 return res.json({ succes: false, msg: "Wrong Password" });
             }
         })
+    })
+});
+
+router.get('/users', (req, res, next) => {
+    User.getUsers((err, users) =>{
+        res.json({users: users});
     })
 });
 

@@ -39,6 +39,9 @@ const UserSchema = mongoose.Schema({
     },
     description:{
         type: String,
+    },
+    lastConnection:{
+        type: Date,
     }
 });
 
@@ -46,6 +49,10 @@ const User = module.exports = mongoose.model('User',UserSchema);
 
 module.exports.getUserById = function(id, callback){
     User.findById(id, callback);
+}
+
+module.exports.getUsers = function( callback){
+    User.find(callback);
 }
 
 module.exports.getUserByUsername = function(username, callback){

@@ -37,4 +37,33 @@
 
     </div>
   </div-->
+   <div *ngIf="authService.isAdmin()" class="panel panel-default">
+  <!-- Default panel contents -->
+  <div class="panel-heading">List of users</div>
+
+  <!-- Table -->
+  <table class="table">
+    <thead>
+    <tr>
+      <th>Username</th>
+      <th>Name</th>
+      <th>Last Connection</th>
+      <th>Number Comments</th>
+      <th>Number Liked Movies</th>
+      <th>Number Rated Movies</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let user of users" (click)="showUser(user._id)">
+      <td>{{user.username}}</td>
+      <td>{{user.name}}</td>
+      <td>{{user.lastConnection | date:fullDate}}</td>
+      <td>{{user.likedMovies.length}}</td>
+      <td>{{user.likedMovies.length}}</td>
+      <td>{{user.ratedMovies.length}}</td>
+    </tr>
+    </tbody>
+  </table>
+
+   </div>
 </div>
