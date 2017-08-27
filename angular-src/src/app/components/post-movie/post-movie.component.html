@@ -1,6 +1,14 @@
 <ul class="nav nav-tabs col-md-8 col-md-offset-2 nav-post-movie">
   <li role="presentation" [class.active]="!postFromIMDb"><a (click)="changeForm(false)">Post Form</a></li>
   <li role="presentation" [class.active]="postFromIMDb"><a (click)="changeForm(true)">Post from IMDb</a></li>
+  <span class="glyphicon glyphicon-info-sign icon-info">
+    <span class="tuto-post">
+      <span class="tuto-title"> <b>Add a movie to the database, there are two ways: </b></span><br>
+    <ul>
+      <li> Fill the from with the information of the movie</li>
+      <li> Search the movie from IMDb, and add it the database </li>
+    </ul>
+    </span></span>
 </ul>
 <div class="col-md-8 col-md-offset-2 post-movie-form">
   <div *ngIf="!postFromIMDb;else post_movie_imdb" class="col-md-10 col-md-offset-1 post-form">
@@ -31,7 +39,7 @@
         <input type="text" [(ngModel)]="movie.releaseDate" name="releaseDate" class="form-control">
       </div>
       <div class="form-group">
-        <label>Budget (Millions of $)</label>
+        <label>Budget</label>
         <input type="text" [(ngModel)]="movie.budget" name="budget" class="form-control">
       </div>
       <div class="form-group">
@@ -39,7 +47,7 @@
         <input type="text" [(ngModel)]="movie.metascore" name="metascore" class="form-control">
       </div>
       <div class="form-group">
-        <label>Path Poster</label>
+        <label>Poster URL</label>
         <input type="text" [(ngModel)]="movie.poster" name="poster" class="form-control">
       </div>
       <div class="form-group">
@@ -53,7 +61,7 @@
   <ng-template #post_movie_imdb>
 
     <div class="col-md-10 col-md-offset-1" id="request-movie">
-      <h2 class="page-header">Post a Movie from the IMDb Database <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/IMDB_Logo_2016.svg/1200px-IMDB_Logo_2016.svg.png"></h2>
+      <h2 class="page-header">Post a Movie from <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/IMDB_Logo_2016.svg/1200px-IMDB_Logo_2016.svg.png"></h2>
       <form (submit)="onMovieSearch()">
         <div class="form-group">
           <label>Movie title</label>

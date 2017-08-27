@@ -4,28 +4,47 @@
   <p><b>Number of movies:</b> {{numberMovies}} </p>
   <p><b>Number of comments:</b> {{numberComments}} </p>
 
-  <div class="top">
+  <h4 class="page-header"><b>Top 5</b></h4>
+  <div *ngIf="moviesBestRating && moviesMostRated" class="top">
     <div class="top-5 left">
-      <p><b>Top 5 rating movies</b></p>
+      <p><b>Top ratings</b></p>
       <div class="list-group">
-        <a *ngFor="let movie of moviesBestRating" [routerLink]="['/info-movie', movie._id]" class="list-group-item">
-    {{movie.title}} - Rate: {{movie.rating}}
-    <div class="rating-block center-block">
-      <rating [(ngModel)]="movie.rating" [float]=true [titles]=false [readonly]="true"></rating>
-    </div>
-  </a>
+        <a *ngFor="let movie of moviesBestRating; let i=index" [routerLink]="['/info-movie', movie._id]" class="list-group-item">
+          <div class="movie-group">
+            <div class="poster">
+              <img [src]="movie.poster" alt="Image" style="width:80px;">
+            </div>
+            <div class="rank"><b>{{i + 1}}.</b>
+            </div>
+            <div class="info-movie">
+              {{movie.title}} - Rate: {{movie.rating}}
+              <div class="rating-block center-block">
+                <rating [(ngModel)]="movie.rating" [float]=true [titles]=false [readonly]="true"></rating>
+              </div>
+            </div>
+          </div>
+        </a>
       </div>
     </div>
 
     <div class="top-5 right">
-      <p><b>Top 5 most rating movies</b></p>
+      <p><b>Most rated movies</b></p>
       <div class="list-group">
-        <a *ngFor="let movie of moviesMostRated" [routerLink]="['/info-movie', movie._id]" class="list-group-item">
-    {{movie.title}} - Number of votes: {{movie.nbVotes}}
-    <div class="rating-block center-block">
-      <rating [(ngModel)]="movie.rating" [float]=true [titles]=false [readonly]="true"></rating>
-    </div>
-  </a>
+        <a *ngFor="let movie of moviesMostRated; let i=index" [routerLink]="['/info-movie', movie._id]" class="list-group-item">
+          <div class="movie-group">
+            <div class="poster">
+              <img [src]="movie.poster" alt="Image" style="width:80px;">
+            </div>
+            <div class="rank"><b>{{i + 1}}.</b>
+            </div>
+            <div class="info-movie">
+              {{movie.title}} - Number of votes: {{movie.nbVotes}}
+              <div class="rating-block center-block">
+                <rating [(ngModel)]="movie.rating" [float]=true [titles]=false [readonly]="true"></rating>
+              </div>
+            </div>
+          </div>
+        </a>
       </div>
     </div>
   </div>
@@ -37,33 +56,34 @@
 
     </div>
   </div-->
-   <div *ngIf="authService.isAdmin()" class="panel panel-default">
-  <!-- Default panel contents -->
-  <div class="panel-heading">List of users</div>
+  <h4 class="page-header"><b>List of users</b></h4>
+  <div *ngIf="users" class="panel panel-default">
+    <!-- Default panel contents -->
+    <!--div class="panel-heading">List of users</div-->
 
-  <!-- Table -->
-  <table class="table">
-    <thead>
-    <tr>
-      <th>Username</th>
-      <th>Name</th>
-      <th>Last Connection</th>
-      <th>Number Comments</th>
-      <th>Number Liked Movies</th>
-      <th>Number Rated Movies</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let user of users" (click)="showUser(user._id)">
-      <td>{{user.username}}</td>
-      <td>{{user.name}}</td>
-      <td>{{user.lastConnection | date:fullDate}}</td>
-      <td>{{user.likedMovies.length}}</td>
-      <td>{{user.likedMovies.length}}</td>
-      <td>{{user.ratedMovies.length}}</td>
-    </tr>
-    </tbody>
-  </table>
+    <!-- Table -->
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Username</th>
+          <th>Name</th>
+          <th>Last Connection</th>
+          <th>Number of Comments</th>
+          <th>Number of Movies Liked</th>
+          <th>Number of Movies Rated</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users" (click)="showUser(user._id)">
+          <td>{{user.username}}</td>
+          <td>{{user.name}}</td>
+          <td>{{user.lastConnection | date:fullDate}}</td>
+          <td>{{user.nbComments}}</td>
+          <td>{{user.likedMovies.length}}</td>
+          <td>{{user.ratedMovies.length}}</td>
+        </tr>
+      </tbody>
+    </table>
 
-   </div>
+  </div>
 </div>

@@ -121,17 +121,26 @@ agm-map {
 .icon-info:hover > .tuto-places { 
   visibility: visible;
 }
+
+.unrelated, .tuto-title{
+  text-align: center;
+  display: block;
+}
 .tuto-places{
     position: absolute;
-    width: 180px;
-    height: 50px;
+    width: 300px;
     background-color: white;
-    border-radius: 5px;
+    border-radius: 2px;
     border: 1px solid grey;
     right: 20px;
-    font-family: initial;
+    font-family: Arial, Helvetica, sans-serif;
     padding: 5px;
     visibility: hidden;
+    z-index: 10;
+}
+
+ul{
+  padding-left: 17px;
 }
 
 .tuto-places:hover{

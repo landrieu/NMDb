@@ -4,6 +4,7 @@ import { CommentService } from '../../services/comment.service';
 import { MovieService } from '../../services/movie.service';
 import { Movie } from '../../models/movie';
 import { User } from '../../models/user';
+import { Comment } from '../../models/comment';
 import { RatingModule } from "ngx-rating";
 import { Router } from '@angular/router';
 declare var jquery: any;
@@ -20,6 +21,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   numberComments: number = 0;
   moviesMostRated: Movie[];
   moviesBestRating: Movie[];
+  comments: Comment[];
   users: User[];
   user: User;
 
@@ -47,22 +49,37 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       this.numberComments = data.numberComments;
     });
 
-      this.authService.getUsers().subscribe(data => {
-        this.users = data.users;
-
-        this.users.sort(function (a, b) {
-          let c = +new Date(a.lastConnection);
-          let d = +new Date(b.lastConnection);
-          return d - c;
-        });
-      });
-    
     this.authService.getProfile().subscribe(data => {
-            this.user = data.user;
+      this.user = data.user;
+    });
+
+    this.authService.getUsers().subscribe(data => {
+      this.users = data.users;
+
+      this.users.sort(function (a, b) {
+        let c = +new Date(a.lastConnection);
+        let d = +new Date(b.lastConnection);
+        return d - c;
+      });
+
+      this.commentService.getAllComments().subscribe(data => {
+
+        this.comments = data.comments;
+        
+        for(let i = 0; i < this.users.length; i++){
+          this.users[i].nbComments = 0;
+          for(let j = 0; j < this.comments.length; j++){
+            
+            if(this.comments[j].idUser === this.users[i]._id){
+              this.users[i].nbComments = this.users[i].nbComments + 1;
+            }
+          }
+        }
+      });
     });
   }
 
-  showUser(id){    
+  showUser(id) {
     if (id === this.user._id) {
       this.router.navigate(['/profile']);
     } else {

@@ -24,6 +24,17 @@ router.post('/postComment',(req,res,next)=>{
     })  
 });
 
+router.get('/comments',(req,res,next)=>{
+    Comment.getComments((err,comments)=>{
+        if(err) throw err;
+        if(!comments){
+            return res.json({success:false, msg: "Comments not found"});
+        }else{
+            return res.json({success:true, comments: comments});
+        }
+    });  
+});
+
 router.get('/commentsUser/:userId',(req,res,next)=>{
     var userId = req.params.userId;
     

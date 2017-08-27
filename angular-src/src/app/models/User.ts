@@ -4,7 +4,7 @@ export class User {
     public name: String,
     public email: String,
     public username: String,
-    public password:String,
+    //public password:String,
     public registrationDate: Date,
     public birthDate: Date,
     public likedMovies: Array<{
@@ -15,6 +15,7 @@ export class User {
     public placesSeen: Array<Object>,
     public placesToSee: Array<Object>,
     public description: String,
-    public lastConnection: Date
+    public lastConnection: Date,
+    public nbComments: number = 0
   ) {  }
 }

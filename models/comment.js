@@ -37,12 +37,16 @@ module.exports.addComment = function (newComment, callback) {
     newComment.save(callback);
 }
 
+module.exports.getComments = function (callback) {
+    Comment.find(callback);
+}
+
 module.exports.getCommentsByMovieId = function (id, callback) {
-    Comment.find({ idMovie: id }, callback)
+    Comment.find({ idMovie: id }, callback);
 }
 
 module.exports.getCommentsByUserId = function (id, callback) {
-    Comment.find({ idUser: id }, callback)
+    Comment.find({ idUser: id }, callback);
 }
 
 module.exports.deleteComment = function (id, callback) {

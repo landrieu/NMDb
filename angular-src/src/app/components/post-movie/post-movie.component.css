@@ -55,8 +55,9 @@ agm-map {
 }
 
 #request-movie h2 img{
-  width:50px;
+  width:60px;
   display: inline-block;
+  margin-bottom: 3px;
 }
 
 .nav-post-movie{
@@ -64,3 +65,49 @@ agm-map {
   margin-top: 20px;
 }
 
+.icon-info{
+    float: right;
+    margin-top: 10px;
+    font-size: 15px;
+    cursor: pointer;
+}
+.icon-info:hover > .tuto-post { 
+  visibility: visible;
+}
+.tuto-post{
+    text-transform: none;
+    position: absolute;
+    width: 300px;
+    background-color: white;
+    border-radius: 2px;
+    border: 1px solid grey;
+    right: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 5px;
+    visibility: hidden;
+    z-index: 10;
+}
+
+.tuto-title{
+  text-align: center;
+  display: block;
+}
+
+.tuto-post ul{
+  padding-left: 17px;
+  list-style-type: disc;
+}
+
+.btn{
+    opacity: 0.95;
+    box-shadow: 5px 5px 5px #888888;
+}
+.btn:hover{
+     transform: scale(0.95, 0.95);
+     opacity: 1;
+     box-shadow: none;
+}
+.btn:active{
+     opacity: 1;
+     box-shadow: none;
+}

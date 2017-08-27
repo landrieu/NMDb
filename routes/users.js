@@ -54,6 +54,7 @@ router.post('/authenticate', (req, res, next) => {
                 });
 
                 user.lastConnection = new Date();
+               
                 User.updateUser(user, user._id, (err)=>{
                     if(err){
                         console.log("err");

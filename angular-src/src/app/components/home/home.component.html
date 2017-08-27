@@ -22,11 +22,61 @@
       <li>Visitor: Can see every movie saved in the database</li>
     </ul-->
     <p>
-      This website is based on IMDb, the purpose is to give the opportunity to anyone to add content to a movie description.
+      This website is based on <a href="http://www.imdb.com/"><b>IMDb</b></a>, the purpose is to give the opportunity to anyone to add content to a movie description.
       
     </p>
-    <p>To access to the entire site you need to create an account.
-      Once the account created, it's possible to look every movie page ont the website, to post a comment, to rate the movie
+    <p>To access to the entire site you <a class="link-register" [routerLink]="['/register']"><b>need</b></a> to create an account.</p>
+    <p><b>Main Functionalities:</b></p>
+      <ul> 
+        <li>Look every page description of the movies available on the Database</li>
+        <li>Add a movie to the <i>Database</i></li>
+        <li>To post a comment about a movie</li>
+        <li>To rate a movie</li>
+        <li>To like a movie</li>
+        <li>To modify some information about your profile</li>
+        <li>To filter the movies displayed on the movie tab</li>
+        <li>To look the profile of the others users</li>
+      </ul>
+       <h3>Tuto</h3>
+      <p>
+        <b>Add a movie to the database:</b> Go to the tab "POST A MOVIE". There are two possibilities: you can either fill a form with the information about
+        the movie to add, or you can search a movie from IMDb and add it.
+      </p>
+
+      <p><b>Look the movies registered on the database:</b>Go to the tab "MOVIES", there is a list of every movie registered
+      on the database. The main information is displayed, if you want to know more about a movies click on it. You will be 
+      redirect to the description of this movie. 
+      </p>
+
+      <p><b>¨Post a movie or add content to a movie:</b> Go to the description of a movie. At the end of the page, there
+      is a form, you have to give a title to the comment, then write your comment below. Once, the comment posted, you 
+      can delete it, at any time. To add content, go below and click on the button "Add Content". Then you have to choose
+      the type of this content, "information" or "Section". An "information" will be displayed of the first part of the page, 
+      it should be a short information. A "section" is a full paragraph, it's longer than an information.
+      </p>
+
+      <p><b>Like or rate a movie:</b> Go to the description of a movie. On the right part of the screen, a section allows
+      you to rate the movie and to like it. The average of this movie is also displayed.
+      </p>
+
+      <p><b>To see your profile:</b> Go the tab "PROFILE".  There are four parts:
+      </p>
+      <ul>
+        <li>Bio: You can visualize your information, and also modify it</li>
+        <li>Like: You can visualize which movies you liked</li>
+        <li>Rating: You can visualize which movies you rated, and modify the rate</li>
+        <li>Places: This is currently unrelated to the website, on this part, you can add places that you
+          have already seen and places that you want to see. Once added, you can displayed those places on a map.
+      </ul>
+      
+      <p><b>Display statistics:</b> Go to the tab "DASHBOARD". You can see, the number of movies registered on the database,
+      the number of comments posted and the number of users registered. There is also, the Top 5 of the best rated movies and 
+      of the most rated movies. At the bottom of the page, the list of users with their statistics are displayed, to look 
+      their profile, click on the one that you want to see.
+      </p>
+
+      <!--p>
+        Once the account created, it's possible to look every movie page ont the website, to post a comment, to rate the movie
       or add content to the page. It's also posssible to add a movie to the database, there are two options, the first one 
       is to fill a form with the information about the movie, the second one is to add the movie from the IMDb database.
       You just have to go to the "POST A MOVIE", write the title of the movie, to click on search then click on save to add the movie.
@@ -34,7 +84,7 @@
       about the movie. You can like or rate the movie on the right part of this page. On the tab "PROFILE", you can modify some
       information about you, you can also see the movies that you rated or liked. A section named "PLACES", allows you to 
       add places that you have seen or that you want to see. You can also display a map with markers on those places.
-    </p>
+      </p>
     <p>Main functionalities: A user can post a movie either with the form or with IMDb. Can like and rate a movie, he can 
       also add content to the movie page, a simple information or an entire section. On the profile page the user can
       modify some informations about himself. He can also create a list of places that he wants to see or he has already
@@ -47,29 +97,52 @@
       There is also the trailer or a video related to the movie. Below there is the comment section, each comment has a
       title, and the name of the writer and the date are displayed. The writer can remove the comment at any time.
       Below there is the form to post a new comment and at the bottom another form can be used to add content to movie page.
-    </p>
-    <p>I used many APIs, geolocation from Google Maps, OMDb and TMDb in order to get data about movies
-    </p>
+    </p-->
   </section>
 
   <div class="pimg2">
     <div class="ptext">
-      <span class="border trans">
-      Purpose
-    </span>
+      <!--span class="border trans">
+      Technical Aspect
+    </span-->
     </div>
   </div>
 
 
   <section class="section section-dark purpose-section">
-    <h2>Why I created this website</h2>
+    <h2>Technologies used</h2>
+    <br>
     <p>
+      To create this web application, I used <b>Angular 4</b> which is a powerful JavaScript framework. I also used <b>Node JS</b>
+      and <b>Express</b> for the back end part. My database is <b>MongoDb</b> and I used <b>Bootstrap</b> 3 for the styles.
+    </p>
+
+    <p>
+      This web application is totally <b>responsive</b>, so it should look great on Tablet and Mobile ;)<br>
+      It's also <b>secure</b>, the passwords are salted and hashed.
+
+    </p>
+    <p>
+      In order to get data of the movies, I used two APIs <b>OMDb</b> and <b>TMDb</b>.
+      I also used <b>Google GeoCoding</b> API and <b>Google Maps</b> API for the section "places" on the profile page.
+
+    </p>
+    <!--p>
       I created this website in order to practice my Angular skills. I learnt it, during my academic exchange in the University
       of Western Ontario, in Canada during the Winter Semester 2017. I realized a project based on the MEAN stack. M stands
       for MongoDb which is a noSQL database, the E stands for Express, it is a powerful Node Js framework, very useful to
       manage route. The A stands for Angular, a front end framework, by the way, I use Angular 4 for this website. And the
       last but not least, the N stands for Node Js the backend part of the project.
-    </p>
+    </p-->
+
+    <h2>Functionalities to add</h2>
+    <br>
+      <ul>
+        <li> Recommendation to another user</li>
+        <li> "Watched" and "to watch" movies list</li>
+        <li> Add theaters to the database</li>
+      </ul>
+    
   </section>
 
   <div class="pimg3">
@@ -84,17 +157,22 @@
   <section class="section section-dark me-section">
     <h3><b>Who am I ?</b></h3>
     <p>
-      I will graduate in November of a Master in Computer Science. I am currently doing a 6 month
+      My name is Lionel Andrieu, I will graduate soon of a Master in Computer Science. I am currently doing a 6 month
       internship in France as Front developer in a travel agency. I have an interest in new technology, I want to learn
-      more about web development.
+      more about web development. I'm looking for a  job opportunity, as a Web Developer.
     </p>
-    <br>
+    <p>This project is available on my GitHub page: 
+    <span class="github-logo">
+      <a href="https://github.com/landrieu">
+    <img src="/assets/images/github-logo.png" />
+    </a>
+    </span>
+    </p>
     <!--h3><b>What next ?</b></h3>
     <p>
     </p-->
-    <br>
     <h3><b>How to reach me ?</b></h3>
-    <p>
+    <p class="contact">
       By phone: +33 7-93-88-48-12<br> Email: lionel.andrieu@gmail.com<br>
     </p>
     <div class="linkedin-logo">

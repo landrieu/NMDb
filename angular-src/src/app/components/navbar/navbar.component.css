@@ -24,13 +24,13 @@
 
 .progress{
     display: none;
-    width:30%;
+    width:21%;
     margin-left: auto;
     margin-right: auto;
     top: 22px;
     /*margin-top: -45px;*/
     z-index: 100;
-    left:35%;
+    left:40%;
     position:absolute;
 }
 

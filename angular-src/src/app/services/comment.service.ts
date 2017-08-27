@@ -22,6 +22,13 @@ export class CommentService {
     .map( res => res.json());
   }
 
+  getAllComments(){
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.get( AppSettings.API_ENDPOINT + 'comments/comments', {headers: headers})
+    .map( res => res.json());
+  }
+
   getCommentsUser(idUser){
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');

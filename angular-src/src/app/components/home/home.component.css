@@ -22,7 +22,7 @@ html, body{
 }
 .section{
     text-align: center;
-    padding: 50px 80px;
+    padding: 30px 80px;
 }
 .section-light{
     background-color: #f4f4f4;
@@ -41,6 +41,31 @@ html, body{
 .ptext .border.trans{
     background-color: transparent;
 }
+
+.github-logo{
+    margin-left: 15px;
+}
+
+.github-logo img{
+    height: 20px;
+    margin-bottom: 3px;
+}
+.github-logo img:hover{
+    transform: scale(1.15, 1.15); /** default is 1, scale it to 1.5 */
+    opacity: 1;
+}
+
+.welcome-section a:hover,
+.welcome-section a:active,
+.welcome-section a:visited,
+.welcome-section a:link{
+    text-decoration: none;
+}
+
+.link-register{
+    color: #666;
+}
+
 
 @media(max-width: 570px){
     .pimg1, .pimg2, .pimg3{
@@ -100,10 +125,23 @@ ul{
     text-align: justify;
 }
 
+.welcome-section{
+    text-decoration: none;
+}
 
+.welcome-section ul{
+        padding-left: 80px
+}
 @media only screen and (max-width: 768px) {
 p{
    text-align: justify;
   }
+.contact{
+    text-align: center;
+}
+.section{
+    padding: 10px 10px;
+}
+
 }
     
