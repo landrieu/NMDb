@@ -8,22 +8,36 @@ export class NotificationService {
   constructor() { }
 
   initProgressBar(){
-    $('.progress').css('display', 'none');
+   /* $('.progress').css('display', 'none');
     $('.progress').css('display', 'inline');
     $('.text-percent').text(0 + "%");
-    $('.progress-bar').css("width", 0 + "%" );
+    $('.progress-bar').css("width", 0 + "%" );*/
+
+    $('.prog').fadeIn();
+    $('.prog').css('width', '0');
   }
 
   removeProgressBar(){
     $('.progress').css('display', 'none');
+    
+    $('.prog').css('width', '0');
   }
 
   changeTextProgress(percent){
     $('.text-percent').text(percent + "%");
     $('.progress-bar').css("width", percent + "%" );
+
+    $('.prog').css('width', percent + "%");
+    
+    
+
     if(percent === 100){
       $('.progress').fadeOut(2000);
+      //$('.prog').delay(10000).css('width', "0%");
+      $('.prog').delay(2000).fadeOut();
     }
+
+    
   }
 
   showNotifSuccess(msg){

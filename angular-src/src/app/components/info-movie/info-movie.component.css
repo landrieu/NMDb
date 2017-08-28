@@ -245,7 +245,34 @@
 .section-content{
     text-align: justify;
 }
+   .image-movie img{
+        width: 200px;
+    }
 
+@media only screen and (max-width: 1100px) {
+    .image-movie{
+        width: 28%;
+    }
+
+    .image-movie img{
+        width: 180px;
+    }
+    .rating{
+        width: 15%;
+    }
+}
+@media only screen and (max-width: 870px) {
+    .image-movie img{
+        width: 150px;
+            padding-top: 50px;
+    }
+    .image-movie{
+        width: 23%;
+    }
+    .rating{
+        width: 20%;
+    }
+}
 @media only screen and (max-width: 768px) {
     .rating{
         width: 100%;
@@ -269,6 +296,8 @@
     }
     .image-movie img{
         width: 180px;
+        padding-top: 20px;
+        padding-bottom: 20px;
     }
     .background-image{
     background-attachment: scroll;

@@ -1,3 +1,11 @@
 .btn-login{
     margin: 70px auto;
 }
+
+.sk-fading-circle {
+  margin: 80px auto;
+  width: 40px;
+  height: 40px;
+  position: relative;
+}
+

@@ -13,16 +13,19 @@ import { FlashMessagesService } from 'angular2-flash-messages';
 export class LoginComponent implements OnInit {
   username: String;
   password: String;
+  loading = false;
 
   constructor(private authService: AuthService, private notificationService: NotificationService, private router: Router, private flashMessagesSercice: FlashMessagesService) { }
 
   ngOnInit() {
+    
   }
 
   /*
    *  Authenticate the user
    */
   onLoginSubmit() {
+    this.loading = true;
     const user = {
       username: this.username,
       password: this.password
@@ -33,10 +36,12 @@ export class LoginComponent implements OnInit {
         // Store the token and some user data
         this.authService.storeUserData(data.token, data.user);
         AppSettings.USER_ID = data.user.id;
+        this.loading = false;
         this.notificationService.showNotifSuccess("You are logged in");
         // Redirect to the Dashboard
         this.router.navigate(['/dashboard']);
       } else {
+        this.loading = false;
         this.notificationService.showNotifWarning(data.msg);
         this.router.navigate(['/login']);
       }

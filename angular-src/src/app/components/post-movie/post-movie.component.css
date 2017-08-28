@@ -111,3 +111,16 @@ agm-map {
      opacity: 1;
      box-shadow: none;
 }
+
+.btn-search{
+  margin-bottom: 30px;
+}
+
+.sk-fading-circle {
+  margin: 35px auto;
+  width: 40px;
+  height: 40px;
+  position: relative;
+}
+
+

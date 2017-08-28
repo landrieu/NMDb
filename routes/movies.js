@@ -39,7 +39,6 @@ router.post('/postMovie',(req,res,next)=>{
     }else{
         Movie.addMovie(newMovie, (err,movie)=>{
         if(err){
-            console.log(err);
             res.json({success:false,msg:"Failed to post the movie"});
         }else{
             res.json({success:true,msg:"Movie posted"});

@@ -4,11 +4,12 @@
   <span class="glyphicon glyphicon-info-sign icon-info">
     <span class="tuto-post">
       <span class="tuto-title"> <b>Add a movie to the database, there are two ways: </b></span><br>
-    <ul>
-      <li> Fill the from with the information of the movie</li>
-      <li> Search the movie from IMDb, and add it the database </li>
-    </ul>
-    </span></span>
+  <ul>
+    <li> Fill the from with the information of the movie</li>
+    <li> Search the movie from IMDb, and add it the database </li>
+  </ul>
+  </span>
+  </span>
 </ul>
 <div class="col-md-8 col-md-offset-2 post-movie-form">
   <div *ngIf="!postFromIMDb;else post_movie_imdb" class="col-md-10 col-md-offset-1 post-form">
@@ -79,7 +80,29 @@
           <label>Movie year</label>
           <input type="text" [(ngModel)]="requestMovie.year" name="year" class="form-control">
         </div>
-        <input type="submit" class="btn-register btn btn-primary center-block" value="Search">
+
+        <div *ngIf="!searching;else searching_section">
+          <input type="submit" class="btn-search btn btn-primary center-block" value="Search">
+        </div>
+        <ng-template #searching_section>
+          <div class="sk-fading-circle">
+            <div class="sk-circle1 sk-circle"></div>
+            <div class="sk-circle2 sk-circle"></div>
+            <div class="sk-circle3 sk-circle"></div>
+            <div class="sk-circle4 sk-circle"></div>
+            <div class="sk-circle5 sk-circle"></div>
+            <div class="sk-circle6 sk-circle"></div>
+            <div class="sk-circle7 sk-circle"></div>
+            <div class="sk-circle8 sk-circle"></div>
+            <div class="sk-circle9 sk-circle"></div>
+            <div class="sk-circle10 sk-circle"></div>
+            <div class="sk-circle11 sk-circle"></div>
+            <div class="sk-circle12 sk-circle"></div>
+          </div>
+        </ng-template>
+
+
+
       </form>
 
       <div id="scroll"> </div>
@@ -95,7 +118,27 @@
                   Plot: {{movie.overview}}
                 </div>
 
-                <input (click)='postMovieFromIMDb(movie.id)' class="btn-post-movie btn btn-primary center-block" value="Save this movie">
+                <div class="btn-post" *ngIf="!posting;else posting_section">
+                  <input (click)='postMovieFromIMDb(movie.id)' class="btn-post-movie btn btn-primary center-block" value="Save this movie">
+                </div>
+                <ng-template #posting_section>
+                  <div class="sk-fading-circle">
+                    <div class="sk-circle1 sk-circle"></div>
+                    <div class="sk-circle2 sk-circle"></div>
+                    <div class="sk-circle3 sk-circle"></div>
+                    <div class="sk-circle4 sk-circle"></div>
+                    <div class="sk-circle5 sk-circle"></div>
+                    <div class="sk-circle6 sk-circle"></div>
+                    <div class="sk-circle7 sk-circle"></div>
+                    <div class="sk-circle8 sk-circle"></div>
+                    <div class="sk-circle9 sk-circle"></div>
+                    <div class="sk-circle10 sk-circle"></div>
+                    <div class="sk-circle11 sk-circle"></div>
+                    <div class="sk-circle12 sk-circle"></div>
+                  </div>
+                </ng-template>
+
+
               </div>
               <div *ngIf=isEmpty(movie.poster_path) class="request-movie-image">
                 <img [src]="'https://image.tmdb.org/t/p/w500'+movie.poster_path" alt="Image" style="width:140px;">

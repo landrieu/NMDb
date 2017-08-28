@@ -34,6 +34,15 @@
     position:absolute;
 }
 
+.prog{
+    width: 0%;
+    height: 5px;
+    background-color: #00C851;
+    top: 60px;
+    position: absolute;
+    transition: 0.2s;
+}
+
 @media only screen and (max-width: 768px) {
 .progress{
     width: 20%;

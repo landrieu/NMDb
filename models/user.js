@@ -122,9 +122,7 @@ module.exports.addPlace = function(param, id,callback){
 }
 
 module.exports.deletePlace = function(param, id,callback){
-    console.log(param.timeStamp);
     if(param.type === "Seen"){
-        console.log(param.timeStamp);
         User.update({"_id": id},{ $pull: {
         "placesSeen": {
             "timeStamp": param.timeStamp

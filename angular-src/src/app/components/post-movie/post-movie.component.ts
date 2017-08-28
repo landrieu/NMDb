@@ -29,6 +29,8 @@ export class PostMovieComponent implements OnInit {
   requestMovie: RequestMovie;
   requestMovies: Movie[];
   postFromIMDb: boolean = false;
+  searching: boolean = false;
+  posting: boolean = false;
 
   constructor(private validateService: ValidateService, private authService: AuthService,
               private flashMessages: FlashMessagesService, private notificationService: NotificationService,
@@ -113,9 +115,10 @@ export class PostMovieComponent implements OnInit {
    *  Get the movies from the TMDb API
    */
   onMovieSearch(){
-   
+   this.searching = true;
     this.emptyMovie(this.requestMovies);
     this.movieService.searchMovieTMDBack(this.requestMovie.title,this.requestMovie.year, this.requestMovie.type).subscribe( movies => {
+      this.searching = false;
       if(movies.Error){
         this.flashMessages.show(movies.Error,{cssClass: 'alert-danger',timeout:3000});
         this.requestMovies = null;
@@ -129,9 +132,11 @@ export class PostMovieComponent implements OnInit {
    *  Post a movie from the APIs to the Db
    */
   postMovieFromIMDb(id){
-   $('input').prop('disabled', true);
+   //$('input').prop('disabled', true);
+   this.posting = true;
 
     this.movieService.getMovieTMDb(id, this.requestMovie.type).subscribe(movie =>{
+      this.posting = false;
       if(this.requestMovie.type === "movie"){
         this.copyTMDbMovie(movie);
         this.postMovie(this.movie);
