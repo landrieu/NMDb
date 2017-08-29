@@ -36,6 +36,7 @@ import { PlacesComponent } from './components/profile/places/places.component';
 import { InfoMovieComponent } from './components/info-movie/info-movie.component';
 import { MapComponent } from './components/map/map.component';
 import { RatingModule} from "ngx-rating";
+import { FooterComponent } from './components/footer/footer.component';
 
 
 const appRoutes: Routes = [
@@ -68,7 +69,8 @@ const appRoutes: Routes = [
     RatingComponent,
     PlacesComponent,
     InfoMovieComponent,
-    MapComponent
+    MapComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

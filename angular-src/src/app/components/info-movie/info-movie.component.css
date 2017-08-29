@@ -196,6 +196,9 @@
 .btn-post{
     /*border-radius: 0px;*/
     background-color: #2ECC40;
+}
+
+.btn{
     opacity: 0.9;
     box-shadow: 5px 5px 5px #888888;
 }
@@ -204,10 +207,12 @@
      opacity: 1;
      box-shadow: none;
 }
-.btn-post:active{
-     background-color: #2ECC40;
+.btn:hover{
      opacity: 1;
      box-shadow: none;
+}
+.btn-post:active{
+     background-color: #2ECC40;
 }
 .full-page{
     margin-bottom: 60px;
