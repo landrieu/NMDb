@@ -71,21 +71,23 @@ export class InfoMovieComponent implements OnInit, AfterViewInit {
           //this.imdbMovie = true;
           this.copyInfoMovie(data.movie);
 
-          this.User = this.authService.getProfile().subscribe(data => {
-            this.User = data.user;
+          if (this.authService.loggedIn()) {
+            this.User = this.authService.getProfile().subscribe(data => {
+              this.User = data.user;
 
-            // Get the user rating and if the movie is liked
-            for (let i = 0; i < data.user.ratedMovies.length; i++) {
-              if (data.user.ratedMovies[i].id === this.movie._id) {
-                this.starsCount = data.user.ratedMovies[i].rate;
+              // Get the user rating and if the movie is liked
+              for (let i = 0; i < data.user.ratedMovies.length; i++) {
+                if (data.user.ratedMovies[i].id === this.movie._id) {
+                  this.starsCount = data.user.ratedMovies[i].rate;
+                }
               }
-            }
-            for (let i = 0; i < data.user.likedMovies.length; i++) {
-              if (data.user.likedMovies[i].id === this.movieFromDb._id) {
-                this.like = true;
+              for (let i = 0; i < data.user.likedMovies.length; i++) {
+                if (data.user.likedMovies[i].id === this.movieFromDb._id) {
+                  this.like = true;
+                }
               }
-            }
-          });
+            });
+          }
 
           // Get the comments of the movie
           this.getComments();
@@ -99,20 +101,22 @@ export class InfoMovieComponent implements OnInit, AfterViewInit {
             this.percent = 60;
             this.notificationService.changeTextProgress(60);
 
-            this.User = this.authService.getProfile().subscribe(data => {
-              this.User = data.user;
+            if (this.authService.loggedIn()) {
+              this.User = this.authService.getProfile().subscribe(data => {
+                this.User = data.user;
 
-              for (let i = 0; i < data.user.ratedMovies.length; i++) {
-                if (data.user.ratedMovies[i].id === this.movieFromDb._id) {
-                  this.starsCount = data.user.ratedMovies[i].rate;
+                for (let i = 0; i < data.user.ratedMovies.length; i++) {
+                  if (data.user.ratedMovies[i].id === this.movieFromDb._id) {
+                    this.starsCount = data.user.ratedMovies[i].rate;
+                  }
                 }
-              }
-              for (let i = 0; i < data.user.likedMovies.length; i++) {
-                if (data.user.likedMovies[i].id === this.movieFromDb._id) {
-                  this.like = true;
+                for (let i = 0; i < data.user.likedMovies.length; i++) {
+                  if (data.user.likedMovies[i].id === this.movieFromDb._id) {
+                    this.like = true;
+                  }
                 }
-              }
-            });
+              });
+            }
 
             //Get movie from TMDb
             this.movieService.getMovieTMDb(id, movie.Type).subscribe(data => {
@@ -130,13 +134,16 @@ export class InfoMovieComponent implements OnInit, AfterViewInit {
               this.movie.ContentAddedInfo = this.movieFromDb.contentAddedInfo;
               this.movie.ContentAddedSection = this.movieFromDb.contentAddedSection;
               this.movieService.getVideoMovie(this.movieFromDb.imdbId).subscribe(data => {
-              this.srcYoutube = this.sanitizer.bypassSecurityTrustResourceUrl("https://www.youtube.com/embed/" + data.results[0].key + "?enablejsapi=1&origin=http://andrieu.herokuapp.com");
+                this.srcYoutube = this.sanitizer.bypassSecurityTrustResourceUrl("https://www.youtube.com/embed/" + data.results[0].key + "?enablejsapi=1&origin=http://andrieu.herokuapp.com");
               });
             })
 
             // Get comments and rating
             this.getComments();
             this.getRating();
+            $('html,body').animate({
+              scrollTop: 0
+            }, 700);
           });
         }
       });
@@ -217,7 +224,7 @@ export class InfoMovieComponent implements OnInit, AfterViewInit {
         // Clear inputs
         this.titleComment = "";
         this.textComment = "";
-      } 
+      }
     })
   }
 
@@ -278,6 +285,7 @@ export class InfoMovieComponent implements OnInit, AfterViewInit {
       this.User.ratedMovies[index].rate = this.starsCount;
     }
     this.movie.Rating = this.movieFromDb.rating;
+    this.movie.NbVotes = this.movieFromDb.nbVotes;
 
     // Save the profile with the new rating
     this.authService.updateFullProfile(this.User).subscribe(data => {

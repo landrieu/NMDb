@@ -43,6 +43,33 @@
     transition: 0.2s;
 }
 
+.nav-disabled{
+   pointer-events: none;
+   cursor: default;
+   background-color: #333;
+  
+}
+
+.nav-disabled a{
+    opacity: 0.3;   
+}
+.log{
+    display: none;
+    position: absolute;
+    background-color: white;
+    z-index: 10;
+    width: 170px;
+    text-transform: none;
+    border: 1px #555 solid;
+    border-radius: 2px;
+    left: 72px;
+    top: 55px;
+}
+
+.nav-disabled:hover .log{
+        display: block !important;
+}
+
 @media only screen and (max-width: 768px) {
 .progress{
     width: 20%;

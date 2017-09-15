@@ -11,24 +11,25 @@ declare var $: any;
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent{
+export class AppComponent {
   title = 'app';
 
 
-  constructor(private authService: AuthService, private locationService: LocationService, private ipService: IpService){
+  constructor(private authService: AuthService, private locationService: LocationService, private ipService: IpService) {
     console.log("APP INIT");
-    this.ipService.postIP().subscribe(data =>{
-      if(data.success === true){
-          console.log(data);
+    this.ipService.postIP().subscribe(data => {
+      if (data.success === true) {
+        console.log(data);
       }
     });
-    this.authService.getProfile().subscribe(profile => {
-      AppSettings.USER_ID = profile.user._id;
-    },
-    err => {
-      console.log(err);
-      return false;
-    });
-
+    if (this.authService.loggedIn()) {
+      this.authService.getProfile().subscribe(profile => {
+        AppSettings.USER_ID = profile.user._id;
+      },
+        err => {
+          console.log(err);
+          return false;
+        });
+    }
   }
 }

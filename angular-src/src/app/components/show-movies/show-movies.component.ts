@@ -25,6 +25,7 @@ export class ShowMoviesComponent implements OnInit, AfterViewInit {
   fullHeart = "/assets/images/icons/full-heart.png";
   emptyHeart = "/assets/images/icons/empty-heart.png";
   heartArray: Array<boolean> = [];
+  loaded : boolean = false;
 
   constructor(private movieService: MovieService, private notificationService: NotificationService, private authService: AuthService, private router: Router) { }
 
@@ -36,25 +37,32 @@ export class ShowMoviesComponent implements OnInit, AfterViewInit {
       this.movies = res.movies;
       this.moviesToDisplay = res.movies;
 
-      this.authService.getProfile().subscribe(profile => {
-        this.notificationService.changeTextProgress(100);
-        this.user = profile.user;
-        this.likedMovies = this.user.likedMovies;
-        for (let i = 0; i < this.movies.length; i++) {
-          this.heartArray[i] = false;
-          for (let j = 0; j < this.likedMovies.length; j++) {
-            if (this.movies[i]._id === this.likedMovies[j].id) {
-              this.heartArray[i] = true;
+
+      if (this.authService.loggedIn()) {
+        this.authService.getProfile().subscribe(profile => {
+          this.notificationService.changeTextProgress(100);
+          this.user = profile.user;
+          this.likedMovies = this.user.likedMovies;
+          for (let i = 0; i < this.movies.length; i++) {
+            this.heartArray[i] = false;
+            for (let j = 0; j < this.likedMovies.length; j++) {
+              if (this.movies[i]._id === this.likedMovies[j].id) {
+                this.heartArray[i] = true;
+              }
             }
           }
-        }
-      },
-        err => {
-          console.log(err);
-          return false;
-        });
-
+          this.loaded = true;
+        },
+          err => {
+            console.log(err);
+            return false;
+          });
+      }else{
+        this.notificationService.changeTextProgress(100);
+        this.loaded = true;
+      }
     });
+
 
   }
 

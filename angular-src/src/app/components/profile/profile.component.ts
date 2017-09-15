@@ -27,11 +27,9 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
       let idUser = params['id'];
-      console.log(idUser);
       if (idUser !== undefined) {
         this.isMyProfile = false;
         this.authService.getUserById(idUser).subscribe(data => {
-          console.log(data);
           this.user = data;
           this.userName = data.name;
         });
