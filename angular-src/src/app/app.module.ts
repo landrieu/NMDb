@@ -9,6 +9,7 @@ import { AgmCoreModule } from '@agm/core';
 import { AppSettings } from './settings/app.settings'
 import { DatePickerModule } from 'ng2-datepicker';
 import { FirstUpperCasePipe } from './pipes/firstuppercase.pipe';
+import { CapitalizePipe } from './pipes/capitalize.pipe';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -64,6 +65,7 @@ const appRoutes: Routes = [
     PostMovieComponent,
     ShowMoviesComponent,
     FirstUpperCasePipe,
+    CapitalizePipe,
     BioComponent,
     LikeComponent,
     RatingComponent,

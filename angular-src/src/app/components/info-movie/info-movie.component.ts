@@ -54,7 +54,7 @@ export class InfoMovieComponent implements OnInit, AfterViewInit {
     this.addContentData = new addContent();
     this.addContentData.type = "info";
     this.notificationService.initProgressBar();
-
+    this.User = {};
 
     // Get the id of the movie from the URL
     this.sub = this.route.params.subscribe(params => {
@@ -120,15 +120,18 @@ export class InfoMovieComponent implements OnInit, AfterViewInit {
 
             //Get movie from TMDb
             this.movieService.getMovieTMDb(id, movie.Type).subscribe(data => {
-
+              console.log("fefze", data);
               //Copy the data
-              this.percent = 100;
+              this.percent = 100; 
               this.notificationService.changeTextProgress(100);
               this.movie = movie;
               this.imdbMovie = true;
+              this.movie.Title = data.original_title;
               this.movie.Budget = data.budget;
               this.movie.BackgroundImage = data.backdrop_path;
               this.movie.Tagline = data.tagline;
+              this.movie.Plot = data.overview;
+              this.movie.Released = data.release_date;
               this.movie.Rating = Math.round(this.movieFromDb.rating * 100) / 100;
               this.movie.NbVotes = this.movieFromDb.nbVotes;
               this.movie.ContentAddedInfo = this.movieFromDb.contentAddedInfo;

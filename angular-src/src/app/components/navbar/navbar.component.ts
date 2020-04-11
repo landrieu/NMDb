@@ -15,10 +15,15 @@ declare var $: any;
 export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(private locationService: LocationService, private authService: AuthService, private notificationService: NotificationService, private router: Router) {
- 
-   }
+  
+  }
 
   ngOnInit() {
+
+  }
+
+  isLogged(){
+    return this.authService.loggedIn();
   }
 
   /*
@@ -37,7 +42,7 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
 
   }
 

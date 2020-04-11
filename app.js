@@ -5,6 +5,7 @@ const cors = require('cors');
 const passport = require('passport');
 const mongoose =require('mongoose');
 const config =require('./config/database');
+var compression = require('compression');
 
 mongoose.connect(config.database, {useMongoClient: true});
 
@@ -20,7 +21,7 @@ const app = express();
 
 const users = require('./routes/users');
 const movies = require('./routes/movies');
-const comments = require('./routes/comments');
+const comments = require('./routes/comments');  
 const ips = require('./routes/ips');
 
 //const port = process.env.PORT || 8080;
@@ -29,6 +30,7 @@ const port = 3008;
 app.use(cors());
 app.enable('trust proxy');
 
+//app.use(compression());
 //Set Static Folder
 app.use(express.static(path.join(__dirname,'public')));
 
@@ -56,5 +58,6 @@ app.get('*',(req, res) => {
 
 //Start server
 app.listen(port, () =>{
+    console.log("Dir: " + __dirname);
     console.log('Server started on port' + port);
 });

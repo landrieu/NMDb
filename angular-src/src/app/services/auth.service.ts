@@ -3,7 +3,9 @@ import { Http, Headers } from '@angular/http';
 import { AppSettings } from '../settings/app.settings'
 import 'rxjs/add/operator/map';
 import { tokenNotExpired } from 'angular2-jwt';
-
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
+import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class AuthService {

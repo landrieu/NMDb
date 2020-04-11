@@ -8,14 +8,15 @@
     "start": "node app"
   },
   "dependencies": {
-    "express":"*",
-    "mongoose":"*",
-    "bcryptjs":"*",
-    "cors":"*",
-    "jsonwebtoken":"*",
-    "body-parser":"*",
-    "passport-jwt":"*",
-    "passport":"*"
+    "bcryptjs": "*",
+    "body-parser": "*",
+    "compression": "^1.7.3",
+    "cors": "*",
+    "express": "*",
+    "jsonwebtoken": "*",
+    "mongoose": "*",
+    "passport": "*",
+    "passport-jwt": "*"
   },
   "author": "Lionel Andrieu",
   "license": "ISC"
