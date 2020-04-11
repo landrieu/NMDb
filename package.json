@@ -9,10 +9,10 @@
   },
   "dependencies": {
     "bcryptjs": "*",
-    "body-parser": "*",
+    "body-parser": "^1.19.0",
     "compression": "^1.7.3",
     "cors": "*",
-    "express": "*",
+    "express": "^4.17.1",
     "jsonwebtoken": "*",
     "mongoose": "*",
     "passport": "*",
