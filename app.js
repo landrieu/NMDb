@@ -7,7 +7,7 @@ const mongoose =require('mongoose');
 const config =require('./config/database');
 var compression = require('compression');
 
-mongoose.connect(config.database, {useMongoClient: true});
+mongoose.connect(config.database, { useUnifiedTopology: true, useNewUrlParser: true });
 
 mongoose.connection.on('connected',()=>{
     console.log("connected to DB");
