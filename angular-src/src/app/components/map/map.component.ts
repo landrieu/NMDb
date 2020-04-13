@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LocationService } from '../../services/location.service';
 import { NotificationService } from '../../services/notification.service';
+import { AppSettings } from '../../settings/app.settings';
 declare var jquery: any;
 declare var $: any;
 declare var google: any;
@@ -57,6 +58,18 @@ export class MapComponent implements OnInit {
       data => {
         this.addMarker(data);
       });
+  }
+
+  loadScript(url, callback){
+        // Adding the script tag to the head as suggested before
+        var GOOGLE_MAP_KEY= AppSettings.GOOGLE_MAP_KEY;
+        var googleMapKey = GOOGLE_MAP_KEY;
+        var script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = url + googleMapKey;
+        document.body.appendChild(script);
+
+        script.onload = callback;
   }
 
   /*
@@ -156,7 +169,13 @@ export class MapComponent implements OnInit {
     // Display and hide the map
     window.onload = function () {
       $("#map1").css("display", "block");
-      me.displayMap();
+
+      let that = me;
+      me.loadScript("https://maps.googleapis.com/maps/api/js?key=", function(){
+        console.log("LOADED");
+        me.displayMap();
+      });    
+      
     }
 
     $(document).click(function (event) {
